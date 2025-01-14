@@ -38,16 +38,21 @@ func _process(delta: float) -> void:
 	# Set sprite orientation
 	if velocity.x < 0:
 		$AnimatedSprite2D.animation = "left"
-		$AnimatedSprite2D.flip_v = false
 	elif velocity.y > 0:
-		$AnimatedSprite2D.animation = "down"
-		$AnimatedSprite2D.flip_h = false
+		$AnimatedSprite2D.animation = "front"
 	elif velocity.y < 0:
-		$AnimatedSprite2D.animation = "up"
-		$AnimatedSprite2D.flip_h = false
+		$AnimatedSprite2D.animation = "gyatt"
 	elif velocity.x > 0:
 		$AnimatedSprite2D.animation = "right"
-		$AnimatedSprite2D.flip_v = false
+	else:
+		if $AnimatedSprite2D.animation == "left":
+			$AnimatedSprite2D.animation = "static left"
+		elif $AnimatedSprite2D.animation == "right":
+			$AnimatedSprite2D.animation = "static right"
+		elif $AnimatedSprite2D.animation == "gyatt":
+			$AnimatedSprite2D.animation = "static gyatt"
+		elif $AnimatedSprite2D.animation == "front":
+			$AnimatedSprite2D.animation = "static front"
 
 
 func _on_body_entered(body: Node2D) -> void:
