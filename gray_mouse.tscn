@@ -124,6 +124,7 @@ height = 190.0
 
 [node name="GrayMouse" type="Area2D"]
 script = ExtResource("1_xvwh8")
+speed = null
 
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(-1, 123.5)
@@ -137,5 +138,8 @@ animation = &"front"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_qy8ku")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
