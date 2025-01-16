@@ -1,8 +1,7 @@
-extends Node2D
+extends Player
 
 signal hit
 
-@export var speed = 400 # pixel/sec
 var screen_size # size of screen window
 
 
@@ -15,18 +14,11 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# Set movement speed
-	var velocity = Vector2.ZERO
-	if Input.is_action_pressed("DOWN"):
-		velocity.y = 1
-	if Input.is_action_pressed("LEFT"):
-		velocity.x = -1
-	if Input.is_action_pressed("RIGHT"):
-		velocity.x = 1
-	if Input.is_action_pressed("UP"):
-		velocity.y = -1
+	var movement = move($AnimatedSprite2D.animation)
+	
+	var velocity = movement[0]
 		
 	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
@@ -34,28 +26,11 @@ func _process(delta: float) -> void:
 	# Set position and limit to screen
 	position += (velocity * delta)
 	
-	# Set sprite orientation
-	if velocity.x < 0:
-		$AnimatedSprite2D.animation = "left"
-	elif velocity.y > 0:
-		$AnimatedSprite2D.animation = "front"
-	elif velocity.y < 0:
-		$AnimatedSprite2D.animation = "gyatt"
-	elif velocity.x > 0:
-		$AnimatedSprite2D.animation = "right"
-	else:
-		if $AnimatedSprite2D.animation == "left":
-			$AnimatedSprite2D.animation = "static left"
-		elif $AnimatedSprite2D.animation == "right":
-			$AnimatedSprite2D.animation = "static right"
-		elif $AnimatedSprite2D.animation == "gyatt":
-			$AnimatedSprite2D.animation = "static gyatt"
-		elif $AnimatedSprite2D.animation == "front":
-			$AnimatedSprite2D.animation = "static front"
+	$AnimatedSprite2D.animation = movement[1]
+	$AnimatedSprite2D.speed_scale = movement[2]
 
 
 func _on_body_entered(body: Node2D) -> void:
-	
 	hit.emit()
 	$CollisionShape2D.set_deferred("disabled", true) # make sure signal only sends once
 	
