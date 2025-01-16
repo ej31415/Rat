@@ -32,7 +32,6 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	
 	hit.emit()
 	$CollisionShape2D.set_deferred("disabled", true) # make sure signal only sends once
 	

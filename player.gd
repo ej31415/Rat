@@ -5,7 +5,7 @@ class_name Player
 enum Roles {MOUSE, RAT, SHERIFF}
 
 var speed = 400 # pixel/sec
-var role = Roles.RAT
+var role = Roles.MOUSE
 
 func move(anim: StringName) -> Array:
 	
