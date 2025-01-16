@@ -25,7 +25,6 @@ func _process(delta: float) -> void:
 		
 	# Set position and limit to screen
 	position += (velocity * delta)
-	position = position.clamp(Vector2.ZERO, screen_size)
 	
 	$AnimatedSprite2D.animation = movement[1]
 	$AnimatedSprite2D.speed_scale = movement[2]
@@ -39,4 +38,4 @@ func start(pos):
 	# pass in the start position from spawner as pos?
 	position = pos
 	show()
-	$CollisionShape2D.disabled = false
+	$CollisionShape2D.disabled = true
