@@ -123,12 +123,10 @@ radius = 95.0
 height = 190.0
 
 [node name="GrayMouse" type="CharacterBody2D"]
-y_sort_enabled = true
 script = ExtResource("1_fvefs")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
-y_sort_enabled = true
 position = Vector2(0, 123.5)
 scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")

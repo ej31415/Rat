@@ -126,7 +126,7 @@ height = 190.0
 script = ExtResource("1_bx85c")
 
 [node name="Shadow" type="Sprite2D" parent="."]
-y_sort_enabled = true
+show_behind_parent = true
 position = Vector2(0, 123.5)
 texture = ExtResource("2_k803p")
 
