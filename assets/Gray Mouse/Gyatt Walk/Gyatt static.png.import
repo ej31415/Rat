@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6d1h43fwosma"
-path="res://.godot/imported/Static 8x.png-703214c3db14d94a16b101606e151202.ctex"
+uid="uid://d1iqrscwuyffx"
+path="res://.godot/imported/Gyatt static.png-b99fe30a4884787369ef62fbc0759c72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Front Facing Walk/Static 8x.png"
-dest_files=["res://.godot/imported/Static 8x.png-703214c3db14d94a16b101606e151202.ctex"]
+source_file="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png"
+dest_files=["res://.godot/imported/Gyatt static.png-b99fe30a4884787369ef62fbc0759c72.ctex"]
 
 [params]
 

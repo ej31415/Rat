@@ -1,22 +1,142 @@
-[gd_scene load_steps=5 format=3 uid="uid://vney586ftfc0"]
+[gd_scene load_steps=17 format=3 uid="uid://vney586ftfc0"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
+[ext_resource type="Texture2D" uid="uid://c2s3tn04ic1rv" path="res://assets/Tan Mouse/Front/Tan front step L.png" id="3_86xjd"]
+[ext_resource type="Texture2D" uid="uid://bkkkd2u3y47ck" path="res://assets/Tan Mouse/Front/Front tan static.png" id="4_pibo6"]
+[ext_resource type="Texture2D" uid="uid://x4s244e28aod" path="res://assets/Tan Mouse/Front/Tan front step right.png" id="5_8rhri"]
+[ext_resource type="Texture2D" uid="uid://dy6k7pp1h36up" path="res://assets/Tan Mouse/Gyatt/Tan gyatt sstep l.png" id="6_bhh7h"]
+[ext_resource type="Texture2D" uid="uid://cgl0rw8v4sq1l" path="res://assets/Tan Mouse/Gyatt/Tan gyatt.png" id="7_jelvr"]
+[ext_resource type="Texture2D" uid="uid://0liowuoltbwq" path="res://assets/Tan Mouse/Gyatt/Tan gyatt step r.png" id="8_oi5f5"]
+[ext_resource type="Texture2D" uid="uid://cxvt017ur7ija" path="res://assets/Tan Mouse/Looking left/Tan look left step left.png" id="9_jywqc"]
+[ext_resource type="Texture2D" uid="uid://drgksp5n83shk" path="res://assets/Tan Mouse/Looking left/Tan look left.png" id="10_a8kd2"]
+[ext_resource type="Texture2D" uid="uid://dml24eeyw2b0k" path="res://assets/Tan Mouse/Looking left/Tan look left step r.png" id="11_0maph"]
+[ext_resource type="Texture2D" uid="uid://dmw4waijg8ssq" path="res://assets/Tan Mouse/Looking right/Tan Look right step right.png" id="12_heger"]
+[ext_resource type="Texture2D" uid="uid://bj3a4ep4qykxx" path="res://assets/Tan Mouse/Looking right/Tan Look right static.png" id="13_kbema"]
+[ext_resource type="Texture2D" uid="uid://c3u7u4y168gt5" path="res://assets/Tan Mouse/Looking right/Tan Look right step left.png" id="14_r5akp"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_31bpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8rhri")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pibo6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_86xjd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pibo6")
+}],
+"loop": true,
+"name": &"front",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_bhh7h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jelvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_oi5f5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jelvr")
+}],
+"loop": true,
+"name": &"gyatt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_jywqc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_a8kd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_0maph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_a8kd2")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_heger")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_kbema")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_r5akp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_kbema")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_pibo6")
+}],
+"loop": true,
+"name": &"static front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_jelvr")
+}],
+"loop": true,
+"name": &"static gyatt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_a8kd2")
+}],
+"loop": true,
+"name": &"static left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_kbema")
+}],
+"loop": true,
+"name": &"static right",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7e41u"]
+radius = 95.0
+height = 190.0
 
-[node name="Node2D" type="CharacterBody2D"]
+[node name="TanMouse" type="CharacterBody2D"]
 script = ExtResource("1_bx85c")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 123.5)
+texture = ExtResource("2_k803p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_31bpd")
+animation = &"static right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_7e41u")
 
-[node name="Shadow" type="Sprite2D" parent="."]
-texture = ExtResource("2_k803p")
-
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)

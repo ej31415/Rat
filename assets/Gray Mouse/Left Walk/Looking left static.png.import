@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btfiiltmos4go"
-path="res://.godot/imported/Gyatt step right.png-47a82f0581efb552655ecb0f6e36fd6f.ctex"
+uid="uid://cnj065wjnmxwc"
+path="res://.godot/imported/Looking left static.png-9dc16577d4b9501ab5503d1dcc4a83b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Gyatt Walk/Gyatt step right.png"
-dest_files=["res://.godot/imported/Gyatt step right.png-47a82f0581efb552655ecb0f6e36fd6f.ctex"]
+source_file="res://assets/Gray Mouse/Left Walk/Looking left static.png"
+dest_files=["res://.godot/imported/Looking left static.png-9dc16577d4b9501ab5503d1dcc4a83b1.ctex"]
 
 [params]
 

@@ -5,7 +5,7 @@ class_name Player
 enum Roles {MOUSE, RAT, SHERIFF}
 
 const SPEED = 400.0
-var anim = "front"
+var anim = "static front"
 var role = Roles.RAT
 
 func _physics_process(delta: float) -> void:

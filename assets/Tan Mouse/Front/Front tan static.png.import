@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnj065wjnmxwc"
-path="res://.godot/imported/Looking left static.png-5cf63ec60d945419fe8e8312eae73e0d.ctex"
+uid="uid://bkkkd2u3y47ck"
+path="res://.godot/imported/Front tan static.png-3952bd3a38e7b4019f5f7a7ff4e6ed79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Left Walk/Looking left static.png"
-dest_files=["res://.godot/imported/Looking left static.png-5cf63ec60d945419fe8e8312eae73e0d.ctex"]
+source_file="res://assets/Tan Mouse/Front/Front tan static.png"
+dest_files=["res://.godot/imported/Front tan static.png-3952bd3a38e7b4019f5f7a7ff4e6ed79.ctex"]
 
 [params]
 
