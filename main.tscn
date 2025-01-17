@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
+[ext_resource type="PackedScene" uid="uid://be70b1rbh61b3" path="res://gray_mouse.tscn" id="2_nn2rc"]
 [ext_resource type="TileSet" uid="uid://cdwgttlidafuo" path="res://assets/Tile Sets/maze-floor.tres" id="3_22thv"]
 [ext_resource type="Texture2D" uid="uid://b1yqxuo30e6kr" path="res://assets/Tile Sets/Walls/Walls 6.png" id="4_jaqq8"]
-[ext_resource type="PackedScene" uid="uid://dcpgc35rf0g1d" path="res://gray_mouse.tscn" id="5_romgb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1afth"]
 texture = ExtResource("4_jaqq8")
@@ -20,6 +20,7 @@ sources/0 = SubResource("TileSetAtlasSource_1afth")
 [node name="main" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_s4k2t")
+player_scene = ExtResource("2_nn2rc")
 
 [node name="Map" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -38,8 +39,6 @@ tile_set = SubResource("TileSet_kfrfe")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 
-[node name="GrayMouse" parent="." instance=ExtResource("5_romgb")]
-
 [node name="host" type="Button" parent="."]
 offset_left = 94.0
 offset_top = 56.0
@@ -55,7 +54,7 @@ offset_bottom = 118.0
 text = "Join"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://gray_mouse.tscn")
+_spawnable_scenes = PackedStringArray("res://gray_mouse.tscn", "res://tan_mouse.tscn")
 spawn_path = NodePath("..")
 
 [connection signal="ready" from="Map" to="." method="_ready"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://vney586ftfc0"]
+[gd_scene load_steps=17 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
