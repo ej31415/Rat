@@ -11,6 +11,9 @@ func _enter_tree():
 
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
+	if is_multiplayer_authority():
+		$Camera2D.make_current()
+	
 	var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 	if role == Roles.RAT and Input.is_action_pressed("SHIFT"):
 		direction *= 2.0

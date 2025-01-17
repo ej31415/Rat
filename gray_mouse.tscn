@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dcpgc35rf0g1d"]
+[gd_scene load_steps=18 format=3 uid="uid://dcpgc35rf0g1d"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
@@ -122,6 +122,11 @@ animations = [{
 radius = 95.0
 height = 190.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hs4jp"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="GrayMouse" type="CharacterBody2D"]
 script = ExtResource("1_fvefs")
 
@@ -140,3 +145,7 @@ shape = SubResource("CapsuleShape2D_qy8ku")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../Camera2D")
+replication_config = SubResource("SceneReplicationConfig_hs4jp")

@@ -1,14 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=6 format=4 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
 [ext_resource type="PackedScene" uid="uid://dcpgc35rf0g1d" path="res://gray_mouse.tscn" id="2_pkw42"]
 [ext_resource type="TileSet" uid="uid://cdwgttlidafuo" path="res://assets/Tile Sets/maze-floor.tres" id="3_22thv"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rc0xr"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qyof2"]
 radius = 256.0
@@ -25,11 +20,6 @@ scale = Vector2(0.976859, 0.996112)
 tile_map_data = PackedByteArray("AAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAP//AAAAAAAAAAAEAP7/AAAAAAAAAAAEAP3/AAAAAAAAAAADAP3/AAAAAAAAAAACAP3/AAAAAAAAAAABAP3/AAAAAAAAAAAAAP3/AAAAAAAAAAD///3/AAAAAAAAAAD+//3/AAAAAAAAAAD9//3/AAAAAAAAAAD8//3/AAAAAAAAAAD7//3/AAAAAAAAAAD7//7/AAAAAAAAAAD7////AAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAD9/wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD9/wEAAAAAAAAAAAD9/wAAAAAAAAAAAAD9////AAAAAAAAAAD9//7/AAAAAAAAAAD8//7/AAAAAAAAAAD8////AAAAAAAAAAD8/wAAAAAAAAAAAAD8/wEAAAAAAAAAAAD+//7/AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAD///7/AAAAAAAAAAAAAP7/AAAAAAAAAAAAAP//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAABAAEAAAAAAAAAAAABAAAAAAAAAAAAAAABAP//AAAAAAAAAAABAP7/AAAAAAAAAAACAP7/AAAAAAAAAAACAP//AAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAADAAAAAAAAAAAAAAADAP//AAAAAAAAAAADAP7/AAAAAAAAAAA=")
 tile_set = ExtResource("3_22thv")
 
-[node name="GrayMouse" parent="." instance=ExtResource("2_pkw42")]
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="GrayMouse"]
-replication_config = SubResource("SceneReplicationConfig_rc0xr")
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-681, 135)
 
@@ -37,20 +27,20 @@ position = Vector2(-681, 135)
 shape = SubResource("CircleShape2D_qyof2")
 
 [node name="StartPosition" type="Marker2D" parent="."]
-position = Vector2(-10, -10)
+position = Vector2(-1, -99)
 
 [node name="host" type="Button" parent="."]
-offset_left = -35.0
-offset_top = -212.0
-offset_right = 43.0
-offset_bottom = -153.0
+offset_left = 94.0
+offset_top = 56.0
+offset_right = 172.0
+offset_bottom = 115.0
 text = "Host"
 
 [node name="join" type="Button" parent="."]
-offset_left = -35.0
-offset_top = -149.0
-offset_right = 43.0
-offset_bottom = -93.0
+offset_left = 188.0
+offset_top = 62.0
+offset_right = 266.0
+offset_bottom = 118.0
 text = "Join"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
