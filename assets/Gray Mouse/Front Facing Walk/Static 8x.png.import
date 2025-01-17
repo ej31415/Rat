@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bycdbqpnd7u0i"
-path="res://.godot/imported/Gyatt step left.png-cbc47b6b4a3b8c63020723174214e2cb.ctex"
+uid="uid://c6d1h43fwosma"
+path="res://.godot/imported/Static 8x.png-d98dc73e50b69b5497c60496cfe77ca1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Gyatt Walk/Gyatt step left.png"
-dest_files=["res://.godot/imported/Gyatt step left.png-cbc47b6b4a3b8c63020723174214e2cb.ctex"]
+source_file="res://assets/Gray Mouse/Front Facing Walk/Static 8x.png"
+dest_files=["res://.godot/imported/Static 8x.png-d98dc73e50b69b5497c60496cfe77ca1.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ylv4iaoo4i6x"
-path="res://.godot/imported/Step left 8x.png-696345678beb94b7995559dfdf35eb8f.ctex"
+uid="uid://d2ac1j1ssl3gi"
+path="res://.godot/imported/Step right 8x.png-8c3860e055ae203b158e7ccc7f132940.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Front Facing Walk/Step left 8x.png"
-dest_files=["res://.godot/imported/Step left 8x.png-696345678beb94b7995559dfdf35eb8f.ctex"]
+source_file="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png"
+dest_files=["res://.godot/imported/Step right 8x.png-8c3860e055ae203b158e7ccc7f132940.ctex"]
 
 [params]
 

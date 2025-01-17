@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dax5savw1px6c"
-path="res://.godot/imported/Static looking right.png-1a1905c85e4c35b27b69968be9d4a0f4.ctex"
+uid="uid://5ermy61iqpxp"
+path="res://.godot/imported/Looking left step right.png-db00b4caff8b592e5ba016e8259ecf39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Right Walk/Static looking right.png"
-dest_files=["res://.godot/imported/Static looking right.png-1a1905c85e4c35b27b69968be9d4a0f4.ctex"]
+source_file="res://assets/Gray Mouse/Left Walk/Looking left step right.png"
+dest_files=["res://.godot/imported/Looking left step right.png-db00b4caff8b592e5ba016e8259ecf39.ctex"]
 
 [params]
 

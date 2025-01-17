@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2ac1j1ssl3gi"
-path="res://.godot/imported/Step right 8x.png-0edbc88d3eb746e9a35eec764d649fc0.ctex"
+uid="uid://c3u7u4y168gt5"
+path="res://.godot/imported/Tan Look right step left.png-361436d4078fd0a4f5ac43eb32bca6df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Front Facing Walk/Step right 8x.png"
-dest_files=["res://.godot/imported/Step right 8x.png-0edbc88d3eb746e9a35eec764d649fc0.ctex"]
+source_file="res://assets/Tan Mouse/Looking right/Tan Look right step left.png"
+dest_files=["res://.godot/imported/Tan Look right step left.png-361436d4078fd0a4f5ac43eb32bca6df.ctex"]
 
 [params]
 
