@@ -17,7 +17,6 @@ tile_map_data = PackedByteArray("AAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAA
 tile_set = ExtResource("3_22thv")
 
 [node name="GrayMouse" parent="." instance=ExtResource("2_pkw42")]
-speed = 400
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(-10, -10)

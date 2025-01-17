@@ -4,14 +4,14 @@ class_name Player
 
 enum Roles {MOUSE, RAT, SHERIFF}
 
-var speed = 400 # pixel/sec
-var role = Roles.MOUSE
+
+var role = Roles.RAT
 
 func move(anim: StringName) -> Array:
-	
 	var velocity = Vector2.ZERO
 	var new_anim = anim
 	var speed_scale = 1.0
+	var speed = 400 # pixel/sec
 	
 	# Set movement speed
 	if Input.is_action_pressed("DOWN"):
