@@ -1,0 +1,141 @@
+[gd_scene load_steps=17 format=3 uid="uid://cip1oahpmpagq"]
+
+[ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
+[ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
+[ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="3_se6ts"]
+[ext_resource type="Texture2D" uid="uid://cupfpm1uud0y0" path="res://assets/Brown Mouse/Front/Brown front static.png" id="4_a5vqm"]
+[ext_resource type="Texture2D" uid="uid://dy5818xgmrtcy" path="res://assets/Brown Mouse/Front/Brown front step right.png" id="5_xwwai"]
+[ext_resource type="Texture2D" uid="uid://bc1of025qgoj8" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step left.png" id="6_aqp1b"]
+[ext_resource type="Texture2D" uid="uid://83tcyx1p6r37" path="res://assets/Brown Mouse/Gyatt/Brown gyatt static.png" id="7_jasi4"]
+[ext_resource type="Texture2D" uid="uid://cryho1so2ilri" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step right.png" id="8_25c4s"]
+[ext_resource type="Texture2D" uid="uid://pdeys5n7jl1n" path="res://assets/Brown Mouse/Facing left/Brown left facing step left.png" id="9_17i1p"]
+[ext_resource type="Texture2D" uid="uid://lr7cplxf7f23" path="res://assets/Brown Mouse/Facing left/Brown left facing static.png" id="10_2bxtn"]
+[ext_resource type="Texture2D" uid="uid://bts13bjivvarg" path="res://assets/Brown Mouse/Facing left/Brown left facing step right.png" id="11_xesxw"]
+[ext_resource type="Texture2D" uid="uid://c2pafu3rxmgdb" path="res://assets/Brown Mouse/Facing right/Brown right facing step left.png" id="12_8o3cd"]
+[ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
+[ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e3fi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_se6ts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a5vqm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xwwai")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a5vqm")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_aqp1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jasi4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_25c4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jasi4")
+}],
+"loop": true,
+"name": &"gyatt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_17i1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_2bxtn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_xesxw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_2bxtn")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_8o3cd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_q3dww")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_nahoj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_q3dww")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_a5vqm")
+}],
+"loop": true,
+"name": &"static front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_jasi4")
+}],
+"loop": true,
+"name": &"static gyatt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_2bxtn")
+}],
+"loop": true,
+"name": &"static left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_q3dww")
+}],
+"loop": true,
+"name": &"static right",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_asjwq"]
+radius = 95.0
+height = 190.0
+
+[node name="BrownMouse" type="CharacterBody2D"]
+script = ExtResource("1_2yxuw")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, 123.5)
+texture = ExtResource("2_tv7fa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_e3fi4")
+animation = &"static right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 25)
+shape = SubResource("CapsuleShape2D_asjwq")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
