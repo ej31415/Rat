@@ -20,6 +20,7 @@ tile_map_data = PackedByteArray("AAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAA
 tile_set = ExtResource("3_22thv")
 
 [node name="GrayMouse" parent="." instance=ExtResource("2_pkw42")]
+motion_mode = 1
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-681, 135)
