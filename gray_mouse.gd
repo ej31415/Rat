@@ -6,6 +6,9 @@ const SPEED = 400.0
 var anim = "front"
 var role = Roles.RAT
 
+func _enter_tree():
+	set_multiplayer_authority(name.to_int())
+
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
@@ -14,10 +17,11 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.speed_scale = 2.0
 	else:
 		$AnimatedSprite2D.speed_scale = 1.0
-	if direction:
-		velocity = direction * SPEED
-	else:
-		velocity = Vector2.ZERO
+	if is_multiplayer_authority():
+		if direction:
+			velocity = direction * SPEED
+		else:
+			velocity = Vector2.ZERO
 	
 	move_and_slide()
 	

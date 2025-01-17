@@ -1,15 +1,21 @@
-[gd_scene load_steps=6 format=4 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=7 format=4 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
 [ext_resource type="PackedScene" uid="uid://dcpgc35rf0g1d" path="res://gray_mouse.tscn" id="2_pkw42"]
 [ext_resource type="TileSet" uid="uid://cdwgttlidafuo" path="res://assets/Tile Sets/maze-floor.tres" id="3_22thv"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rc0xr"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_qyof2"]
 radius = 256.0
 
 [node name="main" type="Node"]
 script = ExtResource("1_s4k2t")
+player_scene = ExtResource("2_pkw42")
 
 [node name="Map" type="Node" parent="."]
 script = ExtResource("2_4s054")
@@ -21,6 +27,9 @@ tile_set = ExtResource("3_22thv")
 
 [node name="GrayMouse" parent="." instance=ExtResource("2_pkw42")]
 
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="GrayMouse"]
+replication_config = SubResource("SceneReplicationConfig_rc0xr")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-681, 135)
 
@@ -30,4 +39,24 @@ shape = SubResource("CircleShape2D_qyof2")
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(-10, -10)
 
+[node name="host" type="Button" parent="."]
+offset_left = -35.0
+offset_top = -212.0
+offset_right = 43.0
+offset_bottom = -153.0
+text = "Host"
+
+[node name="join" type="Button" parent="."]
+offset_left = -35.0
+offset_top = -149.0
+offset_right = 43.0
+offset_bottom = -93.0
+text = "Join"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://gray_mouse.tscn")
+spawn_path = NodePath("..")
+
 [connection signal="ready" from="Map" to="." method="_ready"]
+[connection signal="pressed" from="host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="join" to="." method="_on_join_pressed"]
