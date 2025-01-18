@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=18 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
@@ -122,6 +122,11 @@ animations = [{
 radius = 95.0
 height = 190.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qjbrs"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="TanMouse" type="CharacterBody2D"]
 script = ExtResource("1_bx85c")
 
@@ -140,3 +145,6 @@ shape = SubResource("CapsuleShape2D_7e41u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qjbrs")

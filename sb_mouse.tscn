@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=18 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
@@ -122,6 +122,11 @@ animations = [{
 radius = 95.0
 height = 190.0
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_atjri"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [node name="SBMouse" type="CharacterBody2D"]
 script = ExtResource("1_2m8vg")
 
@@ -139,3 +144,6 @@ shape = SubResource("CapsuleShape2D_j67ck")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_atjri")

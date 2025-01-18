@@ -57,6 +57,8 @@ text = "Join"
 _spawnable_scenes = PackedStringArray("res://gray_mouse.tscn", "res://tan_mouse.tscn")
 spawn_path = NodePath("..")
 
+[node name="GrayMouse" parent="." instance=ExtResource("2_nn2rc")]
+
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="pressed" from="host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="join" to="." method="_on_join_pressed"]
