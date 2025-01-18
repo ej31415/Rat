@@ -1,0 +1,141 @@
+[gd_scene load_steps=17 format=3 uid="uid://75nausi002r2"]
+
+[ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
+[ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
+[ext_resource type="Texture2D" uid="uid://cbqpliwfuwfxq" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step left.png" id="3_3prwe"]
+[ext_resource type="Texture2D" uid="uid://boyrlfdgxfxpg" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde front static.png" id="4_e711r"]
+[ext_resource type="Texture2D" uid="uid://dk556c12acunx" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step right.png" id="5_xn2d5"]
+[ext_resource type="Texture2D" uid="uid://bge8n2pa8kacf" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step left.png" id="6_akavk"]
+[ext_resource type="Texture2D" uid="uid://g2dlxunwdhfc" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt static.png" id="7_vlm0e"]
+[ext_resource type="Texture2D" uid="uid://bo1ih0084ykrw" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step right.png" id="8_38brg"]
+[ext_resource type="Texture2D" uid="uid://df5cxsqj50rb6" path="res://assets/Strawberry Blonde Mouse/Left facing/Strawberry blonde facing left step left.png" id="9_rarhn"]
+[ext_resource type="Texture2D" uid="uid://b363caond8pmq" path="res://assets/Strawberry Blonde Mouse/Left facing/Strawberry blonde facing left static.png" id="10_v1u7e"]
+[ext_resource type="Texture2D" uid="uid://bwaung7gtqwt5" path="res://assets/Strawberry Blonde Mouse/Left facing/Strawberry blonde facing left step right.png" id="11_t72fp"]
+[ext_resource type="Texture2D" uid="uid://c5s5smkq7pjxp" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing right step left.png" id="12_mlgxm"]
+[ext_resource type="Texture2D" uid="uid://iidbiyi6vb8i" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing right.png" id="13_6xcaw"]
+[ext_resource type="Texture2D" uid="uid://cc21kn5d53ckk" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing rightstep right.png" id="14_nuo54"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_st0pp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3prwe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_e711r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xn2d5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_e711r")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_akavk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vlm0e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_38brg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_vlm0e")
+}],
+"loop": true,
+"name": &"gyatt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_rarhn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_v1u7e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_t72fp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_v1u7e")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_mlgxm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6xcaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_nuo54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6xcaw")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_e711r")
+}],
+"loop": true,
+"name": &"static front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_vlm0e")
+}],
+"loop": true,
+"name": &"static gyatt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_v1u7e")
+}],
+"loop": true,
+"name": &"static left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_6xcaw")
+}],
+"loop": true,
+"name": &"static right",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j67ck"]
+radius = 95.0
+height = 190.0
+
+[node name="SBMouse" type="CharacterBody2D"]
+script = ExtResource("1_2m8vg")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+position = Vector2(0, 123.5)
+texture = ExtResource("2_8dqxm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_st0pp")
+animation = &"static front"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 25)
+shape = SubResource("CapsuleShape2D_j67ck")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
