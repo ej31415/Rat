@@ -63,14 +63,22 @@ func generate_maze(m: int, n: int) -> Array:
 
 var straights := [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 
-# Recursive DFS function that carves out the open spots in the input maze matrix
+# Iterative DFS function that carves out the open spots in the input maze matrix from the starting cell
 func generate_maze_helper(mat: Array, r: int, c: int) -> void:
-	mat[r][c] = 0
-	straights.shuffle()
-	for v in straights:
-		var p := Vector2i(r, c) + (v as Vector2i)
-		if _check_in_bounds(mat, p.x, p.y) and mat[p.x][p.y] == 1 and _is_cell_visitable(mat, p.x, p.y):
-			generate_maze_helper(mat, p.x, p.y)
+	var st := []
+	st.append(Vector2i(r, c))
+	
+	while len(st) > 0:
+		var curr := st.pop_back() as Vector2i
+		mat[curr.x][curr.y] = 0
+
+		straights.shuffle()
+		for v in straights:
+			var p := Vector2i(curr.x, curr.y) + (v as Vector2i)
+			if _check_in_bounds(mat, p.x, p.y) and mat[p.x][p.y] == 1 and _is_cell_visitable(mat, p.x, p.y):
+				st.append(curr)
+				st.append(p)
+				break
 
 # Returns a new matrix with each row duplicated `factor` times
 func _vertical_stretch(mat: Array, factor: int) -> Array:
@@ -166,7 +174,7 @@ func build_maze(mat: Array, offset: Vector2i) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(20, 20), 2), 2))
+	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(15, 15), 2), 2))
 	_pretty_print_mat(maze)
 	build_maze(maze, Vector2i(-len(maze[0])/2, -len(maze)-1))
 
