@@ -63,7 +63,7 @@ func generate_maze(m: int, n: int) -> Array:
 
 var straights := [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 
-# recursive DFS function that carves out the open spots in the input maze matrix
+# Recursive DFS function that carves out the open spots in the input maze matrix
 func generate_maze_helper(mat: Array, r: int, c: int) -> void:
 	mat[r][c] = 0
 	straights.shuffle()
@@ -72,19 +72,36 @@ func generate_maze_helper(mat: Array, r: int, c: int) -> void:
 		if _check_in_bounds(mat, p.x, p.y) and mat[p.x][p.y] == 1 and _is_cell_visitable(mat, p.x, p.y):
 			generate_maze_helper(mat, p.x, p.y)
 
-func expand_horizontals(mat: Array) -> Array:
-	var r := len(mat) - 1 # index starting from bottom row
+# Returns a new matrix with each row duplicated `factor` times
+func _vertical_stretch(mat: Array, factor: int) -> Array:
+	var res := []
+	for row in mat:
+		for i in range(factor):
+			res.append((row as Array).duplicate())
+	return res
+
+# Returns a new matrix with each column duplicated `factor` times
+func _horizontal_stretch(mat: Array, factor: int) -> Array:
+	var res := []
+	for r in range(len(mat)):
+		res.append([])
+
+	for c in range(len(mat[0])):
+		for i in range(factor):
+			for r in range(len(mat)):
+				res[r].append(mat[r][c])
+	return res
+
+# Changes the wall type of any front-facing cell
+func _adjust_wall_types(mat: Array) -> Array:
+	var r := len(mat) - 1
 	mat.append([])
 	mat[-1].resize(len(mat[0]))
 	mat[-1].fill(0)
 	while r > -1:
-		var marked := []
 		for c in range(len(mat[r])):
 			if mat[r][c] == 1 and mat[r+1][c] == 0: # front-facing wall
-				marked.append(c)
-		mat.insert(r, (mat[r] as Array).duplicate())
-		for m in marked:
-			mat[r+1][m] = 2
+				mat[r][c] = 2
 		r -= 1
 	mat.pop_back()
 	return mat
@@ -135,6 +152,8 @@ func _is_cell_visitable(mat: Array, r: int, c: int) -> bool:
 		return false
 	return true
 
+# Places the maze tiles on the map based on a provided matrix of integers 0, 1, and 2.
+# 0 = open tile, 1 = wall tile (top texture), 2 = wall tile (side texture)
 func build_maze(mat: Array, offset: Vector2i) -> void:
 	for r in range(len(mat)):
 		for c in range(len(mat[r])):
@@ -147,7 +166,7 @@ func build_maze(mat: Array, offset: Vector2i) -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var maze := expand_horizontals(generate_maze(15, 15))
+	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(20, 20), 2), 2))
 	_pretty_print_mat(maze)
 	build_maze(maze, Vector2i(-len(maze[0])/2, -len(maze)-1))
 
