@@ -165,7 +165,7 @@ func _is_cell_visitable(mat: Array, r: int, c: int) -> bool:
 func build_maze(mat: Array, offset: Vector2i) -> void:
 	for r in range(len(mat)):
 		for c in range(len(mat[r])):
-			$Floor.set_cell(Vector2i(c, r) + offset, 0, Vector2i(0, 0))
+			$Floor.set_cell(Vector2i(c, r) + offset, 1, Vector2i(0, 0))
 			if mat[r][c] == 1:
 				$Walls.set_cell(Vector2i(c, r) + offset, 2, Vector2i(0, 0))
 			elif mat[r][c] == 2:
