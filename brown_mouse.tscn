@@ -146,9 +146,19 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Vision:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Vision:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Vision:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
 light_mask = 4
+motion_mode = 1
 script = ExtResource("1_2yxuw")
 
 [node name="Vision" type="PointLight2D" parent="."]
