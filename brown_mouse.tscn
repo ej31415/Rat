@@ -146,21 +146,29 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
+light_mask = 4
 script = ExtResource("1_2yxuw")
 
-[node name="Shadow" type="Sprite2D" parent="."]
-position = Vector2(0, 123.5)
-texture = ExtResource("2_tv7fa")
-
 [node name="Vision" type="PointLight2D" parent="."]
+energy = 2.0
+range_z_max = 0
+range_item_cull_mask = 43
 texture = ExtResource("3_l4gh1")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
-scale = Vector2(36, 20)
+position = Vector2(0, 35)
+scale = Vector2(5, 5)
 range_z_max = 0
+range_item_cull_mask = 47
 texture = SubResource("GradientTexture2D_60pgy")
 
+[node name="Shadow" type="Sprite2D" parent="."]
+light_mask = 4
+position = Vector2(0, 123.5)
+texture = ExtResource("2_tv7fa")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 4
 sprite_frames = SubResource("SpriteFrames_e3fi4")
 animation = &"static right"
 

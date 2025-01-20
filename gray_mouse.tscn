@@ -148,24 +148,27 @@ properties/2/replication_mode = 1
 [node name="GrayMouse" type="CharacterBody2D"]
 script = ExtResource("1_fvefs")
 
+[node name="Vision" type="PointLight2D" parent="."]
+position = Vector2(-35, 40)
+rotation = -1.5708
+scale = Vector2(1.5, 1)
+energy = 2.0
+range_z_max = 0
+range_item_cull_mask = 46
+texture = ExtResource("15_sh5o6")
+
+[node name="ViewSphere" type="PointLight2D" parent="."]
+position = Vector2(0, 35)
+scale = Vector2(5, 5)
+range_z_max = 0
+range_item_cull_mask = 47
+texture = SubResource("GradientTexture2D_lj53g")
+
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
 position = Vector2(0, 123.5)
 scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")
-
-[node name="Vision" type="PointLight2D" parent="."]
-position = Vector2(-35, 40)
-rotation = -1.5708
-energy = 2.0
-range_z_max = -1
-shadow_enabled = true
-texture = ExtResource("15_sh5o6")
-
-[node name="ViewSphere" type="PointLight2D" parent="."]
-scale = Vector2(36, 20)
-range_z_max = 0
-texture = SubResource("GradientTexture2D_lj53g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p1mwd")
