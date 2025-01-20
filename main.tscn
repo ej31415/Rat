@@ -1,10 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=18 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
-[ext_resource type="PackedScene" uid="uid://be70b1rbh61b3" path="res://gray_mouse.tscn" id="2_nn2rc"]
+[ext_resource type="PackedScene" uid="uid://be70b1rbh61b3" path="res://gray_mouse.tscn" id="2_ce6oi"]
+[ext_resource type="PackedScene" uid="uid://cip1oahpmpagq" path="res://brown_mouse.tscn" id="3_v3yxy"]
 [ext_resource type="Texture2D" uid="uid://iyrxxy6o6sts" path="res://assets/Tile Sets/Floors/floor.jpg" id="4_8xaux"]
+[ext_resource type="PackedScene" uid="uid://75nausi002r2" path="res://sb_mouse.tscn" id="4_dcep3"]
 [ext_resource type="Texture2D" uid="uid://b1yqxuo30e6kr" path="res://assets/Tile Sets/Walls/Walls 6.png" id="4_jaqq8"]
+[ext_resource type="PackedScene" uid="uid://bga65g3uwmuq1" path="res://tan_mouse.tscn" id="5_i607l"]
 [ext_resource type="Texture2D" uid="uid://03qlcaq8dcgo" path="res://assets/Tile Sets/Walls/Walls.jpg" id="6_j188n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1oqjg"]
@@ -51,10 +54,13 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1afth")
 sources/2 = SubResource("TileSetAtlasSource_2knl5")
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" groups=["player"]]
 y_sort_enabled = true
 script = ExtResource("1_s4k2t")
-player_scene = ExtResource("2_nn2rc")
+gray_mouse = ExtResource("2_ce6oi")
+brown_mouse = ExtResource("3_v3yxy")
+sb_mouse = ExtResource("4_dcep3")
+tan_mouse = ExtResource("5_i607l")
 
 [node name="Map" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -72,21 +78,43 @@ tile_set = SubResource("TileSet_kfrfe")
 [node name="StartPosition" type="Marker2D" parent="."]
 
 [node name="host" type="Button" parent="."]
-offset_left = 94.0
-offset_top = 56.0
-offset_right = 172.0
-offset_bottom = 115.0
+offset_left = 102.0
+offset_top = 95.0
+offset_right = 180.0
+offset_bottom = 154.0
 text = "Host"
 
 [node name="join" type="Button" parent="."]
-offset_left = 188.0
-offset_top = 62.0
-offset_right = 266.0
-offset_bottom = 118.0
+offset_left = 203.0
+offset_top = 97.0
+offset_right = 281.0
+offset_bottom = 153.0
 text = "Join"
 
+[node name="start" type="Button" parent="."]
+offset_left = 308.0
+offset_top = 96.0
+offset_right = 386.0
+offset_bottom = 152.0
+disabled = true
+text = "Start"
+
+[node name="label" type="Label" parent="."]
+offset_left = 104.0
+offset_top = 54.0
+offset_right = 144.0
+offset_bottom = 77.0
+text = "IP"
+
+[node name="ip" type="LineEdit" parent="."]
+offset_left = 140.0
+offset_top = 52.0
+offset_right = 385.0
+offset_bottom = 83.0
+text = "localhost"
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://tan_mouse.tscn", "res://gray_mouse.tscn")
+_spawnable_scenes = PackedStringArray("res://tan_mouse.tscn", "res://gray_mouse.tscn", "res://brown_mouse.tscn", "res://sb_mouse.tscn")
 spawn_path = NodePath("..")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
@@ -95,3 +123,4 @@ color = Color(0, 0, 0, 1)
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="pressed" from="host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="start" to="." method="_on_start_pressed"]

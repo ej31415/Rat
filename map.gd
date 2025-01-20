@@ -1,5 +1,8 @@
 extends Node2D
 
+var final_maze
+var final_offset
+
 func _init_matrix(m: int, n: int, val: int) -> Array:
 	var mat := []
 	for r in range(m):
@@ -170,14 +173,27 @@ func build_maze(mat: Array, offset: Vector2i) -> void:
 				$Walls.set_cell(Vector2i(c, r) + offset, 2, Vector2i(0, 0))
 			elif mat[r][c] == 2:
 				$Walls.set_cell(Vector2i(c, r) + offset, 2, Vector2i(0, 1))
-	
+
+func erase_maze(mat: Array, offset: Vector2i):
+	for r in range(len(mat)):
+		for c in range(len(mat[r])):
+			$Floor.erase_cell(Vector2i(c, r) + offset)
+			$Walls.erase_cell(Vector2i(c, r) + offset)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(15, 15), 2), 2))
 	_pretty_print_mat(maze)
-	build_maze(maze, Vector2i(-len(maze[0])/2, -len(maze)-1))
+	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
+	build_maze(maze, offset)
+	final_maze = maze
+	final_offset = offset
 
+func get_maze():
+	return final_maze
+
+func get_offset():
+	return final_offset
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
