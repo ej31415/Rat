@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=21 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
@@ -14,6 +14,18 @@
 [ext_resource type="Texture2D" uid="uid://bycdbqpnd7u0i" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step left.png" id="10_f40xh"]
 [ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="11_05kil"]
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
+[ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
+
+[sub_resource type="Gradient" id="Gradient_mwxoy"]
+offsets = PackedFloat32Array(0.211538, 0.557692, 1)
+colors = PackedColorArray(0.446777, 0.446777, 0.446777, 1, 0.529067, 0.529067, 0.529067, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lj53g"]
+gradient = SubResource("Gradient_mwxoy")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1mwd"]
 animations = [{
@@ -141,6 +153,19 @@ show_behind_parent = true
 position = Vector2(0, 123.5)
 scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")
+
+[node name="Vision" type="PointLight2D" parent="."]
+position = Vector2(-35, 40)
+rotation = -1.5708
+energy = 2.0
+range_z_max = -1
+shadow_enabled = true
+texture = ExtResource("15_sh5o6")
+
+[node name="ViewSphere" type="PointLight2D" parent="."]
+scale = Vector2(36, 20)
+range_z_max = 0
+texture = SubResource("GradientTexture2D_lj53g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p1mwd")
