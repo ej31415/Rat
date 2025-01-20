@@ -16,6 +16,7 @@ func _init() -> void:
 	tan_mouse = preload("res://tan_mouse.tscn")
 	mice = [gray_mouse, brown_mouse, sb_mouse, tan_mouse]
 
+
 func _add_player(id = 1):
 	if len(mice) > 0:
 		var rng = RandomNumberGenerator.new()

@@ -1,6 +1,6 @@
 extends Control
 
-var main = preload("res://main.tscn").instantiate()
+var main = load("res://main.tscn").instantiate()
 var peer = ENetMultiplayerPeer.new()
 
 func _on_host_pressed():
@@ -15,9 +15,10 @@ func _on_join_pressed():
 	multiplayer.multiplayer_peer = peer
 
 func _on_start_pressed():
-	start_helper.rpc()
-
-@rpc("any_peer", "call_local")
-func start_helper():
-	get_tree().root.add_child(main)
+	start_helper.rpc(main)
+	
+@rpc("call_local", "reliable")
+func start_helper(scene):
+	print("got helper")
+	get_tree().root.add_child(scene)
 	self.hide()
