@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=18 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -67,11 +67,13 @@ y_sort_enabled = true
 script = ExtResource("2_4s054")
 
 [node name="Floor" type="TileMapLayer" parent="Map"]
+light_mask = 32
 z_index = -1
 scale = Vector2(0.976859, 0.996112)
 tile_set = SubResource("TileSet_1ltgf")
 
 [node name="Walls" type="TileMapLayer" parent="Map"]
+light_mask = 32
 y_sort_enabled = true
 tile_set = SubResource("TileSet_kfrfe")
 
