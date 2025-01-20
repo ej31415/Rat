@@ -54,7 +54,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1afth")
 sources/2 = SubResource("TileSetAtlasSource_2knl5")
 
-[node name="main" type="Node2D"]
+[node name="main" type="Node2D" groups=["player"]]
 y_sort_enabled = true
 script = ExtResource("1_s4k2t")
 gray_mouse = ExtResource("2_nn2rc")
@@ -79,7 +79,50 @@ tile_set = SubResource("TileSet_kfrfe")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 
+[node name="host" type="Button" parent="."]
+offset_left = 102.0
+offset_top = 95.0
+offset_right = 180.0
+offset_bottom = 154.0
+text = "Host"
+
+[node name="join" type="Button" parent="."]
+offset_left = 203.0
+offset_top = 97.0
+offset_right = 281.0
+offset_bottom = 153.0
+text = "Join"
+
+[node name="start" type="Button" parent="."]
+offset_left = 308.0
+offset_top = 96.0
+offset_right = 386.0
+offset_bottom = 152.0
+disabled = true
+text = "Start"
+
+[node name="label" type="Label" parent="."]
+offset_left = 104.0
+offset_top = 54.0
+offset_right = 144.0
+offset_bottom = 77.0
+text = "IP"
+
+[node name="ip" type="LineEdit" parent="."]
+offset_left = 140.0
+offset_top = 52.0
+offset_right = 385.0
+offset_bottom = 83.0
+text = "localhost"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://tan_mouse.tscn", "res://gray_mouse.tscn", "res://brown_mouse.tscn", "res://sb_mouse.tscn")
+spawn_path = NodePath("..")
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0, 0, 0, 1)
 
 [connection signal="ready" from="Map" to="." method="_ready"]
+[connection signal="pressed" from="host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="start" to="." method="_on_start_pressed"]
