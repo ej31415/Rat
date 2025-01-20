@@ -9,6 +9,7 @@ const SPEED = 400.0
 var anim = "static front"
 var role = ""
 var started = false
+var color = ""
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -24,7 +25,8 @@ func _ready():
 	if role == "":
 		print("role not set")
 
-func starter():
+func starter(color_to_roles):
+	role = color_to_roles[color]
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
@@ -33,8 +35,8 @@ func starter():
 func get_role():
 	return role
 
-func set_role(role):
-	self.role = role
+func get_color():
+	return color
 
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.

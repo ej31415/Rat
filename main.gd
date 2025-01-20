@@ -54,12 +54,9 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	$start.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
-	for color in color_to_instance:
-		var inst = color_to_instance[color]
-		inst.set_role(true_roles[color])
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("starter"):
-			child.starter()
+			child.starter(true_roles)
 		
 # Constructed for testing purposes only.
 
