@@ -26,8 +26,15 @@ func _ready():
 
 func starter():
 	if is_multiplayer_authority():
+		$Camera2D.enabled = true
 		$Camera2D.make_current()
 		started = true
+
+func get_role():
+	return role
+
+func set_role(role):
+	self.role = role
 
 func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
