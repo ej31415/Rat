@@ -1,7 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=21 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
+[ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_l4gh1"]
 [ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="3_se6ts"]
 [ext_resource type="Texture2D" uid="uid://cupfpm1uud0y0" path="res://assets/Brown Mouse/Front/Brown front static.png" id="4_a5vqm"]
 [ext_resource type="Texture2D" uid="uid://dy5818xgmrtcy" path="res://assets/Brown Mouse/Front/Brown front step right.png" id="5_xwwai"]
@@ -14,6 +15,17 @@
 [ext_resource type="Texture2D" uid="uid://c2pafu3rxmgdb" path="res://assets/Brown Mouse/Facing right/Brown right facing step left.png" id="12_8o3cd"]
 [ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
 [ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
+
+[sub_resource type="Gradient" id="Gradient_s0nxo"]
+offsets = PackedFloat32Array(0.211538, 0.557692, 1)
+colors = PackedColorArray(0.446777, 0.446777, 0.446777, 1, 0.529067, 0.529067, 0.529067, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_60pgy"]
+gradient = SubResource("Gradient_s0nxo")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e3fi4"]
 animations = [{
@@ -133,6 +145,14 @@ script = ExtResource("1_2yxuw")
 [node name="Shadow" type="Sprite2D" parent="."]
 position = Vector2(0, 123.5)
 texture = ExtResource("2_tv7fa")
+
+[node name="Vision" type="PointLight2D" parent="."]
+texture = ExtResource("3_l4gh1")
+
+[node name="ViewSphere" type="PointLight2D" parent="."]
+scale = Vector2(36, 20)
+range_z_max = 0
+texture = SubResource("GradientTexture2D_60pgy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_e3fi4")

@@ -30,12 +30,24 @@ func _physics_process(delta: float) -> void:
 	# Set sprite orientation
 	if velocity.x < 0:
 		anim = "left"
+		$Vision.position = Vector2(-40, 0)
+		$Vision.scale = Vector2(1, 1)
+		$Vision.rotation_degrees = 0
 	elif velocity.y > 0:
 		anim = "front"
+		$Vision.position = Vector2(-35, 40)
+		$Vision.scale = Vector2(1, 1)
+		$Vision.rotation_degrees = -90
 	elif velocity.y < 0:
 		anim = "gyatt"
+		$Vision.position = Vector2(35, 10)
+		$Vision.scale = Vector2(1, 1)
+		$Vision.rotation_degrees = 90
 	elif velocity.x > 0:
 		anim = "right"
+		$Vision.position = Vector2(40, 0)
+		$Vision.scale = Vector2(-1, 1)
+		$Vision.rotation_degrees = 0
 	else:
 		if anim == "left":
 			anim = "static left"

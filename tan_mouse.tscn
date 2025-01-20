@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=21 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
 [ext_resource type="Texture2D" uid="uid://c2s3tn04ic1rv" path="res://assets/Tan Mouse/Front/Tan front step L.png" id="3_86xjd"]
+[ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_rgn25"]
 [ext_resource type="Texture2D" uid="uid://bkkkd2u3y47ck" path="res://assets/Tan Mouse/Front/Front tan static.png" id="4_pibo6"]
 [ext_resource type="Texture2D" uid="uid://x4s244e28aod" path="res://assets/Tan Mouse/Front/Tan front step right.png" id="5_8rhri"]
 [ext_resource type="Texture2D" uid="uid://dy6k7pp1h36up" path="res://assets/Tan Mouse/Gyatt/Tan gyatt sstep l.png" id="6_bhh7h"]
@@ -14,6 +15,17 @@
 [ext_resource type="Texture2D" uid="uid://dmw4waijg8ssq" path="res://assets/Tan Mouse/Looking right/Tan Look right step right.png" id="12_heger"]
 [ext_resource type="Texture2D" uid="uid://bj3a4ep4qykxx" path="res://assets/Tan Mouse/Looking right/Tan Look right static.png" id="13_kbema"]
 [ext_resource type="Texture2D" uid="uid://c3u7u4y168gt5" path="res://assets/Tan Mouse/Looking right/Tan Look right step left.png" id="14_r5akp"]
+
+[sub_resource type="Gradient" id="Gradient_3o6ye"]
+offsets = PackedFloat32Array(0.211538, 0.557692, 1)
+colors = PackedColorArray(0.446777, 0.446777, 0.446777, 1, 0.529067, 0.529067, 0.529067, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_md08e"]
+gradient = SubResource("Gradient_3o6ye")
+use_hdr = true
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_31bpd"]
 animations = [{
@@ -134,6 +146,14 @@ script = ExtResource("1_bx85c")
 show_behind_parent = true
 position = Vector2(0, 123.5)
 texture = ExtResource("2_k803p")
+
+[node name="Vision" type="PointLight2D" parent="."]
+texture = ExtResource("3_rgn25")
+
+[node name="ViewSphere" type="PointLight2D" parent="."]
+scale = Vector2(36, 20)
+range_z_max = 0
+texture = SubResource("GradientTexture2D_md08e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_31bpd")

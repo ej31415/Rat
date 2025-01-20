@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=15 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,22 +17,36 @@ tile_size = Vector2i(256, 256)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_1oqjg")
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sqckw"]
+polygon = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1afth"]
 texture = ExtResource("4_jaqq8")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_sqckw")
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -39, 128, -38, 128, 46, -128, 45)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_b3loj"]
+polygon = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_xpyad"]
+polygon = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2knl5"]
 texture = ExtResource("6_j188n")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
+0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_b3loj")
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-82, -128, 76, -128, 77, 128, -82, 128)
 0:1/0 = 0
+0:1/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_xpyad")
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-82, -128, 77, -128, 76, 55, -80, 54)
 
 [sub_resource type="TileSet" id="TileSet_kfrfe"]
 tile_size = Vector2i(256, 256)
+occlusion_layer_0/light_mask = 1
+occlusion_layer_0/sdf_collision = true
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1afth")
 sources/2 = SubResource("TileSetAtlasSource_2knl5")
@@ -72,8 +86,11 @@ offset_bottom = 118.0
 text = "Join"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://gray_mouse.tscn", "res://tan_mouse.tscn")
+_spawnable_scenes = PackedStringArray("res://tan_mouse.tscn", "res://gray_mouse.tscn")
 spawn_path = NodePath("..")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0, 0, 1)
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="pressed" from="host" to="." method="_on_host_pressed"]
