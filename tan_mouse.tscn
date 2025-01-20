@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=22 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
@@ -134,6 +134,8 @@ animations = [{
 radius = 95.0
 height = 190.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e2xir"]
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qjbrs"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -177,8 +179,17 @@ animation = &"static right"
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_7e41u")
 
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 25)
+scale = Vector2(8, 8)
+shape = SubResource("CircleShape2D_e2xir")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_qjbrs")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

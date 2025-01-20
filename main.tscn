@@ -80,6 +80,7 @@ tile_set = SubResource("TileSet_kfrfe")
 [node name="StartPosition" type="Marker2D" parent="."]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+light_mask = 47
 color = Color(0, 0, 0, 1)
 
 [connection signal="ready" from="Map" to="." method="_ready"]
