@@ -28,7 +28,7 @@ texture = ExtResource("4_jaqq8")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_sqckw")
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -39, 128, -38, 128, 46, -128, 45)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -64, 128, -64, 128, 64, -128, 64)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_b3loj"]
 polygon = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
@@ -41,10 +41,10 @@ texture = ExtResource("6_j188n")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_b3loj")
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-82, -128, 76, -128, 77, 128, -82, 128)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -64, 128, -64, 128, 128, -128, 128)
 0:1/0 = 0
 0:1/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_xpyad")
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-82, -128, 77, -128, 76, 55, -80, 54)
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -128, 128, -128, 128, 64, -128, 64)
 
 [sub_resource type="TileSet" id="TileSet_kfrfe"]
 tile_size = Vector2i(256, 256)
