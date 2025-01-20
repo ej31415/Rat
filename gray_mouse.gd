@@ -1,6 +1,5 @@
 extends Player
 
 func _ready() -> void:
+	super._ready()
 	print("initialized gray mouse")
-	if is_multiplayer_authority():
-		$Camera2D.make_current()
