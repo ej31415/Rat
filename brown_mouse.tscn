@@ -16,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
 [ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_epbfg"]
+light_mode = 2
+
 [sub_resource type="Gradient" id="Gradient_s0nxo"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
 colors = PackedColorArray(0.446777, 0.446777, 0.446777, 1, 0.529067, 0.529067, 0.529067, 1, 0, 0, 0, 1)
@@ -134,8 +137,6 @@ animations = [{
 radius = 95.0
 height = 190.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x2wo3"]
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vfuks"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -158,20 +159,29 @@ properties/5/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
 light_mask = 4
+visibility_layer = 4
+material = SubResource("CanvasItemMaterial_epbfg")
+collision_layer = 4
+collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_2yxuw")
 
 [node name="Vision" type="PointLight2D" parent="."]
-energy = 2.0
+light_mask = 4
+visibility_layer = 4
 range_z_max = 0
 range_item_cull_mask = 43
+shadow_item_cull_mask = 43
 texture = ExtResource("3_l4gh1")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
+light_mask = 4
+visibility_layer = 4
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 47
+range_item_cull_mask = 36
+shadow_item_cull_mask = 43
 texture = SubResource("GradientTexture2D_60pgy")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -181,6 +191,7 @@ texture = ExtResource("2_tv7fa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 4
+visibility_layer = 4
 sprite_frames = SubResource("SpriteFrames_e3fi4")
 animation = &"static right"
 
@@ -188,18 +199,11 @@ animation = &"static right"
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_asjwq")
 
-[node name="Hurtbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, 25)
-scale = Vector2(8, 8)
-shape = SubResource("CircleShape2D_x2wo3")
-
 [node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 4
+visibility_layer = 4
 enabled = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_vfuks")
-
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

@@ -16,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ifnq"]
+light_mode = 2
+
 [sub_resource type="Gradient" id="Gradient_mwxoy"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
 colors = PackedColorArray(0.446777, 0.446777, 0.446777, 1, 0.529067, 0.529067, 0.529067, 1, 0, 0, 0, 1)
@@ -134,8 +137,6 @@ animations = [{
 radius = 95.0
 height = 190.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xf663"]
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_b772t"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -157,6 +158,7 @@ properties/5/spawn = true
 properties/5/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
+material = SubResource("CanvasItemMaterial_6ifnq")
 motion_mode = 1
 script = ExtResource("1_fvefs")
 
@@ -164,16 +166,16 @@ script = ExtResource("1_fvefs")
 position = Vector2(-35, 40)
 rotation = -1.5708
 scale = Vector2(1.5, 1)
-energy = 2.0
 range_z_max = 0
 range_item_cull_mask = 46
+shadow_item_cull_mask = 46
 texture = ExtResource("15_sh5o6")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 47
+range_item_cull_mask = 33
 texture = SubResource("GradientTexture2D_lj53g")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -190,18 +192,9 @@ animation = &"front"
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_qy8ku")
 
-[node name="Hurtbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, 25)
-scale = Vector2(8, 8)
-shape = SubResource("CircleShape2D_xf663")
-
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_b772t")
-
-[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
