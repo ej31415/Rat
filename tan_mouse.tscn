@@ -1,11 +1,13 @@
-[gd_scene load_steps=22 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=24 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
 [ext_resource type="Texture2D" uid="uid://c2s3tn04ic1rv" path="res://assets/Tan Mouse/Front/Tan front step L.png" id="3_86xjd"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_rgn25"]
+[ext_resource type="Texture2D" uid="uid://jjxobrplrpjp" path="res://assets/Tan Mouse/Tan stabbed.png" id="4_564i5"]
 [ext_resource type="Texture2D" uid="uid://bkkkd2u3y47ck" path="res://assets/Tan Mouse/Front/Front tan static.png" id="4_pibo6"]
 [ext_resource type="Texture2D" uid="uid://x4s244e28aod" path="res://assets/Tan Mouse/Front/Tan front step right.png" id="5_8rhri"]
+[ext_resource type="Texture2D" uid="uid://c863ndokveg10" path="res://assets/Tan Mouse/Tan dead.png" id="5_qa0fu"]
 [ext_resource type="Texture2D" uid="uid://dy6k7pp1h36up" path="res://assets/Tan Mouse/Gyatt/Tan gyatt sstep l.png" id="6_bhh7h"]
 [ext_resource type="Texture2D" uid="uid://cgl0rw8v4sq1l" path="res://assets/Tan Mouse/Gyatt/Tan gyatt.png" id="7_jelvr"]
 [ext_resource type="Texture2D" uid="uid://0liowuoltbwq" path="res://assets/Tan Mouse/Gyatt/Tan gyatt step r.png" id="8_oi5f5"]
@@ -32,6 +34,17 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_31bpd"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_564i5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qa0fu")
+}],
+"loop": false,
+"name": &"die",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_8rhri")
@@ -156,6 +169,12 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("Vision:scale")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("Vision:enabled")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ViewSphere:enabled")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="TanMouse" type="CharacterBody2D"]
 light_mask = 2
@@ -193,7 +212,7 @@ texture = ExtResource("2_k803p")
 light_mask = 2
 visibility_layer = 2
 sprite_frames = SubResource("SpriteFrames_31bpd")
-animation = &"static right"
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

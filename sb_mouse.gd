@@ -5,10 +5,11 @@ func _ready() -> void:
 	self.color = "sb"
 	print("initialized strawberry blonde mouse")
 
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	if "attack" in anim_name:
-		set_physics_process(true)
-
-
 func _on_knife_hitbox_body_entered(body: Node2D) -> void:
-	body.die()
+	if body.has_method("die"):
+		body.die()
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if anim_name == "attack":
+		print(color + " finished attack animation")
+		set_physics_process(true)

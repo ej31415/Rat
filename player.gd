@@ -10,10 +10,12 @@ var anim = "static front"
 var role = ""
 var started = false
 var color = ""
+var alive = true
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
-	role = roles[idx]
+	#role = roles[idx]
+	role = "rat"
 	roles.pop_at(idx)
 	started = false
 
@@ -39,6 +41,9 @@ func get_color():
 	return color
 
 func _physics_process(delta: float) -> void:
+	if !alive:
+		return
+		
 	# Get the input direction and handle the movement/deceleration.
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
@@ -93,12 +98,21 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.stop()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ATTACK") and role == "rat":
-		set_physics_process(false)
-		if anim == "left" or anim == "static left":
+	if !alive:
+		return
+	if is_multiplayer_authority() and started:
+		if event.is_action_pressed("ATTACK") and role == "rat":
+			print(color + " attack!!!")
+			set_physics_process(false)
 			$AnimationPlayer.play("attack")
-		else:
-			set_physics_process(true)
 
 func die():
+	if !alive:
+		return
 	print(color + " killed!!!")
+	alive = false
+	$Vision.enabled = false
+	$ViewSphere.enabled = false
+	set_physics_process(false)
+	$AnimatedSprite2D.animation = "die"
+	$AnimatedSprite2D.play()

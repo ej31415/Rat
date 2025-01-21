@@ -1,10 +1,12 @@
-[gd_scene load_steps=22 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=24 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_l4gh1"]
 [ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="3_se6ts"]
+[ext_resource type="Texture2D" uid="uid://cj7pyb7y1p1qo" path="res://assets/Brown Mouse/Brown stabbed.png" id="4_1k17j"]
 [ext_resource type="Texture2D" uid="uid://cupfpm1uud0y0" path="res://assets/Brown Mouse/Front/Brown front static.png" id="4_a5vqm"]
+[ext_resource type="Texture2D" uid="uid://hnex77x41c3n" path="res://assets/Brown Mouse/Brown dead.png" id="5_jeyel"]
 [ext_resource type="Texture2D" uid="uid://dy5818xgmrtcy" path="res://assets/Brown Mouse/Front/Brown front step right.png" id="5_xwwai"]
 [ext_resource type="Texture2D" uid="uid://bc1of025qgoj8" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step left.png" id="6_aqp1b"]
 [ext_resource type="Texture2D" uid="uid://83tcyx1p6r37" path="res://assets/Brown Mouse/Gyatt/Brown gyatt static.png" id="7_jasi4"]
@@ -32,6 +34,17 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e3fi4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_1k17j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jeyel")
+}],
+"loop": false,
+"name": &"die",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_se6ts")
@@ -156,6 +169,12 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("Vision:scale")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("Vision:enabled")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ViewSphere:enabled")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
 light_mask = 4
@@ -193,7 +212,7 @@ texture = ExtResource("2_tv7fa")
 light_mask = 4
 visibility_layer = 4
 sprite_frames = SubResource("SpriteFrames_e3fi4")
-animation = &"static right"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
