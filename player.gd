@@ -14,8 +14,8 @@ var alive = true
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
-	#role = roles[idx]
-	role = "rat"
+	role = roles[idx]
+	#role = "rat"
 	roles.pop_at(idx)
 	started = false
 
@@ -33,6 +33,11 @@ func starter(color_to_roles):
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
 		started = true
+		return role
+	return ""
+
+func get_player():
+	return self
 
 func get_role():
 	return role

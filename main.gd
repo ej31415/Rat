@@ -21,7 +21,7 @@ func _on_host_pressed():
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
 	_add_player()
-	$start.disabled = false
+	$StartMenu/start.disabled = false
 
 func _add_player(id = 1):
 	if len(mice) > 0:
@@ -37,7 +37,7 @@ func _add_player(id = 1):
 		call_deferred("add_child", player)
 
 func _on_join_pressed():
-	peer.create_client($ip.text, 135)
+	peer.create_client($StartMenu/ip.text, 135)
 	multiplayer.multiplayer_peer = peer
 
 func _on_start_pressed():
@@ -47,24 +47,22 @@ func _on_start_pressed():
 
 @rpc("call_local")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
-	$label.visible = false
-	$ip.visible = false
-	$host.visible = false
-	$join.visible = false
-	$start.visible = false
+	$StartMenu/label.visible = false
+	$StartMenu/ip.visible = false
+	$StartMenu/host.visible = false
+	$StartMenu/join.visible = false
+	$StartMenu/start.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
+	
+	var role = "PLACEHOLDER"
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("starter"):
-			child.starter(true_roles)
-		
-# Constructed for testing purposes only.
-
-## Called when the node enters the scene tree for the first time.
-#func _ready() -> void:
-	#$GrayMouse.start($StartPosition.position)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+			child.visible = true
+			
+			# spaghetti code >.<
+			var temp = child.starter(true_roles)
+			if temp != "":
+				role = temp
+	$HUD/Role.text = "You are a " + role + ". . ."
+	
