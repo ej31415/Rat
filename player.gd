@@ -10,10 +10,12 @@ var anim = "static front"
 var role = ""
 var started = false
 var color = ""
+var alive = true
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
 	role = roles[idx]
+	#role = "rat"
 	roles.pop_at(idx)
 	started = false
 
@@ -31,6 +33,11 @@ func starter(color_to_roles):
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
 		started = true
+		return role
+	return ""
+
+func get_player():
+	return self
 
 func get_role():
 	return role
@@ -39,6 +46,9 @@ func get_color():
 	return color
 
 func _physics_process(delta: float) -> void:
+	if !alive:
+		return
+		
 	# Get the input direction and handle the movement/deceleration.
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
@@ -59,23 +69,27 @@ func _physics_process(delta: float) -> void:
 		if velocity.x < 0:
 			anim = "left"
 			$Vision.position = Vector2(-40, 0)
-			$Vision.scale = Vector2(1, 1)
+			$Vision.scale = Vector2(2.5, 1.2)
 			$Vision.rotation_degrees = 0
+			$Aim.rotation_degrees = 90
 		elif velocity.y > 0:
 			anim = "front"
 			$Vision.position = Vector2(-35, 40)
-			$Vision.scale = Vector2(1, 1)
+			$Vision.scale = Vector2(2.5, 1.2)
 			$Vision.rotation_degrees = -90
+			$Aim.rotation_degrees = 0
 		elif velocity.y < 0:
 			anim = "gyatt"
 			$Vision.position = Vector2(35, 10)
-			$Vision.scale = Vector2(1, 1)
+			$Vision.scale = Vector2(2.5, 1.2)
 			$Vision.rotation_degrees = 90
+			$Aim.rotation_degrees = 180
 		elif velocity.x > 0:
 			anim = "right"
 			$Vision.position = Vector2(40, 0)
-			$Vision.scale = Vector2(-1, 1)
+			$Vision.scale = Vector2(-2.5, 1.2)
 			$Vision.rotation_degrees = 0
+			$Aim.rotation_degrees = -90
 		else:
 			if anim == "left":
 				anim = "static left"
@@ -91,3 +105,28 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.play()
 		else:
 			$AnimatedSprite2D.stop()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if !alive:
+		return
+	if is_multiplayer_authority() and started:
+		if event.is_action_pressed("ATTACK"):
+			if role == "rat":
+				print(color + " attack!!!")
+				set_physics_process(false)
+				$AnimationPlayer.play("attack")
+			elif role == "sheriff":
+				print(color + " shoot!!!")
+				set_physics_process(false)
+				# add shooting animation
+
+func die():
+	if !alive:
+		return
+	print(color + " killed!!!")
+	alive = false
+	$Vision.enabled = false
+	$ViewSphere.enabled = false
+	set_physics_process(false)
+	$AnimatedSprite2D.animation = "die"
+	$AnimatedSprite2D.play()
