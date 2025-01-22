@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=27 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="11_05kil"]
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
+[ext_resource type="Script" path="res://aim.gd" id="20_of17u"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ifnq"]
 light_mode = 2
@@ -223,6 +224,11 @@ animation = &"static front"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_qy8ku")
+
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 500)
+collision_mask = 15
+script = ExtResource("20_of17u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false

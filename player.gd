@@ -66,21 +66,25 @@ func _physics_process(delta: float) -> void:
 			$Vision.position = Vector2(-40, 0)
 			$Vision.scale = Vector2(2.5, 1.2)
 			$Vision.rotation_degrees = 0
+			$Aim.rotation_degrees = 90
 		elif velocity.y > 0:
 			anim = "front"
 			$Vision.position = Vector2(-35, 40)
 			$Vision.scale = Vector2(2.5, 1.2)
 			$Vision.rotation_degrees = -90
+			$Aim.rotation_degrees = 0
 		elif velocity.y < 0:
 			anim = "gyatt"
 			$Vision.position = Vector2(35, 10)
 			$Vision.scale = Vector2(2.5, 1.2)
 			$Vision.rotation_degrees = 90
+			$Aim.rotation_degrees = 180
 		elif velocity.x > 0:
 			anim = "right"
 			$Vision.position = Vector2(40, 0)
 			$Vision.scale = Vector2(-2.5, 1.2)
 			$Vision.rotation_degrees = 0
+			$Aim.rotation_degrees = -90
 		else:
 			if anim == "left":
 				anim = "static left"
@@ -101,10 +105,15 @@ func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
 		return
 	if is_multiplayer_authority() and started:
-		if event.is_action_pressed("ATTACK") and role == "rat":
-			print(color + " attack!!!")
-			set_physics_process(false)
-			$AnimationPlayer.play("attack")
+		if event.is_action_pressed("ATTACK"):
+			if role == "rat":
+				print(color + " attack!!!")
+				set_physics_process(false)
+				$AnimationPlayer.play("attack")
+			elif role == "sheriff":
+				print(color + " shoot!!!")
+				set_physics_process(false)
+				# add shooting animation
 
 func die():
 	if !alive:

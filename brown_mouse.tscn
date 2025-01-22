@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=27 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://c2pafu3rxmgdb" path="res://assets/Brown Mouse/Facing right/Brown right facing step left.png" id="12_8o3cd"]
 [ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
 [ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
+[ext_resource type="Script" path="res://aim.gd" id="20_ohqr7"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_epbfg"]
 light_mode = 2
@@ -230,6 +231,11 @@ animation = &"static front"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_asjwq")
+
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 500)
+collision_mask = 15
+script = ExtResource("20_ohqr7")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 light_mask = 4
