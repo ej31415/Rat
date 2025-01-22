@@ -1,10 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=27 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_l4gh1"]
 [ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="3_se6ts"]
+[ext_resource type="Texture2D" uid="uid://cj7pyb7y1p1qo" path="res://assets/Brown Mouse/Brown stabbed.png" id="4_1k17j"]
 [ext_resource type="Texture2D" uid="uid://cupfpm1uud0y0" path="res://assets/Brown Mouse/Front/Brown front static.png" id="4_a5vqm"]
+[ext_resource type="Texture2D" uid="uid://cc8jpao75b4fb" path="res://assets/Brown Mouse/Attack/Brown knife 1.png" id="4_pnu4t"]
+[ext_resource type="Texture2D" uid="uid://blj3c70pc41hg" path="res://assets/Brown Mouse/Attack/Brown knife 2.png" id="5_7276m"]
+[ext_resource type="Texture2D" uid="uid://hnex77x41c3n" path="res://assets/Brown Mouse/Brown dead.png" id="5_jeyel"]
 [ext_resource type="Texture2D" uid="uid://dy5818xgmrtcy" path="res://assets/Brown Mouse/Front/Brown front step right.png" id="5_xwwai"]
 [ext_resource type="Texture2D" uid="uid://bc1of025qgoj8" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step left.png" id="6_aqp1b"]
 [ext_resource type="Texture2D" uid="uid://83tcyx1p6r37" path="res://assets/Brown Mouse/Gyatt/Brown gyatt static.png" id="7_jasi4"]
@@ -15,6 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://c2pafu3rxmgdb" path="res://assets/Brown Mouse/Facing right/Brown right facing step left.png" id="12_8o3cd"]
 [ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
 [ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
+[ext_resource type="Script" path="res://aim.gd" id="20_ohqr7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_epbfg"]
+light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_s0nxo"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -29,6 +37,28 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e3fi4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_pnu4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7276m")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_1k17j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jeyel")
+}],
+"loop": false,
+"name": &"die",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_se6ts")
@@ -144,22 +174,48 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Vision:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Vision:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Vision:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Vision:enabled")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ViewSphere:enabled")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
+visible = false
 light_mask = 4
+visibility_layer = 4
+material = SubResource("CanvasItemMaterial_epbfg")
+collision_layer = 4
+collision_mask = 4
+motion_mode = 1
 script = ExtResource("1_2yxuw")
 
 [node name="Vision" type="PointLight2D" parent="."]
-energy = 2.0
+light_mask = 4
+visibility_layer = 4
 range_z_max = 0
 range_item_cull_mask = 43
+shadow_item_cull_mask = 43
 texture = ExtResource("3_l4gh1")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
+light_mask = 4
+visibility_layer = 4
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 47
+range_item_cull_mask = 36
+shadow_item_cull_mask = 43
 texture = SubResource("GradientTexture2D_60pgy")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -169,14 +225,22 @@ texture = ExtResource("2_tv7fa")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 4
+visibility_layer = 4
 sprite_frames = SubResource("SpriteFrames_e3fi4")
-animation = &"static right"
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_asjwq")
 
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 500)
+collision_mask = 15
+script = ExtResource("20_ohqr7")
+
 [node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 4
+visibility_layer = 4
 enabled = false
 zoom = Vector2(0.5, 0.5)
 

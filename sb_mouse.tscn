@@ -1,12 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=31 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
 [ext_resource type="Texture2D" uid="uid://cbqpliwfuwfxq" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step left.png" id="3_3prwe"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_5q2bj"]
+[ext_resource type="Texture2D" uid="uid://b55uc2vfeo8pk" path="res://assets/Strawberry Blonde Mouse/Attack/Strawberry blonde knife 1.png" id="4_6exjp"]
 [ext_resource type="Texture2D" uid="uid://boyrlfdgxfxpg" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde front static.png" id="4_e711r"]
+[ext_resource type="Texture2D" uid="uid://dj7xopuitj87g" path="res://assets/Strawberry Blonde Mouse/Attack/Strawberry blonde knife2.png" id="5_u1o6c"]
 [ext_resource type="Texture2D" uid="uid://dk556c12acunx" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step right.png" id="5_xn2d5"]
 [ext_resource type="Texture2D" uid="uid://bge8n2pa8kacf" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step left.png" id="6_akavk"]
+[ext_resource type="Texture2D" uid="uid://ccf2hsvq3qdxi" path="res://assets/Strawberry Blonde Mouse/Strawberry blonde stabbed.png" id="6_q2qw1"]
+[ext_resource type="Texture2D" uid="uid://dvfn6b85arslo" path="res://assets/Strawberry Blonde Mouse/Strawberry blonde dead.png" id="7_0wn4j"]
 [ext_resource type="Texture2D" uid="uid://g2dlxunwdhfc" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt static.png" id="7_vlm0e"]
 [ext_resource type="Texture2D" uid="uid://bo1ih0084ykrw" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step right.png" id="8_38brg"]
 [ext_resource type="Texture2D" uid="uid://df5cxsqj50rb6" path="res://assets/Strawberry Blonde Mouse/Left facing/Strawberry blonde facing left step left.png" id="9_rarhn"]
@@ -15,6 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://c5s5smkq7pjxp" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing right step left.png" id="12_mlgxm"]
 [ext_resource type="Texture2D" uid="uid://iidbiyi6vb8i" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing right.png" id="13_6xcaw"]
 [ext_resource type="Texture2D" uid="uid://cc21kn5d53ckk" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing rightstep right.png" id="14_nuo54"]
+[ext_resource type="Script" path="res://aim.gd" id="20_xg0ic"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dny3u"]
+light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_v3u6j"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -29,6 +37,28 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_st0pp"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6exjp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_u1o6c")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_q2qw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_0wn4j")
+}],
+"loop": false,
+"name": &"die",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_3prwe")
@@ -134,6 +164,80 @@ animations = [{
 radius = 95.0
 height = 190.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_depec"]
+
+[sub_resource type="Animation" id="Animation_mtbjs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("KnifeHitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_61pn1"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33, 0.667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("KnifeHitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.333333, 0.666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
+_data = {
+"RESET": SubResource("Animation_mtbjs"),
+"attack": SubResource("Animation_61pn1")
+}
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_atjri"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -144,23 +248,49 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:animation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Vision:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Vision:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Vision:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Vision:enabled")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ViewSphere:enabled")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="SBMouse" type="CharacterBody2D"]
+visible = false
+light_mask = 8
+visibility_layer = 8
+material = SubResource("CanvasItemMaterial_dny3u")
+collision_layer = 8
+collision_mask = 8
+motion_mode = 1
 script = ExtResource("1_2m8vg")
 
 [node name="Vision" type="PointLight2D" parent="."]
+light_mask = 8
+visibility_layer = 8
 position = Vector2(0, 35)
 scale = Vector2(3, 3)
-energy = 2.0
 range_z_max = 0
 range_item_cull_mask = 39
+shadow_item_cull_mask = 39
 texture = ExtResource("3_5q2bj")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
+light_mask = 8
+visibility_layer = 8
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 47
+range_item_cull_mask = 40
 texture = SubResource("GradientTexture2D_qsf3k")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -170,6 +300,7 @@ texture = ExtResource("2_8dqxm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 8
+visibility_layer = 8
 sprite_frames = SubResource("SpriteFrames_st0pp")
 animation = &"static front"
 
@@ -177,9 +308,34 @@ animation = &"static front"
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_j67ck")
 
+[node name="KnifeHitbox" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnifeHitbox"]
+position = Vector2(0, 25)
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_depec")
+disabled = true
+
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 500)
+collision_mask = 15
+script = ExtResource("20_xg0ic")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fhu0p")
+}
+
 [node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 8
+visibility_layer = 8
 enabled = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_atjri")
+
+[connection signal="body_entered" from="KnifeHitbox" to="." method="_on_knife_hitbox_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

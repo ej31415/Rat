@@ -1,12 +1,16 @@
-[gd_scene load_steps=21 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=27 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_0n1gc"]
 [ext_resource type="Texture2D" uid="uid://c6d1h43fwosma" path="res://assets/Gray Mouse/Front Facing Walk/Static 8x.png" id="2_grju3"]
 [ext_resource type="Texture2D" uid="uid://ylv4iaoo4i6x" path="res://assets/Gray Mouse/Front Facing Walk/Step left 8x.png" id="3_xfpyb"]
+[ext_resource type="Texture2D" uid="uid://dpmdv1qfa6dgh" path="res://assets/Gray Mouse/Attack/Gray knife 1.png" id="4_dni4b"]
+[ext_resource type="Texture2D" uid="uid://klhn6l1ch1e5" path="res://assets/Gray Mouse/Gray stabbed.png" id="4_fxntr"]
 [ext_resource type="Texture2D" uid="uid://kgbikq7ha5or" path="res://assets/Gray Mouse/Left Walk/Looking left step left.png" id="4_xotgj"]
+[ext_resource type="Texture2D" uid="uid://73rrvxvrvefn" path="res://assets/Gray Mouse/Gray dead.png" id="5_51fhp"]
 [ext_resource type="Texture2D" uid="uid://cnj065wjnmxwc" path="res://assets/Gray Mouse/Left Walk/Looking left static.png" id="5_j5kuj"]
+[ext_resource type="Texture2D" uid="uid://bj3femabcvhp2" path="res://assets/Gray Mouse/Attack/Gray knife2.png" id="5_vbfkc"]
 [ext_resource type="Texture2D" uid="uid://5ermy61iqpxp" path="res://assets/Gray Mouse/Left Walk/Looking left step right.png" id="6_1x0ko"]
 [ext_resource type="Texture2D" uid="uid://bnuax3agd5jqm" path="res://assets/Gray Mouse/Right Walk/Looking right step right.png" id="7_tsppb"]
 [ext_resource type="Texture2D" uid="uid://dax5savw1px6c" path="res://assets/Gray Mouse/Right Walk/Static looking right.png" id="8_e5crm"]
@@ -15,6 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="11_05kil"]
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
+[ext_resource type="Script" path="res://aim.gd" id="20_of17u"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ifnq"]
+light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_mwxoy"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -29,6 +37,28 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1mwd"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dni4b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vbfkc")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_fxntr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_51fhp")
+}],
+"loop": false,
+"name": &"die",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_5bbam")
@@ -144,24 +174,42 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:animation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Vision:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Vision:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Vision:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Vision:enabled")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ViewSphere:enabled")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
+visible = false
+material = SubResource("CanvasItemMaterial_6ifnq")
+motion_mode = 1
 script = ExtResource("1_fvefs")
 
 [node name="Vision" type="PointLight2D" parent="."]
 position = Vector2(-35, 40)
 rotation = -1.5708
 scale = Vector2(1.5, 1)
-energy = 2.0
 range_z_max = 0
 range_item_cull_mask = 46
+shadow_item_cull_mask = 46
 texture = ExtResource("15_sh5o6")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 47
+range_item_cull_mask = 33
 texture = SubResource("GradientTexture2D_lj53g")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -172,11 +220,16 @@ texture = ExtResource("2_0n1gc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"front"
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_qy8ku")
+
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 500)
+collision_mask = 15
+script = ExtResource("20_of17u")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false

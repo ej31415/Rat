@@ -1,11 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=27 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
 [ext_resource type="Texture2D" uid="uid://c2s3tn04ic1rv" path="res://assets/Tan Mouse/Front/Tan front step L.png" id="3_86xjd"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_rgn25"]
+[ext_resource type="Texture2D" uid="uid://jjxobrplrpjp" path="res://assets/Tan Mouse/Tan stabbed.png" id="4_564i5"]
+[ext_resource type="Texture2D" uid="uid://du8eh1i6s8ed1" path="res://assets/Tan Mouse/Attack/Tan knife 1.png" id="4_c5gwt"]
 [ext_resource type="Texture2D" uid="uid://bkkkd2u3y47ck" path="res://assets/Tan Mouse/Front/Front tan static.png" id="4_pibo6"]
+[ext_resource type="Texture2D" uid="uid://degv32dto5ahq" path="res://assets/Tan Mouse/Attack/Tan knife 2.png" id="5_1vqb2"]
 [ext_resource type="Texture2D" uid="uid://x4s244e28aod" path="res://assets/Tan Mouse/Front/Tan front step right.png" id="5_8rhri"]
+[ext_resource type="Texture2D" uid="uid://c863ndokveg10" path="res://assets/Tan Mouse/Tan dead.png" id="5_qa0fu"]
 [ext_resource type="Texture2D" uid="uid://dy6k7pp1h36up" path="res://assets/Tan Mouse/Gyatt/Tan gyatt sstep l.png" id="6_bhh7h"]
 [ext_resource type="Texture2D" uid="uid://cgl0rw8v4sq1l" path="res://assets/Tan Mouse/Gyatt/Tan gyatt.png" id="7_jelvr"]
 [ext_resource type="Texture2D" uid="uid://0liowuoltbwq" path="res://assets/Tan Mouse/Gyatt/Tan gyatt step r.png" id="8_oi5f5"]
@@ -15,6 +19,10 @@
 [ext_resource type="Texture2D" uid="uid://dmw4waijg8ssq" path="res://assets/Tan Mouse/Looking right/Tan Look right step right.png" id="12_heger"]
 [ext_resource type="Texture2D" uid="uid://bj3a4ep4qykxx" path="res://assets/Tan Mouse/Looking right/Tan Look right static.png" id="13_kbema"]
 [ext_resource type="Texture2D" uid="uid://c3u7u4y168gt5" path="res://assets/Tan Mouse/Looking right/Tan Look right step left.png" id="14_r5akp"]
+[ext_resource type="Script" path="res://aim.gd" id="20_6xjy5"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i4pks"]
+light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_3o6ye"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -29,6 +37,28 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_31bpd"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_c5gwt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1vqb2")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_564i5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qa0fu")
+}],
+"loop": false,
+"name": &"die",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("5_8rhri")
@@ -144,23 +174,48 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath("Vision:position")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Vision:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Vision:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Vision:enabled")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("ViewSphere:enabled")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="TanMouse" type="CharacterBody2D"]
+visible = false
 light_mask = 2
+visibility_layer = 2
+material = SubResource("CanvasItemMaterial_i4pks")
+collision_layer = 2
+collision_mask = 2
+motion_mode = 1
 script = ExtResource("1_bx85c")
 
 [node name="Vision" type="PointLight2D" parent="."]
-energy = 2.0
+light_mask = 2
+visibility_layer = 2
 range_z_max = 0
-range_layer_min = -512
 range_item_cull_mask = 45
+shadow_item_cull_mask = 45
 texture = ExtResource("3_rgn25")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 47
+range_item_cull_mask = 34
+shadow_item_cull_mask = 45
 texture = SubResource("GradientTexture2D_md08e")
 
 [node name="Shadow" type="Sprite2D" parent="."]
@@ -170,14 +225,22 @@ texture = ExtResource("2_k803p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 2
+visibility_layer = 2
 sprite_frames = SubResource("SpriteFrames_31bpd")
-animation = &"static right"
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_7e41u")
 
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 500)
+collision_mask = 15
+script = ExtResource("20_6xjy5")
+
 [node name="Camera2D" type="Camera2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 enabled = false
 zoom = Vector2(0.5, 0.5)
 
