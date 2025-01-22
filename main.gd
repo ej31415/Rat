@@ -57,6 +57,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("starter"):
 			child.starter(true_roles)
+	$TimerCanvasLayer.start(1000*120)
 		
 # Constructed for testing purposes only.
 
