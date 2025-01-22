@@ -2,6 +2,7 @@ extends Node2D
 
 var final_maze
 var final_offset
+var on_exit
 
 func _init_matrix(m: int, n: int, val: int) -> Array:
 	var mat := []
@@ -16,7 +17,8 @@ func _pretty_print_mat(mat: Array) -> void:
 	var d := {
 		0: "-",
 		1: "■",
-		2: "▤"
+		2: "▤",
+		3: "⎯"
 	}
 	for r in range(len(mat)):
 		var s := ""
@@ -58,7 +60,7 @@ func generate_maze(m: int, n: int) -> Array:
 	mat.append(bottom)
 	
 	# poke holes for start and end (bottom and top, respectively)
-	mat[0][_find_centermost_index(mat[1], 0)] = 0
+	mat[0][_find_centermost_index(mat[1], 0)] = 3 # finish line cell
 	mat[-1][_find_centermost_index(mat[-2], 0)] = 0
 	_pretty_print_mat(mat)
 	print()
@@ -164,7 +166,7 @@ func _is_cell_visitable(mat: Array, r: int, c: int) -> bool:
 	return true
 
 # Places the maze tiles on the map based on a provided matrix of integers 0, 1, and 2.
-# 0 = open tile, 1 = wall tile (top texture), 2 = wall tile (side texture)
+# 0 = open tile, 1 = wall tile (top texture), 2 = wall tile (side texture), 3 = finish line
 func build_maze(mat: Array, offset: Vector2i) -> void:
 	for r in range(len(mat)):
 		for c in range(len(mat[r])):
@@ -173,6 +175,8 @@ func build_maze(mat: Array, offset: Vector2i) -> void:
 				$Walls.set_cell(Vector2i(c, r) + offset, 2, Vector2i(0, 0))
 			elif mat[r][c] == 2:
 				$Walls.set_cell(Vector2i(c, r) + offset, 2, Vector2i(0, 1))
+			elif mat[r][c] == 3:
+				$Exit.set_cell(Vector2i(c, r) + offset, 0, Vector2i(0, 0))
 
 func erase_maze(mat: Array, offset: Vector2i):
 	for r in range(len(mat)):
@@ -182,7 +186,7 @@ func erase_maze(mat: Array, offset: Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(15, 15), 2), 2))
+	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(5, 5), 2), 2))
 	_pretty_print_mat(maze)
 	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
 	build_maze(maze, offset)

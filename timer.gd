@@ -21,7 +21,7 @@ func _pad(s: String, n_digits: int):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if ms_left and ms_left > 0:
+	if not $Timer.is_stopped() and ms_left and ms_left > 0:
 		ms_left = max(0, ms_left - delta*1000)
 		var minutes := floor(ms_left / 60000) as int
 		var seconds := floor(ms_left / 1000) - minutes*60 as int
@@ -31,3 +31,7 @@ func _process(delta: float) -> void:
 func _on_timer_timeout() -> void:
 	ms_left = 0
 	print("timer up")
+
+@rpc("any_peer")
+func end_timer() -> void:
+	$Timer.stop()

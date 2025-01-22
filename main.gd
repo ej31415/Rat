@@ -8,6 +8,7 @@ var peer = ENetMultiplayerPeer.new()
 var mice = []
 var color_to_role = {}
 var color_to_instance = {}
+var game_ended = false
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -65,7 +66,14 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 #func _ready() -> void:
 	#$GrayMouse.start($StartPosition.position)
 
+func _end_game() -> void:
+	game_ended = true
+	$TimerCanvasLayer.end_timer.rpc()
+	$WinScreen/MiceWin.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	for player in get_tree().get_nodes_in_group("player"):
+		var player_tile = $Map/Exit.local_to_map(player.global_position)
+		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
+			_end_game()
