@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=26 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="3_se6ts"]
 [ext_resource type="Texture2D" uid="uid://cj7pyb7y1p1qo" path="res://assets/Brown Mouse/Brown stabbed.png" id="4_1k17j"]
 [ext_resource type="Texture2D" uid="uid://cupfpm1uud0y0" path="res://assets/Brown Mouse/Front/Brown front static.png" id="4_a5vqm"]
+[ext_resource type="Texture2D" uid="uid://cc8jpao75b4fb" path="res://assets/Brown Mouse/Attack/Brown knife 1.png" id="4_pnu4t"]
+[ext_resource type="Texture2D" uid="uid://blj3c70pc41hg" path="res://assets/Brown Mouse/Attack/Brown knife 2.png" id="5_7276m"]
 [ext_resource type="Texture2D" uid="uid://hnex77x41c3n" path="res://assets/Brown Mouse/Brown dead.png" id="5_jeyel"]
 [ext_resource type="Texture2D" uid="uid://dy5818xgmrtcy" path="res://assets/Brown Mouse/Front/Brown front step right.png" id="5_xwwai"]
 [ext_resource type="Texture2D" uid="uid://bc1of025qgoj8" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step left.png" id="6_aqp1b"]
@@ -34,6 +36,17 @@ fill_to = Vector2(0.12, 0.12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_e3fi4"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_pnu4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_7276m")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("4_1k17j")
@@ -212,7 +225,7 @@ texture = ExtResource("2_tv7fa")
 light_mask = 4
 visibility_layer = 4
 sprite_frames = SubResource("SpriteFrames_e3fi4")
-animation = &"die"
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

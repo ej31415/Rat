@@ -1,11 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=26 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
 [ext_resource type="Texture2D" uid="uid://c2s3tn04ic1rv" path="res://assets/Tan Mouse/Front/Tan front step L.png" id="3_86xjd"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_rgn25"]
 [ext_resource type="Texture2D" uid="uid://jjxobrplrpjp" path="res://assets/Tan Mouse/Tan stabbed.png" id="4_564i5"]
+[ext_resource type="Texture2D" uid="uid://du8eh1i6s8ed1" path="res://assets/Tan Mouse/Attack/Tan knife 1.png" id="4_c5gwt"]
 [ext_resource type="Texture2D" uid="uid://bkkkd2u3y47ck" path="res://assets/Tan Mouse/Front/Front tan static.png" id="4_pibo6"]
+[ext_resource type="Texture2D" uid="uid://degv32dto5ahq" path="res://assets/Tan Mouse/Attack/Tan knife 2.png" id="5_1vqb2"]
 [ext_resource type="Texture2D" uid="uid://x4s244e28aod" path="res://assets/Tan Mouse/Front/Tan front step right.png" id="5_8rhri"]
 [ext_resource type="Texture2D" uid="uid://c863ndokveg10" path="res://assets/Tan Mouse/Tan dead.png" id="5_qa0fu"]
 [ext_resource type="Texture2D" uid="uid://dy6k7pp1h36up" path="res://assets/Tan Mouse/Gyatt/Tan gyatt sstep l.png" id="6_bhh7h"]
@@ -36,6 +38,17 @@ fill_to = Vector2(0.12, 0.12)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("4_c5gwt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1vqb2")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_564i5")
 }, {
 "duration": 1.0,
@@ -43,7 +56,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,

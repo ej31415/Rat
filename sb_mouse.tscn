@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
 [ext_resource type="Texture2D" uid="uid://cbqpliwfuwfxq" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step left.png" id="3_3prwe"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_5q2bj"]
+[ext_resource type="Texture2D" uid="uid://b55uc2vfeo8pk" path="res://assets/Strawberry Blonde Mouse/Attack/Strawberry blonde knife 1.png" id="4_6exjp"]
 [ext_resource type="Texture2D" uid="uid://boyrlfdgxfxpg" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde front static.png" id="4_e711r"]
-[ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="4_ulpci"]
-[ext_resource type="Texture2D" uid="uid://83tcyx1p6r37" path="res://assets/Brown Mouse/Gyatt/Brown gyatt static.png" id="5_te542"]
+[ext_resource type="Texture2D" uid="uid://dj7xopuitj87g" path="res://assets/Strawberry Blonde Mouse/Attack/Strawberry blonde knife2.png" id="5_u1o6c"]
 [ext_resource type="Texture2D" uid="uid://dk556c12acunx" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step right.png" id="5_xn2d5"]
 [ext_resource type="Texture2D" uid="uid://bge8n2pa8kacf" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step left.png" id="6_akavk"]
 [ext_resource type="Texture2D" uid="uid://ccf2hsvq3qdxi" path="res://assets/Strawberry Blonde Mouse/Strawberry blonde stabbed.png" id="6_q2qw1"]
@@ -38,17 +38,14 @@ fill_to = Vector2(0.12, 0.12)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_8dqxm")
+"texture": ExtResource("4_6exjp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_ulpci")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_te542")
+"texture": ExtResource("5_u1o6c")
 }],
 "loop": false,
 "name": &"attack",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -59,7 +56,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"die",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -303,8 +300,7 @@ texture = ExtResource("2_8dqxm")
 light_mask = 8
 visibility_layer = 8
 sprite_frames = SubResource("SpriteFrames_st0pp")
-animation = &"die"
-frame = 1
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
