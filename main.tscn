@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=21 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -193,7 +193,7 @@ horizontal_alignment = 1
 one_shot = true
 
 [connection signal="ready" from="Map" to="." method="_ready"]
-[connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="StartMenu/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="StartMenu/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="StartMenu/start" to="." method="_on_start_pressed"]
+[connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
