@@ -69,7 +69,9 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	$HUD/Role.text = "You are a " + role + ". . ."
 	$TimerCanvasLayer.start(1000*120)
 	$WinScreen/MiceWin.visible = false
+	$WinScreen/RatWins.visible = false
 	$WinScreen/Again.visible = false
+	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
 	game_ended = false
 
 func _on_timer_timeout() -> void:
@@ -83,8 +85,8 @@ func _end_game(mice_win: bool) -> void:
 		$WinScreen/MiceWin.visible = true
 	else:
 		$WinScreen/RatWins.visible = true
-    
-  if is_host: # allow only host to start new game
+	
+	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
 	# reset player positions and lock
 	for player in get_tree().get_nodes_in_group("player"):
