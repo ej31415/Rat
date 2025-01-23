@@ -50,7 +50,6 @@ func _on_start_pressed():
 
 @rpc("call_local")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
-	set_process(false)
 	$StartMenu.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
@@ -64,16 +63,13 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 			var temp = child.starter(true_roles)
 			if temp != "":
 				role = temp
-				
-	for player in get_tree().get_nodes_in_group("player"):
-		player.global_position = Vector2(0, 0)
+		child.global_position = Vector2i(0, 0) # TODO reset the child position
 		
 	$HUD/Role.text = "You are a " + role + ". . ."
 	$TimerCanvasLayer.start(1000*120)
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/Again.visible = false
 	game_ended = false
-	set_process(true)
 
 func _end_game() -> void:
 	print("game ended!!!")
@@ -92,9 +88,18 @@ func _process(delta: float) -> void:
 			print($Map/Exit.local_to_map(player.global_position))
 			_end_game()
 
-
 func _on_again_button_pressed() -> void:
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
+	random_role_assignment()
 	start_helper.rpc(maze, offset, color_to_role)
+
+func random_role_assignment():
+	var colors = color_to_role.keys()
+	colors.shuffle()
+	var roles = color_to_role.values()
+	roles.shuffle()
+	color_to_role.clear()
+	for i in range(colors.size()):
+		color_to_role[colors[i]] = roles[i]
