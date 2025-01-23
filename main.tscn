@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=24 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -92,6 +92,11 @@ visibility_layer = 32
 y_sort_enabled = true
 tile_set = SubResource("TileSet_kfrfe")
 
+[node name="Exit" type="TileMapLayer" parent="Map"]
+light_mask = 32
+z_index = -1
+tile_set = SubResource("TileSet_kfrle")
+
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://tan_mouse.tscn", "res://gray_mouse.tscn", "res://brown_mouse.tscn", "res://sb_mouse.tscn")
 spawn_path = NodePath("..")
@@ -99,11 +104,6 @@ spawn_path = NodePath("..")
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 light_mask = 47
 color = Color(0, 0, 0, 1)
-
-[node name="Exit" type="TileMapLayer" parent="Map"]
-light_mask = 32
-z_index = -1
-tile_set = SubResource("TileSet_kfrle")
 
 [node name="StartPosition" type="Marker2D" parent="."]
 
@@ -220,8 +220,26 @@ offset_bottom = 2118.0
 scale = Vector2(0.221157, 0.221157)
 texture = ExtResource("11_jrcn4")
 
+[node name="Again" type="Button" parent="WinScreen"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -136.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 28
+text = "Play Again"
+
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="pressed" from="StartMenu/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="StartMenu/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="StartMenu/start" to="." method="_on_start_pressed"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
+[connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
