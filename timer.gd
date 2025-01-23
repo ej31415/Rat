@@ -27,10 +27,11 @@ func _process(delta: float) -> void:
 		var seconds := floor(ms_left / 1000) - minutes*60 as int
 		var milliseconds := ms_left - seconds*1000 - minutes*60000 as int
 		$Panel/TimeLeft.text = _pad(str(minutes), 2) + " : " + _pad(str(seconds), 2) + " : " + _pad(str(milliseconds), 3)
+		if ms_left < 1000*10:
+			$Panel/TimeLeft.label_settings.font_color = Color(1.0, 0, 0)
 
 func _on_timer_timeout() -> void:
 	ms_left = 0
-	print("timer up")
 
 @rpc("any_peer")
 func end_timer() -> void:
