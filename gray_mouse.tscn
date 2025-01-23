@@ -197,9 +197,9 @@ motion_mode = 1
 script = ExtResource("1_fvefs")
 
 [node name="Vision" type="PointLight2D" parent="."]
-position = Vector2(-35, 40)
+position = Vector2(0, 10)
 rotation = -1.5708
-scale = Vector2(1.5, 1)
+scale = Vector2(2.5, 1.2)
 range_z_max = 0
 range_item_cull_mask = 46
 shadow_item_cull_mask = 46
@@ -220,7 +220,7 @@ texture = ExtResource("2_0n1gc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"static front"
+animation = &"static gyatt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

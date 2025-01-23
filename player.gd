@@ -32,9 +32,17 @@ func starter(color_to_roles):
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
+		enable_movement()
 		started = true
 		return role
 	return ""
+
+func disable_movement():
+	$AnimatedSprite2D.animation = "static front"
+	set_physics_process(false)
+	
+func enable_movement():
+	set_physics_process(true)
 
 func get_player():
 	return self

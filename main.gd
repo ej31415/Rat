@@ -65,7 +65,6 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 			var temp = child.starter(true_roles)
 			if temp != "":
 				role = temp
-		child.global_position = Vector2i(0, 0) # TODO reset the child position
 		
 	$HUD/Role.text = "You are a " + role + ". . ."
 	$TimerCanvasLayer.start(1000*120)
@@ -78,25 +77,31 @@ func _end_game() -> void:
 	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
 	$WinScreen/MiceWin.visible = true
-	if is_host:
+	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
+	# reset player positions and lock
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("disable_movement"):
+			player.disable_movement()
+		player.global_position = Vector2i(0, 0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	for player in get_tree().get_nodes_in_group("player"):
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
-			print(str($Map/Exit.get_cell_source_id(player_tile) != -1) + " " + str(game_ended) + " in " + str(is_host))
-			print($Map/Exit.local_to_map(player.global_position))
 			_end_game()
 
 func _on_again_button_pressed() -> void:
+	# make a new maze
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
+	
 	random_role_assignment()
 	start_helper.rpc(maze, offset, color_to_role)
 
+# assign random roles to colors based on existing roles and colors
 func random_role_assignment():
 	var colors = color_to_role.keys()
 	colors.shuffle()
