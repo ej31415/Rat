@@ -68,14 +68,20 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	$HUD/Role.text = "You are a " + role + ". . ."
 	$TimerCanvasLayer.start(1000*120)
 
-func _end_game() -> void:
+func _on_timer_timeout() -> void:
+	_end_game(false)
+
+func _end_game(mice_win: bool) -> void:
 	game_ended = true
-	$TimerCanvasLayer.end_timer.rpc()
-	$WinScreen/MiceWin.visible = true
+	if mice_win:
+		$TimerCanvasLayer.end_timer.rpc()
+		$WinScreen/MiceWin.visible = true
+	else:
+		$WinScreen/RatWins.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	for player in get_tree().get_nodes_in_group("player"):
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
-			_end_game()
+			_end_game(true)

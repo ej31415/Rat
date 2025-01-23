@@ -30,7 +30,6 @@ func _process(delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	ms_left = 0
-	print("timer up")
 
 @rpc("any_peer")
 func end_timer() -> void:
