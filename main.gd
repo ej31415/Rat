@@ -136,3 +136,11 @@ func random_role_assignment():
 	color_to_role.clear()
 	for i in range(colors.size()):
 		color_to_role[colors[i]] = roles[i]
+
+
+func _on_title_screen_animation_finished():
+	$StartMenu/host.visible = true
+	$StartMenu/join.visible = true
+	$StartMenu/start.visible = true
+	$StartMenu/label.visible = true
+	$StartMenu/ip.visible = true
