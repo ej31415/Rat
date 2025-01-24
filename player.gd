@@ -161,7 +161,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					add_kill.rpc()
 				sheriff_shot = true
 				print(color + " shoot!!!")
-				# set_physics_process(false)
+				set_physics_process(false)
 				# add shooting animation
 
 @rpc("call_local", "reliable")
@@ -183,6 +183,7 @@ func die():
 	set_physics_process(false)
 	$AnimatedSprite2D.animation = "die"
 	$AnimatedSprite2D.play()
+	$AnimatedSprite2D.position = Vector2(0, 50)
 
 @rpc("call_local", "reliable")
 func add_kill():

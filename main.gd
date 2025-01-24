@@ -28,6 +28,7 @@ func _on_host_pressed():
 	multiplayer.peer_connected.connect(_add_player)
 	_add_player()
 	$StartMenu/start.disabled = false
+	$StartMenu/host.disabled = true
 	$StartMenu/join.disabled = true
 	is_host = true
 
@@ -48,6 +49,7 @@ func _on_join_pressed():
 	peer.create_client($StartMenu/ip.text, 135)
 	multiplayer.multiplayer_peer = peer
 	$StartMenu/host.disabled = true
+	$StartMenu/join.disabled = true
 
 func _on_start_pressed():
 	var maze = $Map.get_maze()
