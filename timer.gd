@@ -4,6 +4,7 @@ var ms_left
 
 func start(ms: int) -> void:
 	$Panel.visible = true
+	$Timer.paused = false
 	$Timer.wait_time = ms/1000
 	$Timer.start()
 	ms_left = ms
@@ -33,6 +34,6 @@ func _process(delta: float) -> void:
 func _on_timer_timeout() -> void:
 	ms_left = 0
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local", "reliable")
 func end_timer() -> void:
 	$Timer.stop()

@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Main
+
 var peer = ENetMultiplayerPeer.new()
 @export var gray_mouse: PackedScene
 @export var brown_mouse: PackedScene
@@ -10,6 +12,8 @@ var color_to_role = {}
 var color_to_instance = {}
 var game_ended = false
 var is_host = false
+
+static var killed = 0
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -50,8 +54,10 @@ func _on_start_pressed():
 	var offset = $Map.get_offset()
 	start_helper.rpc(maze, offset, color_to_role)
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
+	killed = 0
+	
 	$StartMenu.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
@@ -80,10 +86,12 @@ func _on_timer_timeout() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func _end_game(mice_win: bool) -> void:
+	if game_ended:
+		return
 	print("game ended!!!")
 	game_ended = true
+	$TimerCanvasLayer.end_timer.rpc()
 	if mice_win:
-		$TimerCanvasLayer.end_timer.rpc()
 		$WinScreen/MiceWin.visible = true
 	else:
 		$WinScreen/RatWins.visible = true
@@ -99,16 +107,21 @@ func _end_game(mice_win: bool) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	for player in get_tree().get_nodes_in_group("player"):
+		if not player.has_method("get_role"):
+			continue
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
 			_end_game.rpc(true)
+		if player.get_role() == "rat" and not game_ended and not player.is_alive():
+			_end_game.rpc(true)
+	if killed == 3 and not game_ended:
+		_end_game.rpc(false)
 
 func _on_again_button_pressed() -> void:
 	# make a new maze
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
-	
 	random_role_assignment()
 	start_helper.rpc(maze, offset, color_to_role)
 

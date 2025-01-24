@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=30 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
@@ -164,8 +164,6 @@ animations = [{
 radius = 95.0
 height = 190.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_depec"]
-
 [sub_resource type="Animation" id="Animation_mtbjs"]
 length = 0.001
 tracks/0/type = "value"
@@ -179,18 +177,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("KnifeHitbox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_61pn1"]
@@ -218,18 +204,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 1, 2]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("KnifeHitbox/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.333333, 0.666667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
@@ -308,16 +282,6 @@ animation = &"static front"
 position = Vector2(0, 25)
 shape = SubResource("CapsuleShape2D_j67ck")
 
-[node name="KnifeHitbox" type="Area2D" parent="."]
-collision_layer = 7
-collision_mask = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KnifeHitbox"]
-position = Vector2(0, 25)
-scale = Vector2(10, 10)
-shape = SubResource("CircleShape2D_depec")
-disabled = true
-
 [node name="Aim" type="RayCast2D" parent="."]
 target_position = Vector2(0, 500)
 collision_mask = 15
@@ -337,5 +301,4 @@ zoom = Vector2(0.5, 0.5)
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_atjri")
 
-[connection signal="body_entered" from="KnifeHitbox" to="." method="_on_knife_hitbox_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

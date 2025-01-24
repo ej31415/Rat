@@ -11,12 +11,15 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var last_rat_kill = 0
+var sheriff_shot = false
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
 	role = roles[idx]
 	#role = "rat"
 	roles.pop_at(idx)
+	alive = true
 	started = false
 
 func _enter_tree() -> void:
@@ -29,11 +32,15 @@ func _ready():
 
 func starter(color_to_roles):
 	role = color_to_roles[color]
+	alive = true
+	started = true
+	$ViewSphere.enabled = true
+	$ViewSphere.texture_scale = 1
+	$Vision.enabled = true
+	enable_movement()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
-		enable_movement()
-		started = true
 		return role
 	return ""
 
@@ -52,6 +59,9 @@ func get_role():
 
 func get_color():
 	return color
+
+func is_alive():
+	return alive
 
 func _physics_process(delta: float) -> void:
 	if !alive:
@@ -120,21 +130,59 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_multiplayer_authority() and started:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
+				for child in get_tree().get_nodes_in_group("player"):
+					if Time.get_unix_time_from_system() - last_rat_kill < 10:
+						print(color + " on kill cooldown")
+						break
+					if child.has_method("die"):
+						if child.get_role() == "rat":
+							continue
+						if !child.is_alive():
+							continue
+						if child.position.distance_to(self.position) < 190:
+							die_call.rpc(child.get_color())
+							last_rat_kill = Time.get_unix_time_from_system()
+							add_kill.rpc()
 				print(color + " attack!!!")
 				set_physics_process(false)
 				$AnimationPlayer.play("attack")
 			elif role == "sheriff":
+				for child in get_tree().get_nodes_in_group("player"):
+					if sheriff_shot:
+						break
+					if child.has_method("die"):
+						if child.get_role() == "sheriff":
+							continue
+						if !child.is_alive():
+							continue
+						if child.position.distance_to(self.position) < 760:
+							die_call.rpc(child.get_color())
+							add_kill.rpc()
+							sheriff_shot = true
 				print(color + " shoot!!!")
-				set_physics_process(false)
+				# set_physics_process(false)
 				# add shooting animation
+
+@rpc("call_local", "reliable")
+func die_call(color):
+	for child in get_tree().get_nodes_in_group("player"):
+		if child.has_method("die") and child.get_color() == color:
+			child.die()
 
 func die():
 	if !alive:
 		return
 	print(color + " killed!!!")
 	alive = false
+	if is_multiplayer_authority():
+		$ViewSphere.texture_scale = 8
+	else:
+		$ViewSphere.enabled = false
 	$Vision.enabled = false
-	$ViewSphere.enabled = false
 	set_physics_process(false)
 	$AnimatedSprite2D.animation = "die"
 	$AnimatedSprite2D.play()
+
+@rpc("call_local", "reliable")
+func add_kill():
+	Main.killed += 1
