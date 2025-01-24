@@ -239,6 +239,7 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [node name="TanMouse" type="CharacterBody2D"]
+visible = false
 light_mask = 2
 visibility_layer = 2
 material = SubResource("CanvasItemMaterial_i4pks")

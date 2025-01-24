@@ -239,6 +239,7 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
+visible = false
 light_mask = 4
 visibility_layer = 4
 material = SubResource("CanvasItemMaterial_epbfg")

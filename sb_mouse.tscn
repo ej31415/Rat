@@ -239,6 +239,7 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [node name="SBMouse" type="CharacterBody2D"]
+visible = false
 light_mask = 8
 visibility_layer = 8
 material = SubResource("CanvasItemMaterial_dny3u")

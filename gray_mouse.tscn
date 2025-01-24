@@ -239,6 +239,7 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
+visible = false
 material = SubResource("CanvasItemMaterial_6ifnq")
 motion_mode = 1
 script = ExtResource("1_fvefs")
