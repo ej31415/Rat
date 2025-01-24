@@ -114,7 +114,7 @@ func _process(delta: float) -> void:
 			_end_game.rpc(true)
 		if player.get_role() == "rat" and not game_ended and not player.is_alive():
 			_end_game.rpc(true)
-	if killed == 3:
+	if killed == 3 and not game_ended:
 		_end_game.rpc(false)
 
 func _on_again_button_pressed() -> void:
