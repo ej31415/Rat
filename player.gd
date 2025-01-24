@@ -17,7 +17,6 @@ var sheriff_shot = false
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
 	role = roles[idx]
-	#role = "rat"
 	roles.pop_at(idx)
 	alive = true
 	started = false
@@ -33,6 +32,7 @@ func _ready():
 func starter(color_to_roles):
 	role = color_to_roles[color]
 	alive = true
+	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
 	$ViewSphere.texture_scale = 1
@@ -154,8 +154,9 @@ func _unhandled_input(event: InputEvent) -> void:
 						if child.get_role() == "sheriff":
 							continue
 						if !child.is_alive():
+							print(child.color + " is allegedly dead")
 							continue
-						if child.position.distance_to(self.position) < 760:
+						if child.position.distance_to(self.position) < 760: # change this to raycast
 							die_call.rpc(child.get_color())
 							add_kill.rpc()
 							sheriff_shot = true
