@@ -7,6 +7,8 @@ var peer = ENetMultiplayerPeer.new()
 @export var brown_mouse: PackedScene
 @export var sb_mouse: PackedScene
 @export var tan_mouse: PackedScene
+var mice_active_music
+
 var mice = []
 var color_to_role = {}
 var color_to_instance = {}
@@ -20,6 +22,7 @@ func _init() -> void:
 	brown_mouse = preload("res://brown_mouse.tscn")
 	sb_mouse = preload("res://sb_mouse.tscn")
 	tan_mouse = preload("res://tan_mouse.tscn")
+	mice_active_music = preload("res://assets/Music/mice_active_music.mp3")
 	mice = [[gray_mouse, "gray"], [brown_mouse, "brown"], [sb_mouse, "sb"], [tan_mouse, "tan"]]
 
 func _on_host_pressed():
@@ -80,22 +83,26 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
 	$WinScreen/Again.visible = false
+	$AudioStreamPlayer2D.playing = true
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
 	game_ended = false
 
 func _on_timer_timeout() -> void:
-	_end_game(false)
+	$TimerCanvasLayer.end_timer.rpc()
+	_end_game.rpc(false)
 
-@rpc("any_peer", "call_local", "reliable")
+@rpc("call_local", "reliable", "any_peer")
 func _end_game(mice_win: bool) -> void:
 	if game_ended:
 		return
 	print("game ended!!!")
 	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
+	$AudioStreamPlayer2D.playing = false
 	if mice_win:
 		$WinScreen/MiceWin.visible = true
 	else:
+		$TimerCanvasLayer/Panel/TimeLeft.text = "00 : 00 : 000"
 		$WinScreen/RatWins.visible = true
 	
 	if is_host: # allow only host to start new game
