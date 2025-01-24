@@ -221,6 +221,23 @@ offset_bottom = 2118.0
 scale = Vector2(0.221157, 0.221157)
 texture = ExtResource("11_jrcn4")
 
+[node name="Again" type="Button" parent="WinScreen"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -136.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 28
+text = "Play Again"
+
 [node name="RatWins" type="TextureRect" parent="WinScreen"]
 visible = false
 offset_left = 92.0
@@ -236,3 +253,4 @@ texture = ExtResource("13_y2lfq")
 [connection signal="pressed" from="StartMenu/start" to="." method="_on_start_pressed"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
+[connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]

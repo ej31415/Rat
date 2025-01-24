@@ -9,6 +9,7 @@ var mice = []
 var color_to_role = {}
 var color_to_instance = {}
 var game_ended = false
+var is_host = false
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -23,6 +24,8 @@ func _on_host_pressed():
 	multiplayer.peer_connected.connect(_add_player)
 	_add_player()
 	$StartMenu/start.disabled = false
+	$StartMenu/join.disabled = true
+	is_host = true
 
 func _add_player(id = 1):
 	if len(mice) > 0:
@@ -40,6 +43,7 @@ func _add_player(id = 1):
 func _on_join_pressed():
 	peer.create_client($StartMenu/ip.text, 135)
 	multiplayer.multiplayer_peer = peer
+	$StartMenu/host.disabled = true
 
 func _on_start_pressed():
 	var maze = $Map.get_maze()
@@ -48,11 +52,7 @@ func _on_start_pressed():
 
 @rpc("call_local")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
-	$StartMenu/label.visible = false
-	$StartMenu/ip.visible = false
-	$StartMenu/host.visible = false
-	$StartMenu/join.visible = false
-	$StartMenu/start.visible = false
+	$StartMenu.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
@@ -66,19 +66,34 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 			var temp = child.starter(true_roles)
 			if temp != "":
 				role = temp
+		
 	$HUD/Role.text = "You are a " + role + ". . ."
 	$TimerCanvasLayer.start(1000*120)
+	$WinScreen/MiceWin.visible = false
+	$WinScreen/RatWins.visible = false
+	$WinScreen/Again.visible = false
+	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
+	game_ended = false
 
 func _on_timer_timeout() -> void:
 	_end_game(false)
 
 func _end_game(mice_win: bool) -> void:
+	print("game ended!!!")
 	game_ended = true
 	if mice_win:
 		$TimerCanvasLayer.end_timer.rpc()
 		$WinScreen/MiceWin.visible = true
 	else:
 		$WinScreen/RatWins.visible = true
+	
+	if is_host: # allow only host to start new game
+		$WinScreen/Again.visible = true
+	# reset player positions and lock
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("disable_movement"):
+			player.disable_movement()
+		player.global_position = Vector2i(0, 0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -86,3 +101,22 @@ func _process(delta: float) -> void:
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
 			_end_game(true)
+
+func _on_again_button_pressed() -> void:
+	# make a new maze
+	$Map._ready()
+	var maze = $Map.get_maze()
+	var offset = $Map.get_offset()
+	
+	random_role_assignment()
+	start_helper.rpc(maze, offset, color_to_role)
+
+# assign random roles to colors based on existing roles and colors
+func random_role_assignment():
+	var colors = color_to_role.keys()
+	colors.shuffle()
+	var roles = color_to_role.values()
+	roles.shuffle()
+	color_to_role.clear()
+	for i in range(colors.size()):
+		color_to_role[colors[i]] = roles[i]
