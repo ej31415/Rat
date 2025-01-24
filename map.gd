@@ -2,7 +2,6 @@ extends Node2D
 
 var final_maze
 var final_offset
-var final_start_position
 var on_exit
 
 func _init_matrix(m: int, n: int, val: int) -> Array:
@@ -58,11 +57,11 @@ func _extend_outer_walls(mat: Array, n_layers: int) -> Array:
 	return mat
 
 # Returns the local coordinates of one of the maze's starting tiles.
-func _get_start_position(mat: Array) -> Vector2i:
+func get_start_position(mat: Array, offset: Vector2i) -> Vector2i:
 	for r in range(len(mat)-1, -1, -1):
 		var c := (mat[r] as Array).find(0)
 		if c != -1:
-			return Vector2i(r, c)
+			return $Floor.map_to_local(Vector2i(c, r) + offset) + ($Floor.tile_set.tile_size as Vector2)*Vector2(0.75, -0.75)
 	return Vector2i()
 
 func _add_end_tiles(mat: Array) -> Array:
@@ -224,24 +223,19 @@ func erase_maze(mat: Array, offset: Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(15, 15), 2), 2)
+	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(5, 5), 2), 2)
 	maze = _add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, 4)))
 	_pretty_print_mat(maze)
 	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
 	build_maze(maze, offset)
 	final_maze = maze
 	final_offset = offset
-	var pos := _get_start_position(maze)
-	final_start_position = $Floor.map_to_local(Vector2i(pos.y, pos.x) + offset) + ($Floor.tile_set.tile_size as Vector2)*Vector2(1, -1)
 
 func get_maze():
 	return final_maze
 
 func get_offset():
 	return final_offset
-
-func get_start_position():
-	return final_start_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
