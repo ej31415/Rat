@@ -147,19 +147,19 @@ func _unhandled_input(event: InputEvent) -> void:
 				set_physics_process(false)
 				$AnimationPlayer.play("attack")
 			elif role == "sheriff":
-				for child in get_tree().get_nodes_in_group("player"):
-					if sheriff_shot:
-						break
-					if child.has_method("die"):
-						if child.get_role() == "sheriff":
-							continue
-						if !child.is_alive():
-							print(child.color + " is allegedly dead")
-							continue
-						if child.position.distance_to(self.position) < 760: # change this to raycast
-							die_call.rpc(child.get_color())
-							add_kill.rpc()
-							sheriff_shot = true
+				var target = $Aim.get_collider()
+				if target == null:
+					return
+				if sheriff_shot:
+					return
+				if target.has_method("die"):
+					if target.get_role() == "sheriff":
+						return
+					if !target.is_alive():
+						return
+					die_call.rpc(target.get_color())
+					add_kill.rpc()
+				sheriff_shot = true
 				print(color + " shoot!!!")
 				# set_physics_process(false)
 				# add shooting animation
