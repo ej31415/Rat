@@ -62,6 +62,48 @@ func get_color():
 
 func is_alive():
 	return alive
+	
+func set_vision():
+	if velocity.x < 0 and velocity.y < 0:
+		$Vision.position = Vector2(0, -10)
+		$Vision.scale = Vector2(2.5, 1.2)
+		$Vision.rotation_degrees = 45
+		$Aim.rotation_degrees = 135
+	elif velocity.x < 0 and velocity.y > 0:
+		$Vision.position = Vector2(-40, -10)
+		$Vision.scale = Vector2(2.5, 1.2)
+		$Vision.rotation_degrees = -45
+		$Aim.rotation_degrees = 45
+	elif velocity.x > 0 and velocity.y < 0:
+		$Vision.position = Vector2(-40, -10)
+		$Vision.scale = Vector2(-2.5, 1.2)
+		$Vision.rotation_degrees = -45
+		$Aim.rotation_degrees = -135
+	elif velocity.x > 0 and velocity.y > 0:
+		$Vision.position = Vector2(0, -10)
+		$Vision.scale = Vector2(-2.5, 1.2)
+		$Vision.rotation_degrees = 45
+		$Aim.rotation_degrees = -45
+	elif velocity.x < 0:
+		$Vision.position = Vector2(-40, -10)
+		$Vision.scale = Vector2(2.5, 1.2)
+		$Vision.rotation_degrees = 0
+		$Aim.rotation_degrees = 90
+	elif velocity.y < 0:
+		$Vision.position = Vector2(42, 10)
+		$Vision.scale = Vector2(2.5, 1.2)
+		$Vision.rotation_degrees = 90
+		$Aim.rotation_degrees = 180
+	elif velocity.y > 0:
+		$Vision.position = Vector2(-42, 40)
+		$Vision.scale = Vector2(2.5, 1.2)
+		$Vision.rotation_degrees = -90
+		$Aim.rotation_degrees = 0
+	elif velocity.x > 0:
+		$Vision.position = Vector2(40, -10)
+		$Vision.scale = Vector2(-2.5, 1.2)
+		$Vision.rotation_degrees = 0
+		$Aim.rotation_degrees = -90
 
 func _physics_process(delta: float) -> void:
 	if !alive:
@@ -83,31 +125,17 @@ func _physics_process(delta: float) -> void:
 		
 		move_and_slide()
 		
+		set_vision()
+		
 		# Set sprite orientation
 		if velocity.x < 0:
 			anim = "left"
-			$Vision.position = Vector2(-40, -2)
-			$Vision.scale = Vector2(2.5, 1)
-			$Vision.rotation_degrees = 0
-			$Aim.rotation_degrees = 90
 		elif velocity.y > 0:
 			anim = "front"
-			$Vision.position = Vector2(-42, 40)
-			$Vision.scale = Vector2(2.5, 1.2)
-			$Vision.rotation_degrees = -90
-			$Aim.rotation_degrees = 0
 		elif velocity.y < 0:
 			anim = "gyatt"
-			$Vision.position = Vector2(42, 10)
-			$Vision.scale = Vector2(2.5, 1.2)
-			$Vision.rotation_degrees = 90
-			$Aim.rotation_degrees = 180
 		elif velocity.x > 0:
 			anim = "right"
-			$Vision.position = Vector2(40, -2)
-			$Vision.scale = Vector2(-2.5, 1)
-			$Vision.rotation_degrees = 0
-			$Aim.rotation_degrees = -90
 		else:
 			if anim == "left":
 				anim = "static left"
@@ -143,9 +171,9 @@ func _unhandled_input(event: InputEvent) -> void:
 							die_call.rpc(child.get_color())
 							last_rat_kill = Time.get_unix_time_from_system()
 							add_kill.rpc()
-				print(color + " attack!!!")
-				set_physics_process(false)
-				$AnimationPlayer.play("attack")
+					print(color + " attack!!!")
+					set_physics_process(false)
+					$AnimationPlayer.play("attack")
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
 				if target == null:

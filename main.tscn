@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=26 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://timer.gd" id="10_al2ht"]
 [ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="10_dpgvo"]
 [ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
+[ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1oqjg"]
@@ -206,7 +207,7 @@ script = ExtResource("10_al2ht")
 visible = false
 offset_left = 10.0
 offset_top = 12.0
-offset_right = 235.0
+offset_right = 272.0
 offset_bottom = 73.0
 
 [node name="TimeLeft" type="Label" parent="TimerCanvasLayer/Panel"]
@@ -215,6 +216,7 @@ offset_left = 8.0
 offset_top = 7.0
 offset_right = 215.0
 offset_bottom = 51.0
+theme_override_fonts/font = ExtResource("12_63mnq")
 label_settings = SubResource("LabelSettings_wngka")
 horizontal_alignment = 1
 
