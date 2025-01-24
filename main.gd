@@ -61,7 +61,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 		if child.has_method("starter"):
 			child.starter(true_roles)
 			child.visible = true
-			child.position = $Map.get_start_position()
+			child.position = $Map.get_start_position(maze, offset)
 			# spaghetti code >.<
 			var temp = child.starter(true_roles)
 			if temp != "":
@@ -78,6 +78,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 func _on_timer_timeout() -> void:
 	_end_game(false)
 
+@rpc("any_peer", "call_local", "reliable")
 func _end_game(mice_win: bool) -> void:
 	print("game ended!!!")
 	game_ended = true
@@ -100,7 +101,7 @@ func _process(delta: float) -> void:
 	for player in get_tree().get_nodes_in_group("player"):
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
-			_end_game(true)
+			_end_game.rpc(true)
 
 func _on_again_button_pressed() -> void:
 	# make a new maze
