@@ -2,6 +2,7 @@ extends Node2D
 
 var final_maze
 var final_offset
+var final_start_position
 var on_exit
 
 func _init_matrix(m: int, n: int, val: int) -> Array:
@@ -37,6 +38,43 @@ func _find_centermost_index(arr: Array, target: Variant) -> int:
 				min_dist = dist
 				res = i
 	return res
+
+# Pads the maze matrix's left, right, and bottom sides with walls. Extends the exit hallway as well.
+func _extend_outer_walls(mat: Array, n_layers: int) -> Array:
+	# pad top and bottom sides
+	var v_padding := []
+	v_padding.resize(len(mat[0]))
+	v_padding.fill(1)
+	for i in range(n_layers):
+		mat.append(v_padding.duplicate())
+		mat.insert(0, mat[0].duplicate())
+	
+	# pad left and right sides
+	for r in range(len(mat)):
+		for i in range(n_layers):
+			mat[r].append(1)
+			mat[r].insert(0, 1)
+	
+	return mat
+
+# Returns the local coordinates of one of the maze's starting tiles.
+func _get_start_position(mat: Array) -> Vector2i:
+	for r in range(len(mat)-1, -1, -1):
+		var c := (mat[r] as Array).find(0)
+		if c != -1:
+			return Vector2i(r, c)
+	return Vector2i()
+
+func _add_end_tiles(mat: Array) -> Array:
+	for r in range(len(mat)):
+		var found := false
+		for c in range(len(mat[r])):
+			if mat[r][c] == 0:
+				mat[r][c] = 3
+				found = true
+		if found:
+			break
+	return mat
 	
 func generate_maze(m: int, n: int) -> Array:
 	# initialize maze
@@ -60,7 +98,7 @@ func generate_maze(m: int, n: int) -> Array:
 	mat.append(bottom)
 	
 	# poke holes for start and end (bottom and top, respectively)
-	mat[0][_find_centermost_index(mat[1], 0)] = 3 # finish line cell
+	mat[0][_find_centermost_index(mat[1], 0)] = 0
 	mat[-1][_find_centermost_index(mat[-2], 0)] = 0
 	_pretty_print_mat(mat)
 	print()
@@ -186,18 +224,24 @@ func erase_maze(mat: Array, offset: Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var maze := _adjust_wall_types(_horizontal_stretch(_vertical_stretch(generate_maze(5, 5), 2), 2))
+	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(15, 15), 2), 2)
+	maze = _add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, 4)))
 	_pretty_print_mat(maze)
 	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
 	build_maze(maze, offset)
 	final_maze = maze
 	final_offset = offset
+	var pos := _get_start_position(maze)
+	final_start_position = $Floor.map_to_local(Vector2i(pos.y, pos.x) + offset) + ($Floor.tile_set.tile_size as Vector2)*Vector2(1, -1)
 
 func get_maze():
 	return final_maze
 
 func get_offset():
 	return final_offset
+
+func get_start_position():
+	return final_start_position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

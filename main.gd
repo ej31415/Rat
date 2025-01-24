@@ -61,6 +61,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 		if child.has_method("starter"):
 			child.starter(true_roles)
 			child.visible = true
+			child.position = $Map.get_start_position()
 			# spaghetti code >.<
 			var temp = child.starter(true_roles)
 			if temp != "":
