@@ -33,6 +33,6 @@ func _process(delta: float) -> void:
 func _on_timer_timeout() -> void:
 	ms_left = 0
 
-@rpc("any_peer")
+@rpc("any_peer", "call_local", "reliable")
 func end_timer() -> void:
 	$Timer.stop()

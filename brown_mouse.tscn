@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=30 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
@@ -164,6 +164,54 @@ animations = [{
 radius = 95.0
 height = 190.0
 
+[sub_resource type="Animation" id="Animation_mtbjs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_61pn1"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33, 0.667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
+_data = {
+"RESET": SubResource("Animation_mtbjs"),
+"attack": SubResource("Animation_61pn1")
+}
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vfuks"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -191,7 +239,6 @@ properties/7/spawn = true
 properties/7/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
-visible = false
 light_mask = 4
 visibility_layer = 4
 material = SubResource("CanvasItemMaterial_epbfg")
@@ -238,6 +285,11 @@ target_position = Vector2(0, 500)
 collision_mask = 15
 script = ExtResource("20_ohqr7")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fhu0p")
+}
+
 [node name="Camera2D" type="Camera2D" parent="."]
 light_mask = 4
 visibility_layer = 4
@@ -246,3 +298,5 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_vfuks")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
