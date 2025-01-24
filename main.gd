@@ -106,8 +106,12 @@ func _end_game(mice_win: bool) -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	for player in get_tree().get_nodes_in_group("player"):
+		if not player.has_method("get_role"):
+			continue
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
+			_end_game(true)
+		if player.get_role() == "rat" and not game_ended and not player.is_alive():
 			_end_game(true)
 	if killed == 3:
 		_end_game(false)

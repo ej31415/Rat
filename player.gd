@@ -11,7 +11,8 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
-var last_kill = 0
+var last_rat_kill = 0
+var sheriff_shot = false
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -130,7 +131,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
 				for child in get_tree().get_nodes_in_group("player"):
-					if Time.get_unix_time_from_system() - last_kill < 1:
+					if Time.get_unix_time_from_system() - last_rat_kill < 10:
 						print(color + " on kill cooldown")
 						break
 					if child.has_method("die"):
@@ -140,14 +141,26 @@ func _unhandled_input(event: InputEvent) -> void:
 							continue
 						if child.position.distance_to(self.position) < 190:
 							die_call.rpc(child.get_color())
-							last_kill = Time.get_unix_time_from_system()
+							last_rat_kill = Time.get_unix_time_from_system()
 							add_kill.rpc()
 				print(color + " attack!!!")
 				set_physics_process(false)
 				$AnimationPlayer.play("attack")
 			elif role == "sheriff":
+				for child in get_tree().get_nodes_in_group("player"):
+					if sheriff_shot:
+						break
+					if child.has_method("die"):
+						if child.get_role() == "sheriff":
+							continue
+						if !child.is_alive():
+							continue
+						if child.position.distance_to(self.position) < 760:
+							die_call.rpc(child.get_color())
+							add_kill.rpc()
+							sheriff_shot = true
 				print(color + " shoot!!!")
-				set_physics_process(false)
+				# set_physics_process(false)
 				# add shooting animation
 
 @rpc("call_local", "reliable")
