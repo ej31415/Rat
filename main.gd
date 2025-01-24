@@ -56,6 +56,8 @@ func _on_start_pressed():
 
 @rpc("call_local", "reliable")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
+	killed = 0
+	
 	$StartMenu.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
@@ -83,6 +85,8 @@ func _on_timer_timeout() -> void:
 	_end_game(false)
 
 func _end_game(mice_win: bool) -> void:
+	if game_ended:
+		return
 	print("game ended!!!")
 	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
