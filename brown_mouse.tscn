@@ -20,10 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
 [ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
 [ext_resource type="Script" path="res://aim.gd" id="20_ohqr7"]
-[ext_resource type="Texture2D" uid="uid://c17cgem17ul4x" path="res://assets/Brown Mouse/Gun/Brown front gun.png" id="20_wb4sc"]
-[ext_resource type="Texture2D" uid="uid://dr8u0clmr3p3o" path="res://assets/Brown Mouse/Gun/Brown look left gun.png" id="21_cefly"]
-[ext_resource type="Texture2D" uid="uid://1qoxsdeka2rp" path="res://assets/Brown Mouse/Gun/Brown look right gun.png" id="22_rnt3q"]
-[ext_resource type="Texture2D" uid="uid://bcny6skeyuylk" path="res://assets/Brown Mouse/Gun/Brown back gun.png" id="23_do3yt"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown front gun.png" id="20_wb4sc"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown look left gun.png" id="21_cefly"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown look right gun.png" id="22_rnt3q"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown back gun.png" id="23_do3yt"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_epbfg"]
 light_mode = 2

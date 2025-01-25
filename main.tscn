@@ -103,7 +103,7 @@ tile_set = SubResource("TileSet_kfrle")
 _spawnable_scenes = PackedStringArray("res://tan_mouse.tscn", "res://gray_mouse.tscn", "res://brown_mouse.tscn", "res://sb_mouse.tscn")
 spawn_path = NodePath("..")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="Darkness" type="CanvasModulate" parent="."]
 light_mask = 47
 color = Color(0, 0, 0, 1)
 
@@ -198,7 +198,21 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 35
 language = "en_US"
+
+[node name="HelpMessage" type="Label" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -264.0
+offset_top = 24.0
+offset_right = -23.0
+offset_bottom = 49.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 20
+text = "Press [tab] for controls"
 
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
@@ -259,6 +273,145 @@ offset_right = 4602.0
 offset_bottom = 2330.0
 scale = Vector2(0.201313, 0.201313)
 texture = ExtResource("13_y2lfq")
+
+[node name="HelpControl" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="HelpControl"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -272.0
+offset_top = -116.0
+offset_right = 280.0
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.340339, 0.340339, 0.340339, 1)
+
+[node name="Title" type="RichTextLabel" parent="HelpControl"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -108.0
+offset_right = 64.0
+offset_bottom = -84.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]Controls[/center]"
+
+[node name="GridContainer" type="GridContainer" parent="HelpControl"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -272.0
+offset_top = -68.0
+offset_right = 272.0
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="W" type="RichTextLabel" parent="HelpControl/GridContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 15
+bbcode_enabled = true
+text = "[center][W] / [↑][/center]"
+
+[node name="Direction1" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]move up[/center]"
+
+[node name="A" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center][A]  / [←][/center]"
+
+[node name="Direction2" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]move left[/center]"
+
+[node name="S" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center][S]  / [↓][/center]"
+
+[node name="Direction3" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]move down[/center]"
+
+[node name="D" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center][D] / [→][/center]"
+
+[node name="Direction4" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]move right[/center]"
+
+[node name="Shift" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center][Shift] (rat only)[/center]"
+
+[node name="Direction5" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]sprint[/center]"
+
+[node name="LBtn" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center][Left click] (rat and sheriff only)[/center]"
+
+[node name="Direction6" type="RichTextLabel" parent="HelpControl/GridContainer"]
+custom_minimum_size = Vector2(256, 30)
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]kill[/center]"
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="pressed" from="StartMenu/host" to="." method="_on_host_pressed"]

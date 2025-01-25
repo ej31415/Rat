@@ -416,10 +416,12 @@ texture = SubResource("GradientTexture2D_md08e")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
+light_mask = 2
 position = Vector2(0, 123.5)
 texture = ExtResource("2_k803p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.372343, 0.652747, 0, 1)
 light_mask = 2
 visibility_layer = 2
 sprite_frames = SubResource("SpriteFrames_31bpd")
