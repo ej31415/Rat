@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=38 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
@@ -20,6 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
 [ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
 [ext_resource type="Script" path="res://aim.gd" id="20_ohqr7"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown front gun.png" id="20_wb4sc"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown look left gun.png" id="21_cefly"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown look right gun.png" id="22_rnt3q"]
+[ext_resource type="Texture2D" path="res://assets/Brown Mouse/Gun/Brown back gun.png" id="23_do3yt"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_epbfg"]
 light_mode = 2
@@ -129,6 +133,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("20_wb4sc")
+}],
+"loop": false,
+"name": &"shoot down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_cefly")
+}],
+"loop": true,
+"name": &"shoot left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_rnt3q")
+}],
+"loop": false,
+"name": &"shoot right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_do3yt")
+}],
+"loop": false,
+"name": &"shoot up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_a5vqm")
 }],
 "loop": true,
@@ -206,10 +242,122 @@ tracks/1/keys = {
 "values": [0, 1, 2]
 }
 
+[sub_resource type="Animation" id="Animation_0bxlb"]
+resource_name = "shoot down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot down"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0666667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_exyrh"]
+resource_name = "shoot left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot left"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_qludl"]
+resource_name = "shoot right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot right"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_nbms4"]
+resource_name = "shoot up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot up"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
 "RESET": SubResource("Animation_mtbjs"),
-"attack": SubResource("Animation_61pn1")
+"attack": SubResource("Animation_61pn1"),
+"shoot down": SubResource("Animation_0bxlb"),
+"shoot left": SubResource("Animation_exyrh"),
+"shoot right": SubResource("Animation_qludl"),
+"shoot up": SubResource("Animation_nbms4")
 }
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vfuks"]
@@ -275,7 +423,7 @@ texture = ExtResource("2_tv7fa")
 light_mask = 4
 visibility_layer = 4
 sprite_frames = SubResource("SpriteFrames_e3fi4")
-animation = &"static front"
+animation = &"shoot up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

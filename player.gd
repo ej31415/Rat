@@ -191,6 +191,20 @@ func _unhandled_input(event: InputEvent) -> void:
 				print(color + " shoot!!!")
 				set_physics_process(false)
 				# add shooting animation
+				$AnimationPlayer.play(animate_shoot())
+
+func animate_shoot() -> StringName:
+	var current_anim = $AnimatedSprite2D.animation
+	var new_anim = ""
+	if current_anim == "left" or current_anim == "static left":
+		new_anim = "shoot left"
+	elif current_anim == "right" or current_anim == "static right":
+		new_anim = "shoot right"
+	elif current_anim == "front" or current_anim == "static front":
+		new_anim = "shoot down"
+	elif current_anim == "gyatt" or current_anim == "static gyatt":
+		new_anim = "shoot up"
+	return new_anim
 
 @rpc("call_local", "reliable")
 func die_call(color):

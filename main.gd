@@ -125,6 +125,12 @@ func _process(delta: float) -> void:
 			_end_game.rpc(true)
 	if killed == 3 and not game_ended:
 		_end_game.rpc(false)
+		
+	if Input.is_action_just_pressed("HELP"):
+		$HelpControl.visible = !$HelpControl.visible
+	
+	if Input.is_action_just_pressed("TOGGLE LIGHT"):
+		$Darkness.visible = !$Darkness.visible
 
 func _on_again_button_pressed() -> void:
 	# make a new maze
@@ -143,7 +149,6 @@ func random_role_assignment():
 	color_to_role.clear()
 	for i in range(colors.size()):
 		color_to_role[colors[i]] = roles[i]
-
 
 func _on_title_screen_animation_finished():
 	$StartMenu/host.visible = true

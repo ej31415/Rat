@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=38 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
@@ -19,7 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="11_05kil"]
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
+[ext_resource type="Texture2D" uid="uid://vgbuf0utfacj" path="res://assets/Gray Mouse/Shoot/Gray front gun.png" id="20_ntv6s"]
 [ext_resource type="Script" path="res://aim.gd" id="20_of17u"]
+[ext_resource type="Texture2D" uid="uid://c71a05enaenpo" path="res://assets/Gray Mouse/Shoot/Gray look left gun.png" id="21_k2mrk"]
+[ext_resource type="Texture2D" uid="uid://boqcwu3b4m06a" path="res://assets/Gray Mouse/Shoot/Gray look right gun.png" id="22_38kqu"]
+[ext_resource type="Texture2D" uid="uid://cwam6tsw168id" path="res://assets/Gray Mouse/Shoot/Gray gun back.png" id="23_g6aio"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ifnq"]
 light_mode = 2
@@ -129,6 +133,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("20_ntv6s")
+}],
+"loop": false,
+"name": &"shoot down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_k2mrk")
+}],
+"loop": false,
+"name": &"shoot left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_38kqu")
+}],
+"loop": false,
+"name": &"shoot right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_g6aio")
+}],
+"loop": false,
+"name": &"shoot up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("2_grju3")
 }],
 "loop": true,
@@ -206,10 +242,122 @@ tracks/1/keys = {
 "values": [0, 1, 2]
 }
 
+[sub_resource type="Animation" id="Animation_28ygr"]
+resource_name = "shoot down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot down"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bi5kn"]
+resource_name = "shoot left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot left"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_uqbnr"]
+resource_name = "shoot right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot right"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_nm82n"]
+resource_name = "shoot up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"shoot up"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
 "RESET": SubResource("Animation_mtbjs"),
-"attack": SubResource("Animation_61pn1")
+"attack": SubResource("Animation_61pn1"),
+"shoot down": SubResource("Animation_28ygr"),
+"shoot left": SubResource("Animation_bi5kn"),
+"shoot right": SubResource("Animation_uqbnr"),
+"shoot up": SubResource("Animation_nm82n")
 }
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_b772t"]
@@ -267,9 +415,9 @@ scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.605274, 0.605274, 0.605274, 1)
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"attack"
-frame = 1
+animation = &"shoot down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
