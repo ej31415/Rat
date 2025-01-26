@@ -589,10 +589,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -272.0
-offset_top = -116.0
-offset_right = 280.0
-offset_bottom = 132.0
+offset_left = -384.0
+offset_top = -140.0
+offset_right = 384.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.340339, 0.340339, 0.340339, 1)
@@ -603,13 +603,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -108.0
-offset_right = 64.0
+offset_left = -80.0
+offset_top = -132.0
+offset_right = 80.0
 offset_bottom = -84.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "[center]Controls[/center]"
 
@@ -619,50 +620,52 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -272.0
+offset_left = -384.0
 offset_top = -68.0
-offset_right = 272.0
-offset_bottom = 132.0
+offset_right = 384.0
+offset_bottom = 188.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 2
 
 [node name="W" type="RichTextLabel" parent="HelpControl/GridContainer"]
 clip_contents = false
-custom_minimum_size = Vector2(270, 30)
+custom_minimum_size = Vector2(384, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 15
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][W] / [↑][/center]"
 
 [node name="Direction1" type="RichTextLabel" parent="HelpControl/GridContainer"]
-custom_minimum_size = Vector2(256, 30)
+custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move up[/center]"
 
 [node name="A" type="RichTextLabel" parent="HelpControl/GridContainer"]
-custom_minimum_size = Vector2(270, 30)
+custom_minimum_size = Vector2(384, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][A]  / [←][/center]"
 
 [node name="Direction2" type="RichTextLabel" parent="HelpControl/GridContainer"]
-custom_minimum_size = Vector2(256, 30)
+custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move left[/center]"
 
 [node name="S" type="RichTextLabel" parent="HelpControl/GridContainer"]
-custom_minimum_size = Vector2(270, 30)
+custom_minimum_size = Vector2(384, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][S]  / [↓][/center]"
 
@@ -670,14 +673,15 @@ text = "[center][S]  / [↓][/center]"
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move down[/center]"
 
 [node name="D" type="RichTextLabel" parent="HelpControl/GridContainer"]
-custom_minimum_size = Vector2(270, 30)
+custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][D] / [→][/center]"
 
@@ -685,14 +689,15 @@ text = "[center][D] / [→][/center]"
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move right[/center]"
 
 [node name="Shift" type="RichTextLabel" parent="HelpControl/GridContainer"]
-custom_minimum_size = Vector2(270, 30)
+custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][Shift] (rat only)[/center]"
 
@@ -700,7 +705,7 @@ text = "[center][Shift] (rat only)[/center]"
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]sprint[/center]"
 
@@ -708,6 +713,7 @@ text = "[center]sprint[/center]"
 custom_minimum_size = Vector2(270, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][Left click] (rat and sheriff only)[/center]"
 
@@ -715,7 +721,7 @@ text = "[center][Left click] (rat and sheriff only)[/center]"
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]kill[/center]"
 

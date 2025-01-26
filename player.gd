@@ -2,10 +2,10 @@ extends CharacterBody2D
 
 class_name Player
 
-static var roles = ["mouse", "mouse", "sheriff", "rat"]
+static var roles = ["mouse", "rat"]
 static var rng = RandomNumberGenerator.new()
 
-const SPEED = 400.0
+const SPEED = 600.0
 var anim = "static front"
 var role = ""
 var started = false
@@ -114,7 +114,7 @@ func _physics_process(delta: float) -> void:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		if role == "rat" and Input.is_action_pressed("SHIFT"):
 			direction *= 2.0
-			$AnimatedSprite2D.speed_scale = 2.0
+			$AnimatedSprite2D.speed_scale = 1.8
 		else:
 			$AnimatedSprite2D.speed_scale = 1.0
 		if is_multiplayer_authority():
@@ -173,14 +173,13 @@ func _unhandled_input(event: InputEvent) -> void:
 							add_kill.rpc()
 					print(color + " attack!!!")
 					set_physics_process(false)
+					$AnimatedSprite2D.modulate = Color(1, 1, 1, 1)
 					$AnimationPlayer.play("attack")
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
-				if target == null:
-					return
 				if sheriff_shot:
 					return
-				if target.has_method("die"):
+				if target.has_method("die") and target != null:
 					if target.get_role() == "sheriff":
 						return
 					if !target.is_alive():
@@ -190,7 +189,6 @@ func _unhandled_input(event: InputEvent) -> void:
 				sheriff_shot = true
 				print(color + " shoot!!!")
 				set_physics_process(false)
-				# add shooting animation
 				$AnimationPlayer.play(animate_shoot())
 
 func animate_shoot() -> StringName:
@@ -223,9 +221,7 @@ func die():
 		$ViewSphere.enabled = false
 	$Vision.enabled = false
 	set_physics_process(false)
-	$AnimatedSprite2D.animation = "die"
-	$AnimatedSprite2D.play()
-	$AnimatedSprite2D.position = Vector2(0, 50)
+	$AnimationPlayer.play("die")
 
 @rpc("call_local", "reliable")
 func add_kill():

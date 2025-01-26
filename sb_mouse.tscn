@@ -1,16 +1,16 @@
-[gd_scene load_steps=38 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=39 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
 [ext_resource type="Texture2D" uid="uid://cbqpliwfuwfxq" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step left.png" id="3_3prwe"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_5q2bj"]
-[ext_resource type="Texture2D" uid="uid://b55uc2vfeo8pk" path="res://assets/Strawberry Blonde Mouse/Attack/Strawberry blonde knife 1.png" id="4_6exjp"]
 [ext_resource type="Texture2D" uid="uid://boyrlfdgxfxpg" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde front static.png" id="4_e711r"]
-[ext_resource type="Texture2D" uid="uid://dj7xopuitj87g" path="res://assets/Strawberry Blonde Mouse/Attack/Strawberry blonde knife2.png" id="5_u1o6c"]
+[ext_resource type="Texture2D" uid="uid://vg5jihvqqsh2" path="res://assets/Strawberry Blonde Mouse/Attack/Blue knife 1.png" id="4_vdwhf"]
+[ext_resource type="Texture2D" uid="uid://brjpwk6hhj4my" path="res://assets/Strawberry Blonde Mouse/Attack/Blue knife 2.png" id="5_qfdqd"]
 [ext_resource type="Texture2D" uid="uid://dk556c12acunx" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step right.png" id="5_xn2d5"]
 [ext_resource type="Texture2D" uid="uid://bge8n2pa8kacf" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step left.png" id="6_akavk"]
 [ext_resource type="Texture2D" uid="uid://ccf2hsvq3qdxi" path="res://assets/Strawberry Blonde Mouse/Strawberry blonde stabbed.png" id="6_q2qw1"]
-[ext_resource type="Texture2D" uid="uid://dvfn6b85arslo" path="res://assets/Strawberry Blonde Mouse/Strawberry blonde dead.png" id="7_0wn4j"]
+[ext_resource type="Texture2D" uid="uid://drebtbi54o0c0" path="res://assets/Strawberry Blonde Mouse/Dead blue.png" id="7_t8opr"]
 [ext_resource type="Texture2D" uid="uid://g2dlxunwdhfc" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt static.png" id="7_vlm0e"]
 [ext_resource type="Texture2D" uid="uid://bo1ih0084ykrw" path="res://assets/Strawberry Blonde Mouse/Gyatt/Strawberry blonde gyatt step right.png" id="8_38brg"]
 [ext_resource type="Texture2D" uid="uid://df5cxsqj50rb6" path="res://assets/Strawberry Blonde Mouse/Left facing/Strawberry blonde facing left step left.png" id="9_rarhn"]
@@ -19,11 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://c5s5smkq7pjxp" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing right step left.png" id="12_mlgxm"]
 [ext_resource type="Texture2D" uid="uid://iidbiyi6vb8i" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing right.png" id="13_6xcaw"]
 [ext_resource type="Texture2D" uid="uid://cc21kn5d53ckk" path="res://assets/Strawberry Blonde Mouse/Right facing/Strawberry blonde facing rightstep right.png" id="14_nuo54"]
+[ext_resource type="Texture2D" uid="uid://ope808o5s31k" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue back gun.png" id="20_1ac76"]
+[ext_resource type="Texture2D" uid="uid://bihxa3fs8umja" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue gun front.png" id="20_vp0r1"]
 [ext_resource type="Script" path="res://aim.gd" id="20_xg0ic"]
-[ext_resource type="Texture2D" uid="uid://fo032hytfsfj" path="res://assets/Strawberry Blonde Mouse/Shoot/Strawberry blonde gun.png" id="20_yybnt"]
-[ext_resource type="Texture2D" uid="uid://cf847o7p3flsf" path="res://assets/Strawberry Blonde Mouse/Shoot/Strawberry blonde left gun.png" id="21_x1bjk"]
-[ext_resource type="Texture2D" uid="uid://dd4lfs8wq6hcf" path="res://assets/Strawberry Blonde Mouse/Shoot/Strawberry blonde right gun.png" id="22_a402c"]
-[ext_resource type="Texture2D" uid="uid://byqt5uoieaklo" path="res://assets/Strawberry Blonde Mouse/Shoot/Strawberry blonde back gun.png" id="23_1qf6f"]
+[ext_resource type="Texture2D" uid="uid://d0asm6hbbc2q2" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue left gun.png" id="21_cwus1"]
+[ext_resource type="Texture2D" uid="uid://qnd7jsvxrvh" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue right gun.png" id="22_8ssft"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dny3u"]
 light_mode = 2
@@ -43,10 +43,10 @@ fill_to = Vector2(0.12, 0.12)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_6exjp")
+"texture": ExtResource("4_vdwhf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_u1o6c")
+"texture": ExtResource("5_qfdqd")
 }],
 "loop": false,
 "name": &"attack",
@@ -57,7 +57,7 @@ animations = [{
 "texture": ExtResource("6_q2qw1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_0wn4j")
+"texture": ExtResource("7_t8opr")
 }],
 "loop": false,
 "name": &"die",
@@ -133,7 +133,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("20_yybnt")
+"texture": ExtResource("20_vp0r1")
 }],
 "loop": false,
 "name": &"shoot down",
@@ -141,7 +141,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("21_x1bjk")
+"texture": ExtResource("21_cwus1")
 }],
 "loop": false,
 "name": &"shoot left",
@@ -149,7 +149,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("22_a402c")
+"texture": ExtResource("22_8ssft")
 }],
 "loop": false,
 "name": &"shoot right",
@@ -157,7 +157,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("23_1qf6f")
+"texture": ExtResource("20_1ac76")
 }],
 "loop": false,
 "name": &"shoot up",
@@ -213,6 +213,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_61pn1"]
@@ -350,10 +362,50 @@ tracks/1/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_wh14k"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"die"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 50)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
 "RESET": SubResource("Animation_mtbjs"),
 "attack": SubResource("Animation_61pn1"),
+"die": SubResource("Animation_wh14k"),
 "shoot down": SubResource("Animation_6suq8"),
 "shoot left": SubResource("Animation_i75ns"),
 "shoot right": SubResource("Animation_0nbl2"),
@@ -421,11 +473,12 @@ position = Vector2(0, 123.5)
 texture = ExtResource("2_8dqxm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.356602, 0.609717, 0.999995, 1)
+modulate = Color(0.356863, 0.607843, 1, 1)
 light_mask = 8
 visibility_layer = 8
 sprite_frames = SubResource("SpriteFrames_st0pp")
-animation = &"shoot right"
+animation = &"die"
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
