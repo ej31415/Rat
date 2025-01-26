@@ -608,6 +608,7 @@ scale = Vector2(0.201313, 0.201313)
 texture = ExtResource("13_y2lfq")
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="HelpControl"]
 anchors_preset = 8
@@ -618,7 +619,7 @@ anchor_bottom = 0.5
 offset_left = -384.0
 offset_top = -140.0
 offset_right = 384.0
-offset_bottom = 188.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.340339, 0.340339, 0.340339, 1)

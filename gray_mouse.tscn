@@ -1,17 +1,17 @@
-[gd_scene load_steps=38 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=39 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_0n1gc"]
 [ext_resource type="Texture2D" uid="uid://c6d1h43fwosma" path="res://assets/Gray Mouse/Front Facing Walk/Static 8x.png" id="2_grju3"]
 [ext_resource type="Texture2D" uid="uid://ylv4iaoo4i6x" path="res://assets/Gray Mouse/Front Facing Walk/Step left 8x.png" id="3_xfpyb"]
-[ext_resource type="Texture2D" uid="uid://dpmdv1qfa6dgh" path="res://assets/Gray Mouse/Attack/Gray knife 1.png" id="4_dni4b"]
+[ext_resource type="Texture2D" uid="uid://cmtghs8a2lle7" path="res://assets/Gray Mouse/Attack/Yellow knife 1.png" id="4_5q7et"]
 [ext_resource type="Texture2D" uid="uid://klhn6l1ch1e5" path="res://assets/Gray Mouse/Gray stabbed.png" id="4_fxntr"]
 [ext_resource type="Texture2D" uid="uid://kgbikq7ha5or" path="res://assets/Gray Mouse/Left Walk/Looking left step left.png" id="4_xotgj"]
-[ext_resource type="Texture2D" uid="uid://73rrvxvrvefn" path="res://assets/Gray Mouse/Gray dead.png" id="5_51fhp"]
 [ext_resource type="Texture2D" uid="uid://cnj065wjnmxwc" path="res://assets/Gray Mouse/Left Walk/Looking left static.png" id="5_j5kuj"]
-[ext_resource type="Texture2D" uid="uid://bj3femabcvhp2" path="res://assets/Gray Mouse/Attack/Gray knife2.png" id="5_vbfkc"]
+[ext_resource type="Texture2D" uid="uid://d0q0um5nj1po5" path="res://assets/Gray Mouse/Attack/Yellow knife 2.png" id="5_jw066"]
 [ext_resource type="Texture2D" uid="uid://5ermy61iqpxp" path="res://assets/Gray Mouse/Left Walk/Looking left step right.png" id="6_1x0ko"]
+[ext_resource type="Texture2D" uid="uid://jbybup5mm0qw" path="res://assets/Gray Mouse/Dead yellow.png" id="7_8k202"]
 [ext_resource type="Texture2D" uid="uid://bnuax3agd5jqm" path="res://assets/Gray Mouse/Right Walk/Looking right step right.png" id="7_tsppb"]
 [ext_resource type="Texture2D" uid="uid://dax5savw1px6c" path="res://assets/Gray Mouse/Right Walk/Static looking right.png" id="8_e5crm"]
 [ext_resource type="Texture2D" uid="uid://cro8y181m4du8" path="res://assets/Gray Mouse/Right Walk/Looking right step left.png" id="9_50bk1"]
@@ -19,11 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="11_05kil"]
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
 [ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
-[ext_resource type="Texture2D" uid="uid://vgbuf0utfacj" path="res://assets/Gray Mouse/Shoot/Gray front gun.png" id="20_ntv6s"]
+[ext_resource type="Texture2D" uid="uid://dmb1aqad6cvh3" path="res://assets/Gray Mouse/Shoot/Yellow gun front.png" id="20_4i7xt"]
 [ext_resource type="Script" path="res://aim.gd" id="20_of17u"]
-[ext_resource type="Texture2D" uid="uid://c71a05enaenpo" path="res://assets/Gray Mouse/Shoot/Gray look left gun.png" id="21_k2mrk"]
-[ext_resource type="Texture2D" uid="uid://boqcwu3b4m06a" path="res://assets/Gray Mouse/Shoot/Gray look right gun.png" id="22_38kqu"]
-[ext_resource type="Texture2D" uid="uid://cwam6tsw168id" path="res://assets/Gray Mouse/Shoot/Gray gun back.png" id="23_g6aio"]
+[ext_resource type="Texture2D" uid="uid://dlseqfmtgbg3l" path="res://assets/Gray Mouse/Shoot/Yellow gun look left.png" id="21_mgqkw"]
+[ext_resource type="Texture2D" uid="uid://2emmqakl7tkk" path="res://assets/Gray Mouse/Shoot/Yellow gun look right.png" id="22_oonva"]
+[ext_resource type="Texture2D" uid="uid://c3xdaiwjruc06" path="res://assets/Gray Mouse/Shoot/Yellow gun back.png" id="23_efcoa"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ifnq"]
 light_mode = 2
@@ -43,10 +43,10 @@ fill_to = Vector2(0.12, 0.12)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_dni4b")
+"texture": ExtResource("4_5q7et")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_vbfkc")
+"texture": ExtResource("5_jw066")
 }],
 "loop": false,
 "name": &"attack",
@@ -57,7 +57,7 @@ animations = [{
 "texture": ExtResource("4_fxntr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_51fhp")
+"texture": ExtResource("7_8k202")
 }],
 "loop": false,
 "name": &"die",
@@ -133,7 +133,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("20_ntv6s")
+"texture": ExtResource("20_4i7xt")
 }],
 "loop": false,
 "name": &"shoot down",
@@ -141,7 +141,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("21_k2mrk")
+"texture": ExtResource("21_mgqkw")
 }],
 "loop": false,
 "name": &"shoot left",
@@ -149,7 +149,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("22_38kqu")
+"texture": ExtResource("22_oonva")
 }],
 "loop": false,
 "name": &"shoot right",
@@ -157,7 +157,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("23_g6aio")
+"texture": ExtResource("23_efcoa")
 }],
 "loop": false,
 "name": &"shoot up",
@@ -213,6 +213,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_61pn1"]
@@ -350,10 +362,50 @@ tracks/1/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_ylusl"]
+resource_name = "die"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"die"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 50)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
 "RESET": SubResource("Animation_mtbjs"),
 "attack": SubResource("Animation_61pn1"),
+"die": SubResource("Animation_ylusl"),
 "shoot down": SubResource("Animation_28ygr"),
 "shoot left": SubResource("Animation_bi5kn"),
 "shoot right": SubResource("Animation_uqbnr"),
@@ -415,9 +467,10 @@ scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.916199, 0.756383, 0, 1)
+modulate = Color(0.917647, 0.756863, 0, 1)
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"shoot down"
+animation = &"die"
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)
