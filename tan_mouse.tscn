@@ -421,7 +421,7 @@ position = Vector2(0, 123.5)
 texture = ExtResource("2_k803p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.372343, 0.652747, 0, 1)
+modulate = Color(0.445223, 0.773446, 3.85046e-07, 1)
 light_mask = 2
 visibility_layer = 2
 sprite_frames = SubResource("SpriteFrames_31bpd")
