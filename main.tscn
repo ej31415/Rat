@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=107 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -89,6 +89,10 @@
 [ext_resource type="Texture2D" uid="uid://d4m367bhcws7h" path="res://assets/Splash screen/72.png" id="81_tap4o"]
 [ext_resource type="Texture2D" uid="uid://o2ec54xl50eu" path="res://assets/Splash screen/73.png" id="82_bamwr"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
+[ext_resource type="Texture2D" uid="uid://cxwghgrnp7qcb" path="res://assets/Brown Mouse/Brown head.png" id="90_yerap"]
+[ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="91_58q8h"]
+[ext_resource type="Texture2D" uid="uid://o8dc0qtkkpae" path="res://assets/Strawberry Blonde Mouse/Sb mouse head.png" id="92_d7uxc"]
+[ext_resource type="Texture2D" uid="uid://cy4m6rpentofe" path="res://assets/Tan Mouse/Tan head.png" id="93_mcssf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1oqjg"]
 texture = ExtResource("4_8xaux")
@@ -516,37 +520,6 @@ theme_override_colors/font_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "localhost"
 
-[node name="HUD" type="CanvasLayer" parent="."]
-
-[node name="Role" type="Label" parent="HUD"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -52.0
-offset_top = -32.0
-offset_right = 52.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 8
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 35
-language = "en_US"
-
-[node name="HelpMessage" type="Label" parent="HUD"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -264.0
-offset_top = 24.0
-offset_right = -23.0
-offset_bottom = 49.0
-grow_horizontal = 0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 20
-text = "Press [tab] for controls"
-
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
 
@@ -748,6 +721,88 @@ text = "[center]kill[/center]"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("15_l7am8")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Role" type="Label" parent="HUD"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -32.0
+offset_right = 52.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 35
+language = "en_US"
+
+[node name="HelpMessage" type="Label" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -274.0
+offset_top = 24.0
+offset_right = -33.0
+offset_bottom = 49.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 20
+text = "Press [tab] for controls"
+
+[node name="ScoreBoard" type="CanvasGroup" parent="HUD"]
+visible = false
+
+[node name="GrayHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+position = Vector2(1047.5, 69.5)
+scale = Vector2(0.214844, 0.214844)
+texture = ExtResource("91_58q8h")
+
+[node name="SBHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+position = Vector2(1047.5, 102.5)
+scale = Vector2(0.214844, 0.214844)
+texture = ExtResource("92_d7uxc")
+
+[node name="TanHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+position = Vector2(1047.5, 136.5)
+scale = Vector2(0.214844, 0.214844)
+texture = ExtResource("93_mcssf")
+
+[node name="BrownHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+position = Vector2(1047.5, 170.5)
+scale = Vector2(0.214844, 0.214844)
+texture = ExtResource("90_yerap")
+
+[node name="GrayPts" type="Label" parent="HUD/ScoreBoard"]
+offset_left = 1070.0
+offset_top = 58.0
+offset_right = 1135.0
+offset_bottom = 81.0
+text = "- 0 pts"
+
+[node name="SBPts" type="Label" parent="HUD/ScoreBoard"]
+offset_left = 1070.0
+offset_top = 91.0
+offset_right = 1135.0
+offset_bottom = 114.0
+text = "- 0 pts"
+
+[node name="TanPts" type="Label" parent="HUD/ScoreBoard"]
+offset_left = 1070.0
+offset_top = 125.0
+offset_right = 1135.0
+offset_bottom = 148.0
+text = "- 0 pts"
+
+[node name="BrownPts" type="Label" parent="HUD/ScoreBoard"]
+offset_left = 1070.0
+offset_top = 159.0
+offset_right = 1135.0
+offset_bottom = 182.0
+text = "- 0 pts"
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="animation_finished" from="StartMenu/AnimatedSprite2D" to="." method="_on_title_screen_animation_finished"]

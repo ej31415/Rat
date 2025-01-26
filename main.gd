@@ -11,7 +11,18 @@ var mice_active_music
 
 var mice = []
 var color_to_role = {}
-var color_to_instance = {}
+var color_to_pts = {
+	"gray": 0,
+	"sb": 0,
+	"tan": 0,
+	"brown": 0
+}
+var color_to_pts_label = {
+	"gray": $HUD/ScoreBoard/GrayPts,
+	"sb": $HUD/ScoreBoard/SBPts,
+	"tan": $HUD/ScoreBoard/TanPts,
+	"brown": $HUD/ScoreBoard/BrownPts
+}
 var game_ended = false
 var is_host = false
 
@@ -24,6 +35,21 @@ func _init() -> void:
 	tan_mouse = preload("res://tan_mouse.tscn")
 	mice_active_music = preload("res://assets/Music/mice_active_music.mp3")
 	mice = [[gray_mouse, "gray"], [brown_mouse, "brown"], [sb_mouse, "sb"], [tan_mouse, "tan"]]
+	
+
+func _ready():
+	color_to_pts = {
+		"gray": 0,
+		"sb": 0,
+		"tan": 0,
+		"brown": 0
+	}
+	color_to_pts_label = {
+		"gray": $HUD/ScoreBoard/GrayPts,
+		"sb": $HUD/ScoreBoard/SBPts,
+		"tan": $HUD/ScoreBoard/TanPts,
+		"brown": $HUD/ScoreBoard/BrownPts
+	}
 
 func _on_host_pressed():
 	peer.create_server(135)
@@ -43,7 +69,6 @@ func _add_player(id = 1):
 		var color = mice[idx][1]
 		var player = mouse.instantiate()
 		color_to_role[color] = player.get_role()
-		color_to_instance[color] = player
 		mice.pop_at(idx)
 		player.name = str(id)
 		call_deferred("add_child", player)
@@ -61,9 +86,12 @@ func _on_start_pressed():
 
 @rpc("call_local", "reliable")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
+	color_to_role = true_roles
+	
 	killed = 0
 	
 	$StartMenu.visible = false
+	$HUD/ScoreBoard.visible = true
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
@@ -89,10 +117,10 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 
 func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
-	_end_game.rpc(false)
+	_end_game.rpc(false, false)
 
 @rpc("call_local", "reliable", "any_peer")
-func _end_game(mice_win: bool) -> void:
+func _end_game(mice_win: bool, sheriff_win: bool) -> void:
 	if game_ended:
 		return
 	print("game ended!!!")
@@ -105,13 +133,28 @@ func _end_game(mice_win: bool) -> void:
 		$TimerCanvasLayer/Panel/TimeLeft.text = "00 : 00 : 000"
 		$WinScreen/RatWins.visible = true
 	
-	if is_host: # allow only host to start new game
-		$WinScreen/Again.visible = true
 	# reset player positions and lock
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("disable_movement"):
 			player.disable_movement()
 		player.global_position = Vector2i(0, 0)
+	
+	if mice_win:
+		for color in color_to_role:
+			if color_to_role[color] != "rat":
+				color_to_pts[color] += 1
+			if sheriff_win and color_to_role[color] == "sheriff":
+				color_to_pts[color] += 1
+	else:
+		for color in color_to_role:
+			if color_to_role[color] == "rat":
+				color_to_pts[color] += 2
+	
+	for color in color_to_pts_label:
+		color_to_pts_label[color].text = "- " + str(color_to_pts[color]) + " pts"
+		
+	if is_host: # allow only host to start new game
+		$WinScreen/Again.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -120,11 +163,11 @@ func _process(delta: float) -> void:
 			continue
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
-			_end_game.rpc(true)
+			_end_game.rpc(true, false)
 		if player.get_role() == "rat" and not game_ended and not player.is_alive():
-			_end_game.rpc(true)
+			_end_game.rpc(true, true)
 	if killed == 3 and not game_ended:
-		_end_game.rpc(false)
+		_end_game.rpc(false, false)
 		
 	if Input.is_action_just_pressed("HELP"):
 		$HelpControl.visible = !$HelpControl.visible
