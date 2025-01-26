@@ -415,7 +415,7 @@ scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.605274, 0.605274, 0.605274, 1)
+modulate = Color(0.916199, 0.756383, 0, 1)
 sprite_frames = SubResource("SpriteFrames_p1mwd")
 animation = &"shoot down"
 
