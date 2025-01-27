@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-static var roles = ["mouse", "rat"]
+static var roles = ["mouse", "mouse", "sheriff", "rat"]
 static var rng = RandomNumberGenerator.new()
 
 const SPEED = 600.0

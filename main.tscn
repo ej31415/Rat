@@ -763,21 +763,25 @@ text = "Press [tab] for controls"
 visible = false
 
 [node name="GrayHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+modulate = Color(0.917647, 0.756863, 0, 1)
 position = Vector2(1047.5, 69.5)
 scale = Vector2(0.214844, 0.214844)
 texture = ExtResource("91_58q8h")
 
 [node name="SBHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+modulate = Color(0.356863, 0.607843, 1, 1)
 position = Vector2(1047.5, 102.5)
 scale = Vector2(0.214844, 0.214844)
 texture = ExtResource("92_d7uxc")
 
 [node name="TanHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+modulate = Color(0.447059, 0.772549, 0, 1)
 position = Vector2(1047.5, 136.5)
 scale = Vector2(0.214844, 0.214844)
 texture = ExtResource("93_mcssf")
 
 [node name="BrownHead" type="Sprite2D" parent="HUD/ScoreBoard"]
+modulate = Color(1, 0.596078, 0.576471, 1)
 position = Vector2(1047.5, 170.5)
 scale = Vector2(0.214844, 0.214844)
 texture = ExtResource("90_yerap")

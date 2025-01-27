@@ -11,18 +11,8 @@ var mice_active_music
 
 var mice = []
 var color_to_role = {}
-var color_to_pts = {
-	"gray": 0,
-	"sb": 0,
-	"tan": 0,
-	"brown": 0
-}
-var color_to_pts_label = {
-	"gray": $HUD/ScoreBoard/GrayPts,
-	"sb": $HUD/ScoreBoard/SBPts,
-	"tan": $HUD/ScoreBoard/TanPts,
-	"brown": $HUD/ScoreBoard/BrownPts
-}
+var color_to_pts = {}
+var color_to_pts_label = {}
 var game_ended = false
 var is_host = false
 
