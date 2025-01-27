@@ -468,7 +468,7 @@ visibility_layer = 4
 position = Vector2(0, 35)
 scale = Vector2(5, 5)
 range_z_max = 0
-range_item_cull_mask = 36
+range_item_cull_mask = 47
 shadow_item_cull_mask = 43
 texture = SubResource("GradientTexture2D_60pgy")
 

@@ -98,7 +98,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 				role = temp
 		
 	$HUD/Role.text = "You are a " + role + ". . ."
-	$TimerCanvasLayer.start(1000*120)
+	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
 	$WinScreen/Again.visible = false
