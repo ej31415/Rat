@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_0n1gc"]
 [ext_resource type="Texture2D" uid="uid://c6d1h43fwosma" path="res://assets/Gray Mouse/Front Facing Walk/Static 8x.png" id="2_grju3"]
+[ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_unvbn"]
 [ext_resource type="Texture2D" uid="uid://ylv4iaoo4i6x" path="res://assets/Gray Mouse/Front Facing Walk/Step left 8x.png" id="3_xfpyb"]
 [ext_resource type="Texture2D" uid="uid://cmtghs8a2lle7" path="res://assets/Gray Mouse/Attack/Yellow knife 1.png" id="4_5q7et"]
 [ext_resource type="Texture2D" uid="uid://klhn6l1ch1e5" path="res://assets/Gray Mouse/Gray stabbed.png" id="4_fxntr"]
@@ -18,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://bycdbqpnd7u0i" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step left.png" id="10_f40xh"]
 [ext_resource type="Texture2D" uid="uid://d1iqrscwuyffx" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt static.png" id="11_05kil"]
 [ext_resource type="Texture2D" uid="uid://btfiiltmos4go" path="res://assets/Gray Mouse/Gyatt Walk/Gyatt step right.png" id="12_ab1sv"]
-[ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="15_sh5o6"]
 [ext_resource type="Texture2D" uid="uid://dmb1aqad6cvh3" path="res://assets/Gray Mouse/Shoot/Yellow gun front.png" id="20_4i7xt"]
 [ext_resource type="Script" path="res://aim.gd" id="20_of17u"]
 [ext_resource type="Texture2D" uid="uid://dlseqfmtgbg3l" path="res://assets/Gray Mouse/Shoot/Yellow gun look left.png" id="21_mgqkw"]
@@ -433,19 +433,18 @@ properties/5/spawn = true
 properties/5/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
-visible = false
 material = SubResource("CanvasItemMaterial_6ifnq")
 motion_mode = 1
 script = ExtResource("1_fvefs")
 
 [node name="Vision" type="PointLight2D" parent="."]
-position = Vector2(0, 10)
+position = Vector2(3.86535e-12, 44)
 rotation = -1.5708
 scale = Vector2(2.5, 1.2)
 range_z_max = 0
 range_item_cull_mask = 46
 shadow_item_cull_mask = 46
-texture = ExtResource("15_sh5o6")
+texture = ExtResource("2_unvbn")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, 35)

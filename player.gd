@@ -68,43 +68,36 @@ func is_alive():
 	return alive
 	
 func set_vision():
+	$Vision.position = Vector2(0, 50)
 	if velocity.x < 0 and velocity.y < 0:
-		$Vision.position = Vector2(0, -10)
 		$Vision.scale = Vector2(2.5, 1.2)
 		$Vision.rotation_degrees = 45
 		$Aim.rotation_degrees = 135
 	elif velocity.x < 0 and velocity.y > 0:
-		$Vision.position = Vector2(-40, -10)
 		$Vision.scale = Vector2(2.5, 1.2)
 		$Vision.rotation_degrees = -45
 		$Aim.rotation_degrees = 45
 	elif velocity.x > 0 and velocity.y < 0:
-		$Vision.position = Vector2(-40, -10)
 		$Vision.scale = Vector2(-2.5, 1.2)
 		$Vision.rotation_degrees = -45
 		$Aim.rotation_degrees = -135
 	elif velocity.x > 0 and velocity.y > 0:
-		$Vision.position = Vector2(0, -10)
 		$Vision.scale = Vector2(-2.5, 1.2)
 		$Vision.rotation_degrees = 45
 		$Aim.rotation_degrees = -45
 	elif velocity.x < 0:
-		$Vision.position = Vector2(-40, -10)
 		$Vision.scale = Vector2(2.5, 1.2)
 		$Vision.rotation_degrees = 0
 		$Aim.rotation_degrees = 90
 	elif velocity.y < 0:
-		$Vision.position = Vector2(42, 10)
 		$Vision.scale = Vector2(2.5, 1.2)
 		$Vision.rotation_degrees = 90
 		$Aim.rotation_degrees = 180
 	elif velocity.y > 0:
-		$Vision.position = Vector2(-42, 40)
 		$Vision.scale = Vector2(2.5, 1.2)
 		$Vision.rotation_degrees = -90
 		$Aim.rotation_degrees = 0
 	elif velocity.x > 0:
-		$Vision.position = Vector2(40, -10)
 		$Vision.scale = Vector2(-2.5, 1.2)
 		$Vision.rotation_degrees = 0
 		$Aim.rotation_degrees = -90
