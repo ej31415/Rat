@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-static var roles = ["mouse", "mouse", "sheriff", "rat"]
+static var roles = ["sheriff", "rat"]
 static var rng = RandomNumberGenerator.new()
 
 const SPEED = 600.0
@@ -114,7 +114,7 @@ func _physics_process(delta: float) -> void:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		if role == "rat" and Input.is_action_pressed("SHIFT"):
 			direction *= 2.0
-			$AnimatedSprite2D.speed_scale = 1.8
+			$AnimatedSprite2D.speed_scale = 1.5
 		else:
 			$AnimatedSprite2D.speed_scale = 1.0
 		if is_multiplayer_authority():
