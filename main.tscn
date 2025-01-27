@@ -1,4 +1,4 @@
-[gd_scene load_steps=107 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=106 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -19,7 +19,6 @@
 [ext_resource type="Texture2D" uid="uid://crj5xqc3jxh6i" path="res://assets/Splash screen/4.png" id="13_twr5n"]
 [ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
 [ext_resource type="Texture2D" uid="uid://n2bq6u35n8u6" path="res://assets/Splash screen/5(1).png" id="14_jgmpx"]
-[ext_resource type="AudioStream" uid="uid://xkqp87wc82dl" path="res://assets/Music/mice_active_music.mp3" id="15_l7am8"]
 [ext_resource type="Texture2D" uid="uid://crjfqj8hgjoyi" path="res://assets/Splash screen/5.png" id="15_y7243"]
 [ext_resource type="Texture2D" uid="uid://b0wamwtgf2py6" path="res://assets/Splash screen/6.png" id="16_5cxbo"]
 [ext_resource type="Texture2D" uid="uid://bokj2jo3lxh6e" path="res://assets/Splash screen/7.png" id="17_s4jwh"]
@@ -726,7 +725,6 @@ bbcode_enabled = true
 text = "[center]kill[/center]"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("15_l7am8")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

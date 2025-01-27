@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cx8l1xgteqkjw"
+path="res://.godot/imported/Mice Win Sound.mp3-84724592eb64162dbd63c167d52bbca2.mp3str"
+
+[deps]
+
+source_file="res://assets/Music/Mice Win Sound.mp3"
+dest_files=["res://.godot/imported/Mice Win Sound.mp3-84724592eb64162dbd63c167d52bbca2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

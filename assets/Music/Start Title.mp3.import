@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d3kes7a7fqlra"
+path="res://.godot/imported/Start Title.mp3-5d78f4bcdc1cfa02d836c7a04e35f046.mp3str"
+
+[deps]
+
+source_file="res://assets/Music/Start Title.mp3"
+dest_files=["res://.godot/imported/Start Title.mp3-5d78f4bcdc1cfa02d836c7a04e35f046.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

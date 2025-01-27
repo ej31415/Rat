@@ -7,7 +7,10 @@ var peer = ENetMultiplayerPeer.new()
 @export var brown_mouse: PackedScene
 @export var sb_mouse: PackedScene
 @export var tan_mouse: PackedScene
+var title_sound
 var mice_active_music
+var mice_victory_sound
+var rat_victory_sound
 
 var mice = []
 var color_to_role = {}
@@ -23,9 +26,11 @@ func _init() -> void:
 	brown_mouse = preload("res://brown_mouse.tscn")
 	sb_mouse = preload("res://sb_mouse.tscn")
 	tan_mouse = preload("res://tan_mouse.tscn")
+	title_sound = preload("res://assets/Music/Start Title.mp3")
 	mice_active_music = preload("res://assets/Music/mice_active_music.mp3")
+	mice_victory_sound = preload("res://assets/Music/Mice Win Sound.mp3")
+	rat_victory_sound = preload("res://assets/Music/Rat Win Sound.mp3") 
 	mice = [[gray_mouse, "gray"], [brown_mouse, "brown"], [sb_mouse, "sb"], [tan_mouse, "tan"]]
-	
 
 func _ready():
 	color_to_pts = {
@@ -40,6 +45,9 @@ func _ready():
 		"tan": $HUD/ScoreBoard/TanPts,
 		"brown": $HUD/ScoreBoard/BrownPts
 	}
+	
+	$AudioStreamPlayer.stream = title_sound
+	$AudioStreamPlayer.play()
 
 func _on_host_pressed():
 	peer.create_server(135)
@@ -102,7 +110,8 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
 	$WinScreen/Again.visible = false
-	$AudioStreamPlayer.playing = true
+	$AudioStreamPlayer.stream = mice_active_music
+	$AudioStreamPlayer.play()
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
 	game_ended = false
 
@@ -117,12 +126,15 @@ func _end_game(mice_win: bool, sheriff_win: bool) -> void:
 	print("game ended!!!")
 	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
-	$AudioStreamPlayer.playing = false
+	$AudioStreamPlayer.stop()
 	if mice_win:
 		$WinScreen/MiceWin.visible = true
+		$AudioStreamPlayer.stream = mice_victory_sound
 	else:
 		$TimerCanvasLayer/Panel/TimeLeft.text = "00 : 00 : 000"
 		$WinScreen/RatWins.visible = true
+		$AudioStreamPlayer.stream = rat_victory_sound
+	$AudioStreamPlayer.play()
 	
 	# reset player positions and lock
 	for player in get_tree().get_nodes_in_group("player"):
