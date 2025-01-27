@@ -179,7 +179,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				var target = $Aim.get_collider()
 				if sheriff_shot:
 					return
-				if target.has_method("die") and target != null:
+				if target != null and target.has_method("die"):
 					if target.get_role() == "sheriff":
 						return
 					if !target.is_alive():
