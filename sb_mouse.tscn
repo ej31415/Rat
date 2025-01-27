@@ -431,12 +431,6 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("Vision:scale")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath("Vision:enabled")
-properties/6/spawn = true
-properties/6/replication_mode = 1
-properties/7/path = NodePath("ViewSphere:enabled")
-properties/7/spawn = true
-properties/7/replication_mode = 1
 
 [node name="SBMouse" type="CharacterBody2D"]
 visible = false

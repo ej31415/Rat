@@ -38,10 +38,14 @@ func starter(color_to_roles):
 	$ViewSphere.texture_scale = 1
 	$Vision.enabled = true
 	enable_movement()
-	if is_multiplayer_authority():
+	if is_multiplayer_authority():				
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
 		return role
+	else:
+		print("kill vision")
+		$Vision.enabled = false
+		$ViewSphere.enabled = false
 	return ""
 
 func disable_movement():

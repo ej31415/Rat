@@ -102,7 +102,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
 	$WinScreen/Again.visible = false
-	$AudioStreamPlayer2D.playing = true
+	$AudioStreamPlayer.playing = true
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
 	game_ended = false
 
@@ -117,7 +117,7 @@ func _end_game(mice_win: bool, sheriff_win: bool) -> void:
 	print("game ended!!!")
 	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
-	$AudioStreamPlayer2D.playing = false
+	$AudioStreamPlayer.playing = false
 	if mice_win:
 		$WinScreen/MiceWin.visible = true
 	else:
