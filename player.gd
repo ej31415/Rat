@@ -38,12 +38,12 @@ func starter(color_to_roles):
 	$ViewSphere.texture_scale = 1
 	$Vision.enabled = true
 	enable_movement()
-	if is_multiplayer_authority():				
+	reset_sprite_to_defaults()
+	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
 		return role
 	else:
-		print("kill vision")
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
 	return ""
@@ -66,6 +66,16 @@ func get_color():
 
 func is_alive():
 	return alive
+	
+func reset_sprite_to_defaults():
+	$Vision.position = Vector2(0, 50)
+	$Vision.scale = Vector2(2.5, 1.2)
+	$Vision.rotation_degrees = -90
+	$ViewSphere.texture_scale = 1
+	$AnimatedSprite2D.animation = "static front"
+	$AnimatedSprite2D.play()
+	$AnimatedSprite2D.stop()
+	$Aim.rotation_degrees = 0
 	
 func set_vision():
 	$Vision.position = Vector2(0, 50)

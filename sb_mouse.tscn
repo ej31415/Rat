@@ -445,8 +445,9 @@ script = ExtResource("1_2m8vg")
 [node name="Vision" type="PointLight2D" parent="."]
 light_mask = 8
 visibility_layer = 8
-position = Vector2(0, 35)
-scale = Vector2(3, 3)
+position = Vector2(0, 50)
+rotation = -1.5708
+scale = Vector2(2.5, 1.2)
 range_z_max = 0
 range_item_cull_mask = 39
 shadow_item_cull_mask = 39
@@ -471,8 +472,7 @@ modulate = Color(0.356863, 0.607843, 1, 1)
 light_mask = 8
 visibility_layer = 8
 sprite_frames = SubResource("SpriteFrames_st0pp")
-animation = &"die"
-frame = 1
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

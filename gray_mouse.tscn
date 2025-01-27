@@ -433,12 +433,13 @@ properties/5/spawn = true
 properties/5/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
+visible = false
 material = SubResource("CanvasItemMaterial_6ifnq")
 motion_mode = 1
 script = ExtResource("1_fvefs")
 
 [node name="Vision" type="PointLight2D" parent="."]
-position = Vector2(3.86535e-12, 44)
+position = Vector2(0, 50)
 rotation = -1.5708
 scale = Vector2(2.5, 1.2)
 range_z_max = 0
@@ -462,8 +463,7 @@ texture = ExtResource("2_0n1gc")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.917647, 0.756863, 0, 1)
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"die"
-frame = 1
+animation = &"static front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 25)

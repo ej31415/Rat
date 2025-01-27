@@ -45,9 +45,6 @@ func _ready():
 		"tan": $HUD/ScoreBoard/TanPts,
 		"brown": $HUD/ScoreBoard/BrownPts
 	}
-	
-	$AudioStreamPlayer.stream = title_sound
-	$AudioStreamPlayer.play()
 
 func _on_host_pressed():
 	peer.create_server(135)
@@ -140,7 +137,9 @@ func _end_game(mice_win: bool, sheriff_win: bool) -> void:
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("disable_movement"):
 			player.disable_movement()
+			player.reset_sprite_to_defaults()
 		player.global_position = Vector2i(0, 0)
+		
 	
 	if mice_win:
 		for color in color_to_role:
@@ -202,3 +201,6 @@ func _on_title_screen_animation_finished():
 	$StartMenu/start.visible = true
 	$StartMenu/label.visible = true
 	$StartMenu/ip.visible = true
+	
+	$AudioStreamPlayer.stream = title_sound
+	$AudioStreamPlayer.play()

@@ -457,6 +457,9 @@ script = ExtResource("1_2yxuw")
 [node name="Vision" type="PointLight2D" parent="."]
 light_mask = 4
 visibility_layer = 4
+position = Vector2(0, 50)
+rotation = -1.5708
+scale = Vector2(2.5, 1.2)
 range_z_max = 0
 range_item_cull_mask = 43
 shadow_item_cull_mask = 43
