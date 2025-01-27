@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
+[ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_uk5ia"]
 [ext_resource type="Texture2D" uid="uid://c2s3tn04ic1rv" path="res://assets/Tan Mouse/Front/Tan front step L.png" id="3_86xjd"]
-[ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_rgn25"]
 [ext_resource type="Texture2D" uid="uid://jjxobrplrpjp" path="res://assets/Tan Mouse/Tan stabbed.png" id="4_564i5"]
 [ext_resource type="Texture2D" uid="uid://vbrqsct5rrka" path="res://assets/Tan Mouse/Attack/Green knife 1.png" id="4_mux2c"]
 [ext_resource type="Texture2D" uid="uid://bkkkd2u3y47ck" path="res://assets/Tan Mouse/Front/Front tan static.png" id="4_pibo6"]
@@ -448,7 +448,7 @@ visibility_layer = 2
 range_z_max = 0
 range_item_cull_mask = 45
 shadow_item_cull_mask = 45
-texture = ExtResource("3_rgn25")
+texture = ExtResource("2_uk5ia")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
 light_mask = 2

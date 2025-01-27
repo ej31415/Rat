@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
+[ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_8swru"]
 [ext_resource type="Texture2D" uid="uid://cbqpliwfuwfxq" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde step left.png" id="3_3prwe"]
-[ext_resource type="Texture2D" uid="uid://d4bp62bjddfam" path="res://assets/Flashlight.png" id="3_5q2bj"]
 [ext_resource type="Texture2D" uid="uid://boyrlfdgxfxpg" path="res://assets/Strawberry Blonde Mouse/Front/Strawberry blonde front static.png" id="4_e711r"]
 [ext_resource type="Texture2D" uid="uid://vg5jihvqqsh2" path="res://assets/Strawberry Blonde Mouse/Attack/Blue knife 1.png" id="4_vdwhf"]
 [ext_resource type="Texture2D" uid="uid://brjpwk6hhj4my" path="res://assets/Strawberry Blonde Mouse/Attack/Blue knife 2.png" id="5_qfdqd"]
@@ -450,7 +450,7 @@ scale = Vector2(3, 3)
 range_z_max = 0
 range_item_cull_mask = 39
 shadow_item_cull_mask = 39
-texture = ExtResource("3_5q2bj")
+texture = ExtResource("2_8swru")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
 light_mask = 8
