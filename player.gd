@@ -6,6 +6,7 @@ static var roles = ["mouse", "mouse", "sheriff", "rat"]
 static var rng = RandomNumberGenerator.new()
 
 const SPEED = 600.0
+const FOV_TWEEN_DURATION = 0.075
 var anim = "static front"
 var role = ""
 var started = false
@@ -66,6 +67,28 @@ func get_color():
 
 func is_alive():
 	return alive
+
+func _rotation_tween(end_angle: float):
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	
+	var start_angle := fmod($Vision.rotation_degrees, 360.0)
+	if start_angle < 0:
+		start_angle += 360.0
+		
+	end_angle = fmod(end_angle, 360.0)
+	if end_angle < 0:
+		end_angle += 360.0
+		
+	var diff = end_angle - start_angle
+	if abs(diff) > 180.0:
+		if diff > 0:
+			diff -= 360.0
+		else:
+			diff += 360.0
+			
+	var target_angle = $Vision.rotation_degrees + diff
+	tween.tween_property($Vision, "rotation_degrees", target_angle, FOV_TWEEN_DURATION)
 	
 func reset_sprite_to_defaults():
 	$Vision.position = Vector2(0, 50)
@@ -78,38 +101,31 @@ func reset_sprite_to_defaults():
 	$Aim.rotation_degrees = 0
 	
 func set_vision():
+	$Vision.scale = Vector2(2.5, 1.2)
 	$Vision.position = Vector2(0, 50)
 	if velocity.x < 0 and velocity.y < 0:
-		$Vision.scale = Vector2(2.5, 1.2)
-		$Vision.rotation_degrees = 45
+		_rotation_tween(45)
 		$Aim.rotation_degrees = 135
 	elif velocity.x < 0 and velocity.y > 0:
-		$Vision.scale = Vector2(2.5, 1.2)
-		$Vision.rotation_degrees = -45
+		_rotation_tween(315)
 		$Aim.rotation_degrees = 45
 	elif velocity.x > 0 and velocity.y < 0:
-		$Vision.scale = Vector2(-2.5, 1.2)
-		$Vision.rotation_degrees = -45
+		_rotation_tween(135)
 		$Aim.rotation_degrees = -135
 	elif velocity.x > 0 and velocity.y > 0:
-		$Vision.scale = Vector2(-2.5, 1.2)
-		$Vision.rotation_degrees = 45
+		_rotation_tween(225)
 		$Aim.rotation_degrees = -45
 	elif velocity.x < 0:
-		$Vision.scale = Vector2(2.5, 1.2)
-		$Vision.rotation_degrees = 0
+		_rotation_tween(0)
 		$Aim.rotation_degrees = 90
 	elif velocity.y < 0:
-		$Vision.scale = Vector2(2.5, 1.2)
-		$Vision.rotation_degrees = 90
+		_rotation_tween(90)
 		$Aim.rotation_degrees = 180
 	elif velocity.y > 0:
-		$Vision.scale = Vector2(2.5, 1.2)
-		$Vision.rotation_degrees = -90
+		_rotation_tween(270)
 		$Aim.rotation_degrees = 0
 	elif velocity.x > 0:
-		$Vision.scale = Vector2(-2.5, 1.2)
-		$Vision.rotation_degrees = 0
+		_rotation_tween(180)
 		$Aim.rotation_degrees = -90
 
 func _physics_process(delta: float) -> void:
