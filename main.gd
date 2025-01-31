@@ -51,7 +51,8 @@ func _on_host_pressed():
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
 	_add_player()
-	$StartMenu/start.disabled = false
+	$StartMenu/start.visible = true
+	$StartMenu/num_players.visible = true
 	$StartMenu/host.disabled = true
 	$StartMenu/join.disabled = true
 	is_host = true
@@ -67,6 +68,9 @@ func _add_player(id = 1):
 		mice.pop_at(idx)
 		player.name = str(id)
 		call_deferred("add_child", player)
+	$StartMenu/num_players.text = "Joined: " + str(4 - len(mice)) + "/4"
+	if len(mice) == 0:
+		$StartMenu/start.disabled = false
 
 func _on_join_pressed():
 	peer.create_client($StartMenu/ip.text, 135)
@@ -198,7 +202,6 @@ func random_role_assignment():
 func _on_title_screen_animation_finished():
 	$StartMenu/host.visible = true
 	$StartMenu/join.visible = true
-	$StartMenu/start.visible = true
 	$StartMenu/label.visible = true
 	$StartMenu/ip.visible = true
 	
