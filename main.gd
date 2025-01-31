@@ -103,6 +103,11 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 				role = temp
 		
 	$HUD/Role.text = "You are a " + role + ". . ."
+	if role == "sheriff":
+		$HUD/Gun.visible = true 
+		$HUD/Gun.modulate = Color(1,1,1)
+	elif role == "rat":
+		$HUD/Knife.visible = true 
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
@@ -176,6 +181,10 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("TOGGLE LIGHT"):
 		$Darkness.visible = !$Darkness.visible
+		
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_shot") and player.get_shot() == true:
+			$HUD/Gun.modulate=Color(60/255.0,60/255.0,60/255.0)
 
 func _on_again_button_pressed() -> void:
 	# make a new maze
@@ -204,3 +213,7 @@ func _on_title_screen_animation_finished():
 	
 	$AudioStreamPlayer.stream = title_sound
 	$AudioStreamPlayer.play()
+
+func _on_skip_pressed() -> void:
+	$StartMenu/Skip.visible = false
+	$StartMenu/AnimatedSprite2D.speed_scale = 5.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=108 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -91,7 +91,9 @@
 [ext_resource type="Texture2D" uid="uid://cxwghgrnp7qcb" path="res://assets/Brown Mouse/Brown head.png" id="90_yerap"]
 [ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="91_58q8h"]
 [ext_resource type="Texture2D" uid="uid://o8dc0qtkkpae" path="res://assets/Strawberry Blonde Mouse/Sb mouse head.png" id="92_d7uxc"]
+[ext_resource type="Texture2D" uid="uid://dm05pyoxhtnuq" path="res://assets/UI/Gun icon.png" id="93_jk6us"]
 [ext_resource type="Texture2D" uid="uid://cy4m6rpentofe" path="res://assets/Tan Mouse/Tan head.png" id="93_mcssf"]
+[ext_resource type="Texture2D" uid="uid://bm0e3q780eblu" path="res://assets/UI/Knife icon no blood.png" id="94_i526h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1oqjg"]
 texture = ExtResource("4_8xaux")
@@ -441,6 +443,22 @@ autoplay = "default"
 frame = 73
 frame_progress = 1.0
 script = SubResource("GDScript_d3nxb")
+
+[node name="Skip" type="Button" parent="StartMenu"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -48.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 20
+text = ">  >  >"
 
 [node name="host" type="Button" parent="StartMenu"]
 visible = false
@@ -812,8 +830,42 @@ offset_right = 1135.0
 offset_bottom = 182.0
 text = "- 0 pts"
 
+[node name="Gun" type="Sprite2D" parent="HUD"]
+visible = false
+position = Vector2(1080, 576)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("93_jk6us")
+
+[node name="Knife" type="Sprite2D" parent="HUD"]
+visible = false
+position = Vector2(1080, 576)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("94_i526h")
+
+[node name="Shots" type="RichTextLabel" parent="HUD"]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -119.0
+offset_right = -25.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+text = "[center]10[/center]"
+
+[node name="KnifeCooldown" type="RichTextLabel" parent="HUD"]
+offset_right = 40.0
+offset_bottom = 40.0
+
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="animation_finished" from="StartMenu/AnimatedSprite2D" to="." method="_on_title_screen_animation_finished"]
+[connection signal="pressed" from="StartMenu/Skip" to="." method="_on_skip_pressed"]
 [connection signal="pressed" from="StartMenu/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="StartMenu/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="StartMenu/start" to="." method="_on_start_pressed"]

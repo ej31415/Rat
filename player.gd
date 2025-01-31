@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Player
 
-static var roles = ["mouse", "mouse", "sheriff", "rat"]
+static var roles = ["sheriff"]
 static var rng = RandomNumberGenerator.new()
 
 const SPEED = 600.0
@@ -64,7 +64,10 @@ func get_role():
 
 func get_color():
 	return color
-
+	
+func get_shot():
+	return sheriff_shot
+	
 func is_alive():
 	return alive
 
