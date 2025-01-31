@@ -108,6 +108,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 		$HUD/Gun.modulate = Color(1,1,1)
 	elif role == "rat":
 		$HUD/Knife.visible = true 
+	
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
