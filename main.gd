@@ -142,6 +142,9 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	
 	$StartMenu.visible = false
 	$HUD/ScoreBoard.visible = true
+	$HUD/Gun.visible = false
+	$HUD/Knife.visible = false
+	$HUD/KnifeCooldown.visible = false
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
@@ -209,9 +212,6 @@ func _end_game(mice_win: bool, sheriff_win: bool, player_discon: bool) -> void:
 		if player.has_method("disable_movement"):
 			player.disable_movement()
 			player.reset_sprite_to_defaults()
-			$HUD/Gun.visible = false
-			$HUD/Knife.visible = false
-			$HUD/KnifeCooldown.visible = false
 		player.global_position = Vector2i(0, 0)
 		
 	if !player_discon:
