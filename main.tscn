@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=109 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -88,6 +88,7 @@
 [ext_resource type="Texture2D" uid="uid://d4m367bhcws7h" path="res://assets/Splash screen/72.png" id="81_tap4o"]
 [ext_resource type="Texture2D" uid="uid://o2ec54xl50eu" path="res://assets/Splash screen/73.png" id="82_bamwr"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
+[ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
 [ext_resource type="Texture2D" uid="uid://cxwghgrnp7qcb" path="res://assets/Brown Mouse/Brown head.png" id="90_yerap"]
 [ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="91_58q8h"]
 [ext_resource type="Texture2D" uid="uid://o8dc0qtkkpae" path="res://assets/Strawberry Blonde Mouse/Sb mouse head.png" id="92_d7uxc"]
@@ -450,15 +451,18 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -104.0
-offset_top = -48.0
+offset_left = -120.0
+offset_top = -96.0
 offset_right = -8.0
-offset_bottom = -8.0
+offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 20
-text = ">  >  >"
+icon = ExtResource("85_mrld5")
+flat = true
+icon_alignment = 1
+expand_icon = true
 
 [node name="host" type="Button" parent="StartMenu"]
 visible = false
@@ -842,26 +846,22 @@ position = Vector2(1080, 576)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("94_i526h")
 
-[node name="Shots" type="RichTextLabel" parent="HUD"]
+[node name="KnifeCooldown" type="RichTextLabel" parent="HUD"]
 visible = false
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -120.0
-offset_top = -119.0
-offset_right = -25.0
-offset_bottom = -24.0
+offset_left = -136.0
+offset_top = -136.0
+offset_right = -8.0
+offset_bottom = -8.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_font_sizes/normal_font_size = 60
+theme_override_fonts/normal_font = ExtResource("12_63mnq")
+theme_override_font_sizes/normal_font_size = 80
 bbcode_enabled = true
-text = "[center]10[/center]"
-
-[node name="KnifeCooldown" type="RichTextLabel" parent="HUD"]
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="animation_finished" from="StartMenu/AnimatedSprite2D" to="." method="_on_title_screen_animation_finished"]

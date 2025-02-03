@@ -107,7 +107,8 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary):
 		$HUD/Gun.visible = true 
 		$HUD/Gun.modulate = Color(1,1,1)
 	elif role == "rat":
-		$HUD/Knife.visible = true 
+		$HUD/Knife.visible = true
+		$HUD/KnifeCooldown.visible = true
 	
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/MiceWin.visible = false
@@ -166,26 +167,42 @@ func _end_game(mice_win: bool, sheriff_win: bool) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var cooldown = -1
 	for player in get_tree().get_nodes_in_group("player"):
 		if not player.has_method("get_role"):
 			continue
+			
+		# Check end game
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
 			_end_game.rpc(true, false)
 		if player.get_role() == "rat" and not game_ended and not player.is_alive():
 			_end_game.rpc(true, true)
+			
+		# Check sheriff shot
+		if player.get_shot() == true:
+			$HUD/Gun.modulate=Color(60/255.0,60/255.0,60/255.0)
+			
+		# Check rat kill time
+		cooldown = max(cooldown, player.get_kill_cooldown())
+		
+			
 	if killed == 3 and not game_ended:
 		_end_game.rpc(false, false)
+		
+	if cooldown > 0:
+		print(cooldown)
+		$HUD/Knife.modulate=Color(60/255.0,60/255.0,60/255.0)
+		$HUD/KnifeCooldown.text = "[center]" + str(cooldown)
+	else:
+		$HUD/Knife.modulate=Color(1, 1, 1)
+		$HUD/KnifeCooldown.clear()
 		
 	if Input.is_action_just_pressed("HELP"):
 		$HelpControl.visible = !$HelpControl.visible
 	
 	if Input.is_action_just_pressed("TOGGLE LIGHT"):
 		$Darkness.visible = !$Darkness.visible
-		
-	for player in get_tree().get_nodes_in_group("player"):
-		if player.has_method("get_shot") and player.get_shot() == true:
-			$HUD/Gun.modulate=Color(60/255.0,60/255.0,60/255.0)
 
 func _on_again_button_pressed() -> void:
 	# make a new maze
@@ -206,6 +223,7 @@ func random_role_assignment():
 		color_to_role[colors[i]] = roles[i]
 
 func _on_title_screen_animation_finished():
+	$StartMenu/Skip.visible = false
 	$StartMenu/host.visible = true
 	$StartMenu/join.visible = true
 	$StartMenu/start.visible = true
