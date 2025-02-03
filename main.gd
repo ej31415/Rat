@@ -252,7 +252,7 @@ func _process(delta: float) -> void:
 			
 		# Check rat kill time
 		cooldown = max(cooldown, player.get_kill_cooldown())
-    
+	
 	if killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false)
 		
@@ -306,4 +306,14 @@ func _on_title_screen_animation_finished():
 
 func _on_skip_pressed() -> void:
 	$StartMenu/Skip.visible = false
-	$StartMenu/AnimatedSprite2D.speed_scale = 5.0
+
+func _on_title_sequence_finished() -> void:
+	$StartMenu/TitleScreen.visible = true
+	$StartMenu/Skip.visible = false
+	$StartMenu/host.visible = true
+	$StartMenu/join.visible = true
+	$StartMenu/label.visible = true
+	$StartMenu/ip.visible = true
+	
+	$AudioStreamPlayer.stream = title_sound
+	$AudioStreamPlayer.play()
