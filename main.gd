@@ -174,6 +174,12 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("HELP"):
 		$HelpControl.visible = !$HelpControl.visible
 	
+	if Input.is_action_just_pressed("LEFT") and $HelpControl.visible:
+		$HelpControl/Left.emit_signal("button_down")
+	
+	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
+		$HelpControl/Right.emit_signal("button_down")
+		
 	if Input.is_action_just_pressed("TOGGLE LIGHT"):
 		$Darkness.visible = !$Darkness.visible
 
