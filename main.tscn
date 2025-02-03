@@ -534,6 +534,21 @@ theme_override_colors/font_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "localhost"
 
+[node name="error" type="Label" parent="StartMenu"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.517
+anchor_right = 0.5
+anchor_bottom = 0.517
+offset_left = -61.0
+offset_top = 202.984
+offset_right = 40.0
+offset_bottom = 225.984
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "error joining"
+
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
 
@@ -583,6 +598,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 28
+disabled = true
 text = "Play Again"
 
 [node name="RatWins" type="TextureRect" parent="WinScreen"]
@@ -593,6 +609,33 @@ offset_right = 4602.0
 offset_bottom = 2330.0
 scale = Vector2(0.201313, 0.201313)
 texture = ExtResource("13_y2lfq")
+
+[node name="PlayerDisconnected" type="Label" parent="WinScreen"]
+visible = false
+offset_left = 132.0
+offset_top = 221.0
+offset_right = 1017.0
+offset_bottom = 379.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 80
+text = "Player Disconnected"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="num_players" type="Label" parent="WinScreen"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.517
+anchor_right = 0.5
+anchor_bottom = 0.517
+offset_left = 145.0
+offset_top = 195.984
+offset_right = 353.0
+offset_bottom = 218.984
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Joined: 1/4"
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
 visible = false
