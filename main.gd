@@ -161,6 +161,13 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 		color_to_pts_label[color].text = "- " + str(color_to_pts[color]) + " pts"
 
 	$HUD/Role.text = "You are a " + role + ". . ."
+	if role == "sheriff":
+		$HUD/Gun.visible = true 
+		$HUD/Gun.modulate = Color(1,1,1)
+	elif role == "rat":
+		$HUD/Knife.visible = true
+		$HUD/KnifeCooldown.visible = true
+	
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/MiceWin.visible = false
 	$WinScreen/RatWins.visible = false
@@ -225,18 +232,37 @@ func _end_game(mice_win: bool, sheriff_win: bool, player_discon: bool) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var cooldown = -1
 	if player_disconnected and not game_ended:
 		_end_game.rpc(false, false, true)
 	for player in get_tree().get_nodes_in_group("player"):
 		if not player.has_method("get_role"):
 			continue
+			
+		# Check end game
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
 			_end_game.rpc(true, false, false)
 		if player.get_role() == "rat" and not game_ended and not player.is_alive():
 			_end_game.rpc(true, true, false)
+			
+		# Check sheriff shot
+		if player.get_shot() == true:
+			$HUD/Gun.modulate=Color(60/255.0,60/255.0,60/255.0)
+			
+		# Check rat kill time
+		cooldown = max(cooldown, player.get_kill_cooldown())
+    
 	if killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false)
+		
+	if cooldown > 0:
+		print(cooldown)
+		$HUD/Knife.modulate=Color(60/255.0,60/255.0,60/255.0)
+		$HUD/KnifeCooldown.text = "[center]" + str(cooldown)
+	else:
+		$HUD/Knife.modulate=Color(1, 1, 1)
+		$HUD/KnifeCooldown.clear()
 		
 	if Input.is_action_just_pressed("HELP"):
 		$HelpControl.visible = !$HelpControl.visible
@@ -269,6 +295,7 @@ func random_role_assignment():
 		color_to_role[colors[i]] = roles[i]
 
 func _on_title_screen_animation_finished():
+	$StartMenu/Skip.visible = false
 	$StartMenu/host.visible = true
 	$StartMenu/join.visible = true
 	$StartMenu/label.visible = true
@@ -276,3 +303,7 @@ func _on_title_screen_animation_finished():
 	
 	$AudioStreamPlayer.stream = title_sound
 	$AudioStreamPlayer.play()
+
+func _on_skip_pressed() -> void:
+	$StartMenu/Skip.visible = false
+	$StartMenu/AnimatedSprite2D.speed_scale = 5.0

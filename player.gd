@@ -2,11 +2,12 @@ extends CharacterBody2D
 
 class_name Player
 
-static var roles = ["mouse", "mouse", "sheriff", "rat"]
+static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
 const SPEED = 600.0
 const FOV_TWEEN_DURATION = 0.075
+const rat_cooldown = 10
 var anim = "static front"
 var role = ""
 var started = false
@@ -64,7 +65,13 @@ func get_role():
 
 func get_color():
 	return color
+	
+func get_shot():
+	return sheriff_shot
 
+func get_kill_cooldown():
+	return ceil(rat_cooldown - (Time.get_unix_time_from_system() - last_rat_kill))
+	
 func is_alive():
 	return alive
 
@@ -182,7 +189,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
 				for child in get_tree().get_nodes_in_group("player"):
-					if Time.get_unix_time_from_system() - last_rat_kill < 10:
+					if Time.get_unix_time_from_system() - last_rat_kill < rat_cooldown:
 						print(color + " on kill cooldown")
 						break
 					if child.has_method("die"):
