@@ -55,6 +55,7 @@ func _ready():
 		"tan": tan_mouse,
 		"brown": brown_mouse
 	}
+	multiplayer.server_disconnected.connect(_on_server_disconnect)
 
 func _on_host_pressed():
 	peer.create_server(135)
@@ -109,6 +110,11 @@ func _remove_player_handler(color, interim_discon):
 	$WinScreen/num_players.text = "Joined: " + str(4 - len(mice)) + "/4"
 	$StartMenu/start.disabled = true
 	$WinScreen/Again.disabled = true
+
+func _on_server_disconnect():
+	$TimerCanvasLayer.end_timer()
+	$AudioStreamPlayer.stop()
+	$WinScreen/ServerDisconnected.visible = true
 
 func _on_join_pressed():
 	var error = peer.create_client($StartMenu/ip.text, 135)

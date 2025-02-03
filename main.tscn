@@ -637,6 +637,19 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Joined: 1/4"
 
+[node name="ServerDisconnected" type="Label" parent="WinScreen"]
+visible = false
+offset_left = 132.0
+offset_top = 221.0
+offset_right = 1017.0
+offset_bottom = 379.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 80
+text = "The server has disconnected. Please restart your game."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="HelpControl" type="CanvasLayer" parent="."]
 visible = false
 
