@@ -209,6 +209,9 @@ func _end_game(mice_win: bool, sheriff_win: bool, player_discon: bool) -> void:
 		if player.has_method("disable_movement"):
 			player.disable_movement()
 			player.reset_sprite_to_defaults()
+			$HUD/Gun.visible = false
+			$HUD/Knife.visible = false
+			$HUD/KnifeCooldown.visible = false
 		player.global_position = Vector2i(0, 0)
 		
 	if !player_discon:
@@ -252,7 +255,7 @@ func _process(delta: float) -> void:
 			
 		# Check rat kill time
 		cooldown = max(cooldown, player.get_kill_cooldown())
-    
+	
 	if killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false)
 		

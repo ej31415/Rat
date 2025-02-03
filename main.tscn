@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=114 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -89,7 +89,6 @@
 [ext_resource type="Texture2D" uid="uid://o2ec54xl50eu" path="res://assets/Splash screen/73.png" id="82_bamwr"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
-
 [ext_resource type="Script" path="res://help_dialog.gd" id="89_6vxhg"]
 [ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="90_muood"]
 [ext_resource type="Texture2D" uid="uid://rbqtpvbk8ytd" path="res://assets/UI Sprites/right_arrow.png" id="90_pnvh2"]
@@ -97,8 +96,8 @@
 [ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="91_58q8h"]
 [ext_resource type="Texture2D" uid="uid://cubvfbgohpio3" path="res://assets/Brown Mouse/Attack/Red knife 2.png" id="91_wbe5m"]
 [ext_resource type="Texture2D" uid="uid://o8dc0qtkkpae" path="res://assets/Strawberry Blonde Mouse/Sb mouse head.png" id="92_d7uxc"]
-[ext_resource type="Texture2D" uid="uid://dm05pyoxhtnuq" path="res://assets/UI/Gun icon.png" id="93_jk6us"]
 [ext_resource type="Texture2D" uid="uid://bihxa3fs8umja" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue gun front.png" id="92_ql6vx"]
+[ext_resource type="Texture2D" uid="uid://dm05pyoxhtnuq" path="res://assets/UI/Gun icon.png" id="93_jk6us"]
 [ext_resource type="Texture2D" uid="uid://cy4m6rpentofe" path="res://assets/Tan Mouse/Tan head.png" id="93_mcssf"]
 [ext_resource type="Texture2D" uid="uid://bm0e3q780eblu" path="res://assets/UI/Knife icon no blood.png" id="94_i526h"]
 
