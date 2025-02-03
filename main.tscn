@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=111 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -89,10 +89,16 @@
 [ext_resource type="Texture2D" uid="uid://o2ec54xl50eu" path="res://assets/Splash screen/73.png" id="82_bamwr"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
+
+[ext_resource type="Script" path="res://help_dialog.gd" id="89_6vxhg"]
+[ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="90_muood"]
+[ext_resource type="Texture2D" uid="uid://rbqtpvbk8ytd" path="res://assets/UI Sprites/right_arrow.png" id="90_pnvh2"]
 [ext_resource type="Texture2D" uid="uid://cxwghgrnp7qcb" path="res://assets/Brown Mouse/Brown head.png" id="90_yerap"]
 [ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="91_58q8h"]
+[ext_resource type="Texture2D" uid="uid://cubvfbgohpio3" path="res://assets/Brown Mouse/Attack/Red knife 2.png" id="91_wbe5m"]
 [ext_resource type="Texture2D" uid="uid://o8dc0qtkkpae" path="res://assets/Strawberry Blonde Mouse/Sb mouse head.png" id="92_d7uxc"]
 [ext_resource type="Texture2D" uid="uid://dm05pyoxhtnuq" path="res://assets/UI/Gun icon.png" id="93_jk6us"]
+[ext_resource type="Texture2D" uid="uid://bihxa3fs8umja" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue gun front.png" id="92_ql6vx"]
 [ext_resource type="Texture2D" uid="uid://cy4m6rpentofe" path="res://assets/Tan Mouse/Tan head.png" id="93_mcssf"]
 [ext_resource type="Texture2D" uid="uid://bm0e3q780eblu" path="res://assets/UI/Knife icon no blood.png" id="94_i526h"]
 
@@ -507,6 +513,21 @@ theme_override_fonts/font = ExtResource("10_dpgvo")
 disabled = true
 text = "Start"
 
+[node name="num_players" type="Label" parent="StartMenu"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.517
+anchor_right = 0.5
+anchor_bottom = 0.517
+offset_left = 146.0
+offset_top = 153.984
+offset_right = 354.0
+offset_bottom = 176.984
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Joined: 1/4"
+
 [node name="label" type="Label" parent="StartMenu"]
 visible = false
 anchors_preset = -1
@@ -540,6 +561,21 @@ theme_override_colors/font_uneditable_color = Color(0.772549, 0.772549, 0.772549
 theme_override_colors/font_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "localhost"
+
+[node name="error" type="Label" parent="StartMenu"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.517
+anchor_right = 0.5
+anchor_bottom = 0.517
+offset_left = -61.0
+offset_top = 202.984
+offset_right = 40.0
+offset_bottom = 225.984
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "error joining"
 
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
@@ -590,6 +626,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 28
+disabled = true
 text = "Play Again"
 
 [node name="RatWins" type="TextureRect" parent="WinScreen"]
@@ -601,33 +638,77 @@ offset_bottom = 2330.0
 scale = Vector2(0.201313, 0.201313)
 texture = ExtResource("13_y2lfq")
 
-[node name="HelpControl" type="CanvasLayer" parent="."]
+[node name="PlayerDisconnected" type="Label" parent="WinScreen"]
 visible = false
+offset_left = 132.0
+offset_top = 221.0
+offset_right = 1017.0
+offset_bottom = 379.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 80
+text = "Player Disconnected"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="num_players" type="Label" parent="WinScreen"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.517
+anchor_right = 0.5
+anchor_bottom = 0.517
+offset_left = 145.0
+offset_top = 195.984
+offset_right = 353.0
+offset_bottom = 218.984
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Joined: 1/4"
+
+[node name="ServerDisconnected" type="Label" parent="WinScreen"]
+visible = false
+offset_left = 132.0
+offset_top = 221.0
+offset_right = 1017.0
+offset_bottom = 379.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 80
+text = "The server has disconnected. Please restart your game."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="HelpControl" type="CanvasLayer" parent="."]
+script = ExtResource("89_6vxhg")
 
 [node name="ColorRect" type="ColorRect" parent="HelpControl"]
-anchors_preset = 8
+anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.482
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 0.483
 offset_left = -384.0
-offset_top = -140.0
+offset_top = -166.336
 offset_right = 384.0
-offset_bottom = 140.0
+offset_bottom = 175.016
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.340339, 0.340339, 0.340339, 1)
+metadata/_edit_use_anchors_ = true
 
-[node name="Title" type="RichTextLabel" parent="HelpControl"]
+[node name="Controls" type="CanvasGroup" parent="HelpControl"]
+position = Vector2(0, -38)
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Controls"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -132.0
-offset_right = 80.0
-offset_bottom = -84.0
+offset_left = 496.0
+offset_top = 192.0
+offset_right = 656.0
+offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -635,21 +716,21 @@ theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "[center]Controls[/center]"
 
-[node name="GridContainer" type="GridContainer" parent="HelpControl"]
+[node name="GridContainer" type="GridContainer" parent="HelpControl/Controls"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -384.0
-offset_top = -68.0
-offset_right = 384.0
-offset_bottom = 188.0
+offset_left = 192.0
+offset_top = 255.0
+offset_right = 960.0
+offset_bottom = 511.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 2
 
-[node name="W" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="W" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 clip_contents = false
 custom_minimum_size = Vector2(384, 30)
 layout_mode = 2
@@ -658,7 +739,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][W] / [↑][/center]"
 
-[node name="Direction1" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Direction1" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -666,7 +747,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move up[/center]"
 
-[node name="A" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="A" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(384, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -674,7 +755,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][A]  / [←][/center]"
 
-[node name="Direction2" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Direction2" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -682,7 +763,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move left[/center]"
 
-[node name="S" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="S" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(384, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -690,7 +771,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][S]  / [↓][/center]"
 
-[node name="Direction3" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Direction3" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -698,7 +779,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move down[/center]"
 
-[node name="D" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="D" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -706,7 +787,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][D] / [→][/center]"
 
-[node name="Direction4" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Direction4" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -714,7 +795,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]move right[/center]"
 
-[node name="Shift" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Shift" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(368, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -722,7 +803,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][Shift] (rat only)[/center]"
 
-[node name="Direction5" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Direction5" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -730,7 +811,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]sprint[/center]"
 
-[node name="LBtn" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="LBtn" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(270, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -738,13 +819,155 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center][Left click] (rat and sheriff only)[/center]"
 
-[node name="Direction6" type="RichTextLabel" parent="HelpControl/GridContainer"]
+[node name="Direction6" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]kill[/center]"
+
+[node name="Mouse" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Mouse"]
+offset_left = 496.0
+offset_top = 156.0
+offset_right = 656.0
+offset_bottom = 204.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Mouse[/center]"
+metadata/_edit_use_anchors_ = true
+
+[node name="MouseImage" type="TextureRect" parent="HelpControl/Mouse"]
+offset_left = 351.0
+offset_top = 208.0
+offset_right = 523.0
+offset_bottom = 380.0
+texture = ExtResource("90_muood")
+expand_mode = 1
+
+[node name="MouseDesc" type="RichTextLabel" parent="HelpControl/Mouse"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 573.0
+offset_top = 275.0
+offset_right = 829.0
+offset_bottom = 362.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The mice must escape the maze alive before the timer runs out.[/center]"
+scroll_active = false
+
+[node name="Rat" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Rat"]
+offset_left = 496.0
+offset_top = 156.0
+offset_right = 656.0
+offset_bottom = 204.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Rat[/center]"
+metadata/_edit_use_anchors_ = true
+
+[node name="RatDesc" type="RichTextLabel" parent="HelpControl/Rat"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 561.0
+offset_top = 293.0
+offset_right = 817.0
+offset_bottom = 348.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The rat has to kill all the mice.[/center]"
+scroll_active = false
+
+[node name="RatImage" type="TextureRect" parent="HelpControl/Rat"]
+offset_left = 349.0
+offset_top = 209.0
+offset_right = 519.0
+offset_bottom = 379.0
+texture = ExtResource("91_wbe5m")
+expand_mode = 1
+
+[node name="Sheriff" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Sheriff"]
+offset_left = 496.0
+offset_top = 156.0
+offset_right = 656.0
+offset_bottom = 204.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Sheriff[/center]"
+metadata/_edit_use_anchors_ = true
+
+[node name="SheriffImage" type="TextureRect" parent="HelpControl/Sheriff"]
+offset_left = 346.0
+offset_top = 204.0
+offset_right = 524.0
+offset_bottom = 382.0
+texture = ExtResource("92_ql6vx")
+expand_mode = 1
+
+[node name="SheriffDesc" type="RichTextLabel" parent="HelpControl/Sheriff"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 592.0
+offset_top = 252.0
+offset_right = 848.0
+offset_bottom = 396.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The sheriff's job is to shoot the rat.
+
+Be careful, though! You only have 1 bullet.[/center]"
+scroll_active = false
+
+[node name="Right" type="TextureButton" parent="HelpControl"]
+offset_left = 652.0
+offset_top = 429.0
+offset_right = 695.0
+offset_bottom = 472.0
+texture_normal = ExtResource("90_pnvh2")
+ignore_texture_size = true
+stretch_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Left" type="TextureButton" parent="HelpControl"]
+offset_left = 460.0
+offset_top = 429.0
+offset_right = 503.0
+offset_bottom = 472.0
+texture_normal = ExtResource("90_pnvh2")
+ignore_texture_size = true
+stretch_mode = 0
+flip_h = true
+metadata/_edit_use_anchors_ = true
+
+[node name="PageNumber" type="RichTextLabel" parent="HelpControl"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = 109.0
+offset_right = 79.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("12_63mnq")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center]1/4[/center]"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
@@ -872,3 +1095,5 @@ bbcode_enabled = true
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
+[connection signal="button_down" from="HelpControl/Right" to="HelpControl" method="_on_right_button_down"]
+[connection signal="button_down" from="HelpControl/Left" to="HelpControl" method="_on_left_button_down"]
