@@ -305,9 +305,13 @@ func _on_title_screen_animation_finished():
 	$AudioStreamPlayer.play()
 
 func _on_skip_pressed() -> void:
-	$StartMenu/Skip.visible = false
+	show_title_menu()
 
 func _on_title_sequence_finished() -> void:
+	show_title_menu()
+
+func show_title_menu() -> void:
+	$StartMenu/VideoContainer.visible = false
 	$StartMenu/TitleScreen.visible = true
 	$StartMenu/Skip.visible = false
 	$StartMenu/host.visible = true
