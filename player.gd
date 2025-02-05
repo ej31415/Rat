@@ -203,7 +203,6 @@ func _unhandled_input(event: InputEvent) -> void:
 							add_kill.rpc()
 					print(color + " attack!!!")
 					set_physics_process(false)
-					$AnimatedSprite2D.modulate = Color(1, 1, 1, 1)
 					$AnimationPlayer.play("attack")
 			elif role == "sheriff":
 				var target = $Aim.get_collider()

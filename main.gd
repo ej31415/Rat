@@ -191,6 +191,9 @@ func _end_game(mice_win: bool, sheriff_win: bool, player_discon: bool) -> void:
 	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
 	$AudioStreamPlayer.stop()
+	$HUD/Gun.visible = false
+	$HUD/Knife.visible = false
+	$HUD/KnifeCooldown.visible = false
 	if player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
 	else:
