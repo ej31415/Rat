@@ -5,7 +5,7 @@ class_name Player
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
-const SPEED = 600.0
+var SPEED = 600.0
 const FOV_TWEEN_DURATION = 0.075
 const rat_cooldown = 10
 var anim = "static front"
@@ -15,6 +15,8 @@ var color = ""
 var alive = true
 var last_rat_kill = 0
 var sheriff_shot = false
+var ghost_instance: CharacterBody2D
+var ghost_scene: PackedScene
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -22,6 +24,7 @@ func _init() -> void:
 	roles.pop_at(idx)
 	alive = true
 	started = false
+	ghost_scene = preload("res://ghost_mouse.tscn")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -32,6 +35,10 @@ func _ready():
 		print("role not set")
 
 func starter(color_to_roles):
+	if ghost_instance and is_instance_valid(ghost_instance):
+		ghost_instance.queue_free()
+		ghost_instance = null
+
 	role = color_to_roles[color]
 	alive = true
 	sheriff_shot = false
@@ -138,10 +145,14 @@ func set_vision():
 func _physics_process(delta: float) -> void:
 	if !alive:
 		return
-		
+	
+	if color == "ghost":
+		print(role)
+		print("received", is_multiplayer_authority(), started, get_multiplayer_authority())
 	# Get the input direction and handle the movement/deceleration.
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
+		
 		if role == "rat" and Input.is_action_pressed("SHIFT"):
 			direction *= 2.0
 			$AnimatedSprite2D.speed_scale = 1.5
@@ -246,11 +257,35 @@ func die():
 	alive = false
 	if is_multiplayer_authority():
 		$ViewSphere.texture_scale = 8
+		ghost_instance = spawn_ghost()
 	else:
 		$ViewSphere.enabled = false
 	$Vision.enabled = false
 	set_physics_process(false)
 	$AnimationPlayer.play("die")
+	await get_tree().create_timer(1).timeout
+	# spawn the ghost ideally
+	
+
+func spawn_ghost() -> CharacterBody2D:
+	
+	var ghost := ghost_scene.instantiate()
+	ghost.global_position = global_position
+	get_parent().add_child(ghost)
+	$Camera2D.enabled = false
+		
+	if multiplayer.has_multiplayer_peer():
+		ghost.set_multiplayer_authority(multiplayer.get_unique_id())
+		print("ghost mult authority set to", ghost.get_multiplayer_authority())
+
+	# Ensure the ghost's camera is enabled and set as current
+	if ghost.has_node("Camera2D"):
+		print("setting camera")
+		var camera = ghost.get_node("Camera2D")
+		camera.enabled = true
+		camera.make_current()
+		
+	return ghost
 
 @rpc("call_local", "reliable")
 func add_kill():
