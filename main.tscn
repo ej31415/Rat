@@ -398,6 +398,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("89_6vxhg")
 
 [node name="ColorRect" type="ColorRect" parent="HelpControl"]

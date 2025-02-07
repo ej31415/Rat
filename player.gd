@@ -34,6 +34,7 @@ func _ready():
 func starter(color_to_roles):
 	role = color_to_roles[color]
 	alive = true
+	last_rat_kill = Time.get_unix_time_from_system() - 5
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
