@@ -260,7 +260,7 @@ func _process(delta: float) -> void:
 		_end_game.rpc(false, false, false)
 		
 	if cooldown > 0:
-		print(cooldown)
+		#print(cooldown)
 		$HUD/Knife.modulate=Color(60/255.0,60/255.0,60/255.0)
 		$HUD/KnifeCooldown.text = "[center]" + str(cooldown)
 	else:
