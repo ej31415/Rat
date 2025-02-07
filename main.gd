@@ -158,7 +158,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 				role = temp
 
 	for color in color_to_pts_label:
-		color_to_pts_label[color].text = "- " + str(color_to_pts[color]) + " pts"
+		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 
 	$HUD/Role.text = "You are a " + role + ". . ."
 	if role == "sheriff":
@@ -238,7 +238,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 					color_to_pts[color] += 2
 	
 	for color in color_to_pts_label:
-		color_to_pts_label[color].text = "- " + str(color_to_pts[color]) + " pts"
+		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 		
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true

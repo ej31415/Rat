@@ -768,28 +768,28 @@ offset_left = 1070.0
 offset_top = 58.0
 offset_right = 1135.0
 offset_bottom = 81.0
-text = "- 0 pts"
+text = " 0 pts"
 
 [node name="SBPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
 offset_top = 91.0
 offset_right = 1135.0
 offset_bottom = 114.0
-text = "- 0 pts"
+text = " 0 pts"
 
 [node name="TanPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
 offset_top = 125.0
 offset_right = 1135.0
 offset_bottom = 148.0
-text = "- 0 pts"
+text = " 0 pts"
 
 [node name="BrownPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
 offset_top = 159.0
 offset_right = 1135.0
 offset_bottom = 182.0
-text = "- 0 pts"
+text = " 0 pts"
 
 [node name="Gun" type="Sprite2D" parent="HUD"]
 visible = false
