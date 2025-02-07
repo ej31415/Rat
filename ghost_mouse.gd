@@ -1,11 +1,16 @@
 extends Player
 
+var enabled := false
+
 func _init() -> void:
 	SPEED = 1500
 	
 func _ready() -> void:
 	super.set_physics_process(true)
-	started = true
+	started = false
+	visible = false
+	$AnimatedSprite2D.modulate = Color("#71bdee00")
+	$ViewSphere.energy = 0
 	print("initialized ghost mouse", alive, started)
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

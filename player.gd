@@ -45,6 +45,7 @@ func starter(color_to_roles):
 	started = true
 	$ViewSphere.enabled = true
 	$ViewSphere.texture_scale = 1
+	$ViewSphere.energy = 1
 	$Vision.enabled = true
 	enable_movement()
 	reset_sprite_to_defaults()
@@ -146,9 +147,6 @@ func _physics_process(delta: float) -> void:
 	if !alive:
 		return
 	
-	if color == "ghost":
-		print(role)
-		print("received", is_multiplayer_authority(), started, get_multiplayer_authority())
 	# Get the input direction and handle the movement/deceleration.
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
@@ -255,35 +253,52 @@ func die():
 		return
 	print(color + " killed!!!")
 	alive = false
-	if is_multiplayer_authority():
-		ghost_instance = spawn_ghost()
-	else:
-		$ViewSphere.enabled = false
 	$Vision.enabled = false
 	set_physics_process(false)
 	$AnimationPlayer.play("die")
+	if is_multiplayer_authority():
+		ghost_instance = spawn_ghost()
+		await get_tree().create_timer(1).timeout
+		fade_out_vision(0.5)
+		activate_ghost(0.5)
+	else:
+		$ViewSphere.enabled = false
 	await get_tree().create_timer(1).timeout
 	
 
+func fade_out_vision(tween_seconds: float) -> void:
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property($ViewSphere, "energy", 0, tween_seconds)
+	
 func spawn_ghost() -> CharacterBody2D:
 	var ghost := ghost_scene.instantiate()
 	ghost.global_position = global_position
 	get_parent().add_child(ghost)
-	$Camera2D.enabled = false
-		
 	if multiplayer.has_multiplayer_peer():
 		ghost.set_multiplayer_authority(multiplayer.get_unique_id())
 		print("ghost mult authority set to", ghost.get_multiplayer_authority())
-
-	# Ensure the ghost's camera is enabled and set as current
-	if ghost.has_node("Camera2D"):
-		print("setting camera")
-		var camera = ghost.get_node("Camera2D")
-		camera.enabled = true
-		camera.make_current()
-	
 	return ghost
 
+# kill screen animation here maybe
+func activate_ghost(tween_duration: float):
+	await get_tree().create_timer(2).timeout
+	if ghost_instance and ghost_instance.has_node("Camera2D"):
+		var tween := get_tree().create_tween()
+		tween.set_ease(Tween.EASE_IN)
+		ghost_instance.started = true
+		ghost_instance.visible = true
+		
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1.8, tween_duration)
+		tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
+		print("setting camera")
+		var camera = ghost_instance.get_node("Camera2D")
+		
+		# disable dead body's cam and enable ghost's cam
+		$Camera2D.enabled = false
+		camera.enabled = true
+		camera.make_current()
+			
 @rpc("call_local", "reliable")
 func add_kill():
 	Main.killed += 1
