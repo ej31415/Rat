@@ -260,6 +260,7 @@ func die():
 		ghost_instance = spawn_ghost()
 		await get_tree().create_timer(1).timeout
 		fade_out_vision(0.5)
+		await get_tree().create_timer(1).timeout
 		activate_ghost(0.5)
 	else:
 		$ViewSphere.enabled = false
@@ -282,7 +283,6 @@ func spawn_ghost() -> CharacterBody2D:
 
 # kill screen animation here maybe
 func activate_ghost(tween_duration: float):
-	await get_tree().create_timer(2).timeout
 	if ghost_instance and ghost_instance.has_node("Camera2D"):
 		var tween := get_tree().create_tween()
 		tween.set_ease(Tween.EASE_IN)
