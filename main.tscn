@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=41 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
+[ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
@@ -397,7 +398,6 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
-visible = false
 script = ExtResource("89_6vxhg")
 
 [node name="ColorRect" type="ColorRect" parent="HelpControl"]
@@ -688,6 +688,20 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "[center]1/4[/center]"
 
+[node name="Close" type="TextureButton" parent="HelpControl"]
+anchors_preset = -1
+anchor_right = 0.512153
+anchor_bottom = 0.910494
+offset_left = 912.0
+offset_top = 160.0
+offset_right = 952.0
+offset_bottom = 200.0
+scale = Vector2(0.05, 0.05)
+texture_normal = ExtResource("23_omg22")
+ignore_texture_size = true
+stretch_mode = 4
+metadata/_edit_use_anchors_ = true
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -816,3 +830,4 @@ bbcode_enabled = true
 [connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
 [connection signal="button_down" from="HelpControl/Right" to="HelpControl" method="_on_right_button_down"]
 [connection signal="button_down" from="HelpControl/Left" to="HelpControl" method="_on_left_button_down"]
+[connection signal="button_down" from="HelpControl/Close" to="HelpControl" method="_on_close_button_down"]
