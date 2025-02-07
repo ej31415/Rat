@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
+static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
 var SPEED = 600.0

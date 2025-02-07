@@ -112,9 +112,18 @@ func _remove_player_handler(color, interim_discon):
 	$WinScreen/Again.disabled = true
 
 func _on_server_disconnect():
-	$TimerCanvasLayer.end_timer()
-	$AudioStreamPlayer.stop()
-	$WinScreen/ServerDisconnected.visible = true
+	if first_started:
+		$TimerCanvasLayer.end_timer()
+		$AudioStreamPlayer.stop()
+		$WinScreen/Again.visible = false
+		$WinScreen/MiceWin.visible = false
+		$WinScreen/RatWins.visible = false
+		$WinScreen/PlayerDisconnected.visible = false
+		$WinScreen/num_players.visible = false
+		$HUD.visible = false
+		$StartMenu.visible = false
+		set_physics_process(false)
+		$WinScreen/ServerDisconnected.visible = true
 
 func _on_join_pressed():
 	var error = peer.create_client($StartMenu/ip.text, 135)
@@ -123,8 +132,20 @@ func _on_join_pressed():
 		$StartMenu/host.disabled = true
 		$StartMenu/join.disabled = true
 		$StartMenu/error.visible = false
+		$StartMenu/joined.visible = true
+		$StartMenu/disconnect.visible = true
 	else:
 		$StartMenu/error.visible = true
+
+func _on_disconnect_pressed():
+	peer.close()
+	multiplayer.multiplayer_peer = peer
+	Player.roles = Player.roles_copy.duplicate()
+	$StartMenu/disconnect.visible = false
+	$StartMenu/join.disabled = false
+	$StartMenu/error.visible = false
+	$StartMenu/host.disabled = false
+	$StartMenu/joined.visible = false
 
 func _on_start_pressed():
 	var maze = $Map.get_maze()
