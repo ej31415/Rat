@@ -256,7 +256,6 @@ func die():
 	print(color + " killed!!!")
 	alive = false
 	if is_multiplayer_authority():
-		$ViewSphere.texture_scale = 8
 		ghost_instance = spawn_ghost()
 	else:
 		$ViewSphere.enabled = false
@@ -264,11 +263,9 @@ func die():
 	set_physics_process(false)
 	$AnimationPlayer.play("die")
 	await get_tree().create_timer(1).timeout
-	# spawn the ghost ideally
 	
 
 func spawn_ghost() -> CharacterBody2D:
-	
 	var ghost := ghost_scene.instantiate()
 	ghost.global_position = global_position
 	get_parent().add_child(ghost)
@@ -284,7 +281,7 @@ func spawn_ghost() -> CharacterBody2D:
 		var camera = ghost.get_node("Camera2D")
 		camera.enabled = true
 		camera.make_current()
-		
+	
 	return ghost
 
 @rpc("call_local", "reliable")
