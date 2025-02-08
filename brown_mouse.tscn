@@ -457,6 +457,7 @@ script = ExtResource("1_2yxuw")
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, 35)
 scale = Vector2(15, 15)
+energy = 0.5
 blend_mode = 2
 range_item_cull_mask = 33
 shadow_enabled = true
@@ -464,14 +465,15 @@ shadow_item_cull_mask = 0
 texture = SubResource("GradientTexture2D_60pgy")
 
 [node name="Vision" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(0, 50)
+position = Vector2(0, 30)
 rotation = -1.5708
-scale = Vector2(2.5, 1.2)
+scale = Vector2(1.5, 1.2)
 range_z_max = 0
 range_item_cull_mask = 46
-shadow_item_cull_mask = 47
+shadow_enabled = true
+shadow_item_cull_mask = 32
 texture = ExtResource("2_45tb2")
+offset = Vector2(-400, 0)
 
 [node name="Shadow" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_h5n1v")

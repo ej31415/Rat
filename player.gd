@@ -75,6 +75,14 @@ func get_kill_cooldown():
 	
 func is_alive():
 	return alive
+	
+func reset_sprite_to_defaults():
+	$Vision.rotation_degrees = -90
+	$ViewSphere.texture_scale = 1
+	$AnimatedSprite2D.animation = "static front"
+	$AnimatedSprite2D.play()
+	$AnimatedSprite2D.stop()
+	$Aim.rotation_degrees = 0
 
 func _rotation_tween(end_angle: float):
 	var tween := get_tree().create_tween()
@@ -98,19 +106,7 @@ func _rotation_tween(end_angle: float):
 	var target_angle = $Vision.rotation_degrees + diff
 	tween.tween_property($Vision, "rotation_degrees", target_angle, FOV_TWEEN_DURATION)
 	
-func reset_sprite_to_defaults():
-	$Vision.position = Vector2(0, 50)
-	$Vision.scale = Vector2(2.5, 1.2)
-	$Vision.rotation_degrees = -90
-	$ViewSphere.texture_scale = 1
-	$AnimatedSprite2D.animation = "static front"
-	$AnimatedSprite2D.play()
-	$AnimatedSprite2D.stop()
-	$Aim.rotation_degrees = 0
-	
 func set_vision():
-	$Vision.scale = Vector2(2.5, 1.2)
-	$Vision.position = Vector2(0, 50)
 	if velocity.x < 0 and velocity.y < 0:
 		_rotation_tween(45)
 		$Aim.rotation_degrees = 135
