@@ -60,6 +60,7 @@ polygon = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
 texture = ExtResource("6_j188n")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
+0:0/0/y_sort_origin = 200
 0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_6wibn")
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -64, 128, -64, 128, 128, -128, 128)
 0:1/0 = 0
@@ -216,6 +217,21 @@ theme_override_fonts/font = ExtResource("10_dpgvo")
 disabled = true
 text = "Start"
 
+[node name="disconnect" type="Button" parent="StartMenu"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.556
+anchor_right = 0.5
+anchor_bottom = 0.556
+offset_left = 52.0
+offset_top = 111.712
+offset_right = 130.0
+offset_bottom = 167.712
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 12
+text = "Disconnect"
+
 [node name="num_players" type="Label" parent="StartMenu"]
 visible = false
 anchors_preset = -1
@@ -279,6 +295,21 @@ offset_bottom = 225.984
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "error joining"
+
+[node name="joined" type="Label" parent="StartMenu"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.517
+anchor_right = 0.5
+anchor_bottom = 0.517
+offset_left = -65.0
+offset_top = 205.984
+offset_right = 65.0
+offset_bottom = 228.984
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "waiting for host"
 
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
@@ -827,6 +858,7 @@ bbcode_enabled = true
 [connection signal="pressed" from="StartMenu/host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="StartMenu/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="StartMenu/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="StartMenu/disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]

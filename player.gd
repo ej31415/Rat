@@ -3,9 +3,10 @@ extends CharacterBody2D
 class_name Player
 
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
+static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
-const SPEED = 600.0
+var SPEED = 600.0
 const FOV_TWEEN_DURATION = 0.075
 const rat_cooldown = 10
 var anim = "static front"
@@ -15,6 +16,8 @@ var color = ""
 var alive = true
 var last_rat_kill = 0
 var sheriff_shot = false
+var ghost_instance: CharacterBody2D
+var ghost_scene: PackedScene
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -22,6 +25,7 @@ func _init() -> void:
 	roles.pop_at(idx)
 	alive = true
 	started = false
+	ghost_scene = preload("res://ghost_mouse.tscn")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -32,6 +36,10 @@ func _ready():
 		print("role not set")
 
 func starter(color_to_roles):
+	if ghost_instance and is_instance_valid(ghost_instance):
+		ghost_instance.queue_free()
+		ghost_instance = null
+
 	role = color_to_roles[color]
 	alive = true
 	last_rat_kill = Time.get_unix_time_from_system() - 5
@@ -39,6 +47,7 @@ func starter(color_to_roles):
 	started = true
 	$ViewSphere.enabled = true
 	$ViewSphere.texture_scale = 1
+	$ViewSphere.energy = 1
 	$Vision.enabled = true
 	enable_movement()
 	reset_sprite_to_defaults()
@@ -135,10 +144,11 @@ func set_vision():
 func _physics_process(delta: float) -> void:
 	if !alive:
 		return
-		
+	
 	# Get the input direction and handle the movement/deceleration.
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
+		
 		if role == "rat" and Input.is_action_pressed("SHIFT"):
 			direction *= 2.0
 			$AnimatedSprite2D.speed_scale = 1.5
@@ -241,14 +251,52 @@ func die():
 		return
 	print(color + " killed!!!")
 	alive = false
-	if is_multiplayer_authority():
-		$ViewSphere.texture_scale = 8
-	else:
-		$ViewSphere.enabled = false
 	$Vision.enabled = false
 	set_physics_process(false)
 	$AnimationPlayer.play("die")
+	if is_multiplayer_authority():
+		ghost_instance = spawn_ghost()
+		await get_tree().create_timer(1).timeout
+		fade_out_vision(0.5)
+		await get_tree().create_timer(1).timeout
+		activate_ghost(0.5)
+	else:
+		$ViewSphere.enabled = false
+	await get_tree().create_timer(1).timeout
+	
 
+func fade_out_vision(tween_seconds: float) -> void:
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property($ViewSphere, "energy", 0, tween_seconds)
+	
+func spawn_ghost() -> CharacterBody2D:
+	var ghost := ghost_scene.instantiate()
+	ghost.global_position = global_position
+	get_parent().add_child(ghost)
+	if multiplayer.has_multiplayer_peer():
+		ghost.set_multiplayer_authority(multiplayer.get_unique_id())
+		print("ghost mult authority set to", ghost.get_multiplayer_authority())
+	return ghost
+
+# kill screen animation here maybe
+func activate_ghost(tween_duration: float):
+	if ghost_instance and ghost_instance.has_node("Camera2D"):
+		var tween := get_tree().create_tween()
+		tween.set_ease(Tween.EASE_IN)
+		ghost_instance.started = true
+		ghost_instance.visible = true
+		
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1.8, tween_duration)
+		tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
+		print("setting camera")
+		var camera = ghost_instance.get_node("Camera2D")
+		
+		# disable dead body's cam and enable ghost's cam
+		$Camera2D.enabled = false
+		camera.enabled = true
+		camera.make_current()
+			
 @rpc("call_local", "reliable")
 func add_kill():
 	Main.killed += 1
