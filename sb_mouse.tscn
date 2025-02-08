@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=41 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://d0asm6hbbc2q2" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue left gun.png" id="21_cwus1"]
 [ext_resource type="Texture2D" uid="uid://qnd7jsvxrvh" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue right gun.png" id="22_8ssft"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dny3u"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_awjhh"]
 light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_v3u6j"]
@@ -38,6 +38,12 @@ use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.12, 0.12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2x0gl"]
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_g3nlh"]
+light_mode = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_st0pp"]
 animations = [{
@@ -434,43 +440,45 @@ properties/5/replication_mode = 1
 
 [node name="SBMouse" type="CharacterBody2D"]
 visible = false
-light_mask = 8
-visibility_layer = 8
-material = SubResource("CanvasItemMaterial_dny3u")
+light_mask = 4
+material = SubResource("CanvasItemMaterial_awjhh")
 collision_layer = 8
 collision_mask = 8
 motion_mode = 1
 script = ExtResource("1_2m8vg")
 
-[node name="Vision" type="PointLight2D" parent="."]
-light_mask = 8
-visibility_layer = 8
-position = Vector2(0, 50)
-rotation = -1.5708
-scale = Vector2(2.5, 1.2)
-range_z_max = 0
-range_item_cull_mask = 39
-shadow_item_cull_mask = 39
-texture = ExtResource("2_8swru")
-
 [node name="ViewSphere" type="PointLight2D" parent="."]
 light_mask = 8
 visibility_layer = 8
 position = Vector2(0, 35)
-scale = Vector2(5, 5)
-range_z_max = 0
-range_item_cull_mask = 47
+scale = Vector2(15, 15)
+blend_mode = 2
+range_item_cull_mask = 36
+shadow_enabled = true
+shadow_item_cull_mask = 0
 texture = SubResource("GradientTexture2D_qsf3k")
 
+[node name="Vision" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, 50)
+rotation = -1.5708
+scale = Vector2(2.5, 1.2)
+range_z_max = 0
+range_item_cull_mask = 43
+shadow_enabled = true
+shadow_item_cull_mask = 47
+texture = ExtResource("2_8swru")
+
 [node name="Shadow" type="Sprite2D" parent="."]
-light_mask = 8
+light_mask = 4
+material = SubResource("CanvasItemMaterial_2x0gl")
 position = Vector2(0, 123.5)
 texture = ExtResource("2_8dqxm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.356863, 0.607843, 1, 1)
-light_mask = 8
-visibility_layer = 8
+light_mask = 4
+material = SubResource("CanvasItemMaterial_g3nlh")
 sprite_frames = SubResource("SpriteFrames_st0pp")
 animation = &"static front"
 

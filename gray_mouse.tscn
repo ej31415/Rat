@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=41 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Texture2D" uid="uid://d2ac1j1ssl3gi" path="res://assets/Gray Mouse/Front Facing Walk/Step right 8x.png" id="1_5bbam"]
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://2emmqakl7tkk" path="res://assets/Gray Mouse/Shoot/Yellow gun look right.png" id="22_oonva"]
 [ext_resource type="Texture2D" uid="uid://c3xdaiwjruc06" path="res://assets/Gray Mouse/Shoot/Yellow gun back.png" id="23_efcoa"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ifnq"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lunfw"]
 light_mode = 2
 
 [sub_resource type="Gradient" id="Gradient_mwxoy"]
@@ -38,6 +38,12 @@ use_hdr = true
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.12, 0.12)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_03x3l"]
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cm2ee"]
+light_mode = 2
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_p1mwd"]
 animations = [{
@@ -434,34 +440,42 @@ properties/5/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
 visible = false
-material = SubResource("CanvasItemMaterial_6ifnq")
+light_mask = 2
+material = SubResource("CanvasItemMaterial_lunfw")
 motion_mode = 1
 script = ExtResource("1_fvefs")
 
+[node name="ViewSphere" type="PointLight2D" parent="."]
+position = Vector2(0, 35)
+scale = Vector2(15, 15)
+blend_mode = 2
+range_item_cull_mask = 34
+shadow_enabled = true
+shadow_item_cull_mask = 0
+texture = SubResource("GradientTexture2D_lj53g")
+
 [node name="Vision" type="PointLight2D" parent="."]
+visible = false
 position = Vector2(0, 50)
 rotation = -1.5708
 scale = Vector2(2.5, 1.2)
 range_z_max = 0
-range_item_cull_mask = 46
-shadow_item_cull_mask = 46
+range_item_cull_mask = 45
+shadow_item_cull_mask = 47
 texture = ExtResource("2_unvbn")
-
-[node name="ViewSphere" type="PointLight2D" parent="."]
-position = Vector2(0, 35)
-scale = Vector2(5, 5)
-range_z_max = 0
-range_item_cull_mask = 47
-texture = SubResource("GradientTexture2D_lj53g")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
+light_mask = 2
+material = SubResource("CanvasItemMaterial_03x3l")
 position = Vector2(0, 123.5)
 scale = Vector2(1, 0.832031)
 texture = ExtResource("2_0n1gc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.917647, 0.756863, 0, 1)
+light_mask = 2
+material = SubResource("CanvasItemMaterial_cm2ee")
 sprite_frames = SubResource("SpriteFrames_p1mwd")
 animation = &"static front"
 
