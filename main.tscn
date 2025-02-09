@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=44 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -14,9 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
-[ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
+[ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]

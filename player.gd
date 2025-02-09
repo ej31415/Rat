@@ -265,13 +265,13 @@ func die():
 	$AnimationPlayer.play("die")
 	if is_multiplayer_authority():
 		ghost_instance = spawn_ghost()
-		await get_tree().create_timer(1).timeout
-		fade_out_vision(0.5)
-		await get_tree().create_timer(1).timeout
-		activate_ghost(0.5)
+		await get_tree().create_timer(0.2).timeout
+		fade_out_vision(0.1)
+		await get_tree().create_timer(0.2).timeout
+		activate_ghost(0.1)
 	else:
 		$ViewSphere.enabled = false
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.2).timeout
 	
 
 func fade_out_vision(tween_seconds: float) -> void:
