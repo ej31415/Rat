@@ -301,6 +301,7 @@ func fade_out_vision(tween_seconds: float) -> void:
 func spawn_ghost(color: Color) -> CharacterBody2D:
 	var ghost := ghost_scene.instantiate()
 	ghost.global_position = global_position
+	color.a = 0.5
 	ghost.get_node("AnimatedSprite2D").modulate = color
 	get_parent().add_child(ghost)
 	if multiplayer.has_multiplayer_peer():

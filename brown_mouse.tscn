@@ -1,8 +1,9 @@
-[gd_scene load_steps=52 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=53 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_45tb2"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
+[ext_resource type="Texture2D" uid="uid://d1ij1rxp38wvt" path="res://assets/Generic Mouse/Attachments/Die2 blood.png" id="4_jd11p"]
 [ext_resource type="Texture2D" uid="uid://cf24mmyomivfe" path="res://assets/Generic Mouse/Attack/Knife 1 mouse.png" id="6_2eh0l"]
 [ext_resource type="Texture2D" uid="uid://diiucxji0xqxo" path="res://assets/Generic Mouse/Attack/Knife 2 mouse.png" id="7_6udi8"]
 [ext_resource type="Texture2D" uid="uid://car0ilct25xab" path="res://assets/Generic Mouse/Movement/Diagonal step down 1.png" id="7_dafvd"]
@@ -631,8 +632,8 @@ script = ExtResource("20_ohqr7")
 [node name="Blood" type="Sprite2D" parent="."]
 visible = false
 material = SubResource("CanvasItemMaterial_dtrll")
-position = Vector2(-80, -50)
-texture = ExtResource("29_nutvb")
+position = Vector2(0, -50)
+texture = ExtResource("4_jd11p")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_h5n1v")
@@ -647,7 +648,7 @@ sprite_frames = SubResource("SpriteFrames_g38yx")
 frame = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 0.596078, 0.576471, 1)
+modulate = Color(0.99999, 0.369563, 0.375103, 1)
 material = SubResource("CanvasItemMaterial_piuaj")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_e3fi4")
