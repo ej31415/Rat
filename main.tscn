@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
+[ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
+[ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
@@ -84,6 +86,11 @@ sources/0 = SubResource("TileSetAtlasSource_binbo")
 
 [sub_resource type="LabelSettings" id="LabelSettings_wngka"]
 font_size = 31
+
+[sub_resource type="LabelSettings" id="LabelSettings_q2m06"]
+font = ExtResource("10_dpgvo")
+shadow_size = 58
+shadow_color = Color(0, 0, 0, 0.0705882)
 
 [node name="main" type="Node2D" groups=["player"]]
 y_sort_enabled = true
@@ -389,9 +396,9 @@ anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = 145.0
+offset_left = -247.0
 offset_top = 195.984
-offset_right = 353.0
+offset_right = -159.0
 offset_bottom = 218.984
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
@@ -409,6 +416,31 @@ text = "The server has disconnected. Please restart your game."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="RestartTimer" type="Timer" parent="WinScreen"]
+wait_time = 10.0
+one_shot = true
+
+[node name="CheckBoxButton" type="TextureButton" parent="WinScreen"]
+visible = false
+offset_left = 725.0
+offset_top = 520.0
+offset_right = 773.0
+offset_bottom = 568.0
+texture_normal = ExtResource("18_uuutx")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("19_7k81b")
+
+[node name="Tooltip" type="Label" parent="WinScreen/CheckBoxButton"]
+visible = false
+layout_mode = 0
+offset_left = -40.0
+offset_top = -42.0
+offset_right = 91.0
+offset_bottom = -15.0
+text = "Toggle auto-play"
+label_settings = SubResource("LabelSettings_q2m06")
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
 script = ExtResource("89_6vxhg")
@@ -828,5 +860,9 @@ bbcode_enabled = true
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
+[connection signal="timeout" from="WinScreen/RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="button_up" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_button_up"]
+[connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
 [connection signal="button_down" from="HelpControl/Right" to="HelpControl" method="_on_right_button_down"]
 [connection signal="button_down" from="HelpControl/Left" to="HelpControl" method="_on_left_button_down"]
