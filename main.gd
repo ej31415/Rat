@@ -177,6 +177,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 			child.starter(true_roles)
 			child.visible = true
 			child.position = $Map.get_start_position(maze, offset)
+			child.reset_sprite_to_defaults()
 			# spaghetti code >.<
 			var temp = child.starter(true_roles)
 			if temp != "":
@@ -221,6 +222,10 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Gun.visible = false
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
+	#for player in get_tree().get_nodes_in_group("player"):
+		#if player.get_node("AnimationPlayer") != null:
+			#player.get_node("AnimationPlayer").stop()
+			#player.get_node("AnimationPlayer").clear_queue()
 	if player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
 	else:

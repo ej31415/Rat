@@ -1,30 +1,33 @@
-[gd_scene load_steps=41 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=44 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_45tb2"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
-[ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="3_se6ts"]
-[ext_resource type="Texture2D" uid="uid://cj7pyb7y1p1qo" path="res://assets/Brown Mouse/Brown stabbed.png" id="4_1k17j"]
-[ext_resource type="Texture2D" uid="uid://cudvgos3rrn5c" path="res://assets/Brown Mouse/Attack/Red knife 1.png" id="4_4b4lf"]
-[ext_resource type="Texture2D" uid="uid://cupfpm1uud0y0" path="res://assets/Brown Mouse/Front/Brown front static.png" id="4_a5vqm"]
-[ext_resource type="Texture2D" uid="uid://cubvfbgohpio3" path="res://assets/Brown Mouse/Attack/Red knife 2.png" id="5_nenpg"]
-[ext_resource type="Texture2D" uid="uid://dy5818xgmrtcy" path="res://assets/Brown Mouse/Front/Brown front step right.png" id="5_xwwai"]
-[ext_resource type="Texture2D" uid="uid://bc1of025qgoj8" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step left.png" id="6_aqp1b"]
-[ext_resource type="Texture2D" uid="uid://d17lo6t0xw0ep" path="res://assets/Brown Mouse/Red dead.png" id="7_6b3pp"]
-[ext_resource type="Texture2D" uid="uid://83tcyx1p6r37" path="res://assets/Brown Mouse/Gyatt/Brown gyatt static.png" id="7_jasi4"]
-[ext_resource type="Texture2D" uid="uid://cryho1so2ilri" path="res://assets/Brown Mouse/Gyatt/Brown gyatt step right.png" id="8_25c4s"]
-[ext_resource type="Texture2D" uid="uid://pdeys5n7jl1n" path="res://assets/Brown Mouse/Facing left/Brown left facing step left.png" id="9_17i1p"]
-[ext_resource type="Texture2D" uid="uid://lr7cplxf7f23" path="res://assets/Brown Mouse/Facing left/Brown left facing static.png" id="10_2bxtn"]
-[ext_resource type="Texture2D" uid="uid://bts13bjivvarg" path="res://assets/Brown Mouse/Facing left/Brown left facing step right.png" id="11_xesxw"]
-[ext_resource type="Texture2D" uid="uid://c2pafu3rxmgdb" path="res://assets/Brown Mouse/Facing right/Brown right facing step left.png" id="12_8o3cd"]
-[ext_resource type="Texture2D" uid="uid://ipcg31h4m08m" path="res://assets/Brown Mouse/Facing right/Brown right facing static.png" id="13_q3dww"]
-[ext_resource type="Texture2D" uid="uid://dyt2tct6bdmye" path="res://assets/Brown Mouse/Facing right/Brown right facing step right.png" id="14_nahoj"]
-[ext_resource type="Texture2D" uid="uid://c8tbu7nmbko5k" path="res://assets/Brown Mouse/Shoot/Red gun front.png" id="20_5uo64"]
+[ext_resource type="Texture2D" uid="uid://d1ij1rxp38wvt" path="res://assets/Generic Mouse/Attachments/Die2 blood.png" id="4_jd11p"]
+[ext_resource type="Texture2D" uid="uid://cf24mmyomivfe" path="res://assets/Generic Mouse/Attack/Knife 1 mouse.png" id="6_2eh0l"]
+[ext_resource type="Texture2D" uid="uid://diiucxji0xqxo" path="res://assets/Generic Mouse/Attack/Knife 2 mouse.png" id="7_6udi8"]
+[ext_resource type="Texture2D" uid="uid://car0ilct25xab" path="res://assets/Generic Mouse/Movement/Diagonal step down 1.png" id="7_dafvd"]
+[ext_resource type="Texture2D" uid="uid://ed16fgavspom" path="res://assets/Generic Mouse/Movement/Diagonal step down static.png" id="8_dlc2n"]
+[ext_resource type="Texture2D" uid="uid://8r3rriuctktl" path="res://assets/Generic Mouse/Movement/Diagonal step down 2.png" id="9_8eong"]
+[ext_resource type="Texture2D" uid="uid://buvn0i38hnsng" path="res://assets/Generic Mouse/Movement/Diagonal Back step1.png" id="10_1hxq3"]
+[ext_resource type="Texture2D" uid="uid://dabgcw36efga5" path="res://assets/Generic Mouse/Movement/Diagonal Back step static.png" id="11_66045"]
+[ext_resource type="Texture2D" uid="uid://2yrthxkey5i7" path="res://assets/Generic Mouse/Movement/Diagonal Back Step 2.png" id="12_euonm"]
+[ext_resource type="Texture2D" uid="uid://65wlv4er4vpp" path="res://assets/Generic Mouse/Movement/Die1 constipation.png" id="13_h5yh7"]
+[ext_resource type="Texture2D" uid="uid://crdimjruid25d" path="res://assets/Generic Mouse/Movement/Die2.png" id="14_pat0w"]
+[ext_resource type="Texture2D" uid="uid://ynhbn7yskgct" path="res://assets/Generic Mouse/Movement/Walk step 1.png" id="15_a0bbw"]
+[ext_resource type="Texture2D" uid="uid://c43dn47xi4jxs" path="res://assets/Generic Mouse/Movement/Front facing mouse static.png" id="16_ijnq1"]
+[ext_resource type="Texture2D" uid="uid://ye7libkkyeuh" path="res://assets/Generic Mouse/Movement/Walk step2.png" id="17_nu21k"]
+[ext_resource type="Texture2D" uid="uid://cpwjdjughyehs" path="res://assets/Generic Mouse/Movement/Back step1.png" id="18_fat2b"]
+[ext_resource type="Texture2D" uid="uid://5haeta0ujw0y" path="res://assets/Generic Mouse/Movement/Back static.png" id="19_nl1dn"]
+[ext_resource type="Texture2D" uid="uid://jslba1jlh5cf" path="res://assets/Generic Mouse/Movement/Back step 2.png" id="20_55aj6"]
 [ext_resource type="Script" path="res://aim.gd" id="20_ohqr7"]
-[ext_resource type="Texture2D" uid="uid://cqrnd5vqvss5a" path="res://assets/Brown Mouse/Shoot/Red gun left.png" id="21_cwawy"]
-[ext_resource type="Texture2D" uid="uid://bvrr37qxsb2b8" path="res://assets/Brown Mouse/Shoot/Red gun right.png" id="22_4siov"]
-[ext_resource type="Texture2D" uid="uid://cyffdup3knuv5" path="res://assets/Brown Mouse/Shoot/Red gun back.png" id="23_klr6m"]
+[ext_resource type="Texture2D" uid="uid://bmxqp1n4m3v0k" path="res://assets/Generic Mouse/Movement/Walk 1 left.png" id="21_hvqra"]
+[ext_resource type="Texture2D" uid="uid://dtpvum7kha8g6" path="res://assets/Generic Mouse/Movement/Left static.png" id="22_71pnw"]
+[ext_resource type="Texture2D" uid="uid://coqwqtel0ltpm" path="res://assets/Generic Mouse/Movement/Walk 2 left.png" id="23_sddlc"]
+[ext_resource type="Texture2D" uid="uid://bno0il3qfepdl" path="res://assets/Generic Mouse/Attack/Sheriff front.png" id="24_qmk5w"]
+[ext_resource type="Texture2D" uid="uid://dkuy3dt26mgf" path="res://assets/Generic Mouse/Attack/Sheriff lr.png" id="25_62ukp"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="25_ue6sh"]
+[ext_resource type="Texture2D" uid="uid://cc2dlvoa6fwj6" path="res://assets/Generic Mouse/Attack/Sheriff back.png" id="26_vc1pb"]
 
 [sub_resource type="Gradient" id="Gradient_s0nxo"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -37,6 +40,9 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.12, 0.12)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dtrll"]
+light_mode = 2
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_h5n1v"]
 light_mode = 2
 
@@ -47,10 +53,10 @@ light_mode = 2
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_4b4lf")
+"texture": ExtResource("6_2eh0l")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_nenpg")
+"texture": ExtResource("7_6udi8")
 }],
 "loop": false,
 "name": &"attack",
@@ -58,10 +64,44 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_1k17j")
+"texture": ExtResource("7_dafvd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_6b3pp")
+"texture": ExtResource("8_dlc2n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_8eong")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_dlc2n")
+}],
+"loop": true,
+"name": &"diagonal down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_1hxq3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_66045")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_euonm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_66045")
+}],
+"loop": true,
+"name": &"diagonal up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_h5yh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_pat0w")
 }],
 "loop": false,
 "name": &"die",
@@ -69,16 +109,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_se6ts")
+"texture": ExtResource("15_a0bbw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_a5vqm")
+"texture": ExtResource("16_ijnq1")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_xwwai")
+"texture": ExtResource("17_nu21k")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_a5vqm")
+"texture": ExtResource("16_ijnq1")
 }],
 "loop": true,
 "name": &"front",
@@ -86,16 +126,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_aqp1b")
+"texture": ExtResource("18_fat2b")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_jasi4")
+"texture": ExtResource("19_nl1dn")
 }, {
 "duration": 1.0,
-"texture": ExtResource("8_25c4s")
+"texture": ExtResource("20_55aj6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_jasi4")
+"texture": ExtResource("19_nl1dn")
 }],
 "loop": true,
 "name": &"gyatt",
@@ -103,16 +143,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_17i1p")
+"texture": ExtResource("21_hvqra")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_2bxtn")
+"texture": ExtResource("22_71pnw")
 }, {
 "duration": 1.0,
-"texture": ExtResource("11_xesxw")
+"texture": ExtResource("23_sddlc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_2bxtn")
+"texture": ExtResource("22_71pnw")
 }],
 "loop": true,
 "name": &"left",
@@ -120,24 +160,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("12_8o3cd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_q3dww")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_nahoj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_q3dww")
-}],
-"loop": true,
-"name": &"right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("20_5uo64")
+"texture": ExtResource("24_qmk5w")
 }],
 "loop": false,
 "name": &"shoot down",
@@ -145,23 +168,15 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("21_cwawy")
+"texture": ExtResource("25_62ukp")
 }],
-"loop": true,
+"loop": false,
 "name": &"shoot left",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("22_4siov")
-}],
-"loop": false,
-"name": &"shoot right",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("23_klr6m")
+"texture": ExtResource("26_vc1pb")
 }],
 "loop": false,
 "name": &"shoot up",
@@ -169,7 +184,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_a5vqm")
+"texture": ExtResource("16_ijnq1")
 }],
 "loop": true,
 "name": &"static front",
@@ -177,7 +192,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_jasi4")
+"texture": ExtResource("19_nl1dn")
 }],
 "loop": true,
 "name": &"static gyatt",
@@ -185,18 +200,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_2bxtn")
+"texture": ExtResource("22_71pnw")
 }],
 "loop": true,
 "name": &"static left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("13_q3dww")
-}],
-"loop": true,
-"name": &"static right",
 "speed": 5.0
 }]
 
@@ -229,33 +236,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
-}
-
-[sub_resource type="Animation" id="Animation_61pn1"]
-resource_name = "attack"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"attack"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_ads6u"]
@@ -351,33 +331,6 @@ tracks/1/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_qludl"]
-resource_name = "shoot right"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"shoot right"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="Animation" id="Animation_nbms4"]
 resource_name = "shoot up"
 tracks/0/type = "value"
@@ -405,14 +358,40 @@ tracks/1/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_l5g7y"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.33),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
 "RESET": SubResource("Animation_mtbjs"),
-"attack": SubResource("Animation_61pn1"),
+"attack": SubResource("Animation_l5g7y"),
 "die": SubResource("Animation_ads6u"),
 "shoot down": SubResource("Animation_0bxlb"),
 "shoot left": SubResource("Animation_exyrh"),
-"shoot right": SubResource("Animation_qludl"),
 "shoot up": SubResource("Animation_nbms4")
 }
 
@@ -445,7 +424,7 @@ script = ExtResource("1_2yxuw")
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, -15)
 scale = Vector2(15, 15)
-energy = 0.5
+energy = 0.3
 blend_mode = 2
 range_item_cull_mask = 33
 shadow_enabled = true
@@ -455,6 +434,8 @@ texture = SubResource("GradientTexture2D_60pgy")
 [node name="Vision" type="PointLight2D" parent="."]
 rotation = -1.5708
 scale = Vector2(1.5, 1.2)
+color = Color(0.921569, 0.921569, 0.921569, 1)
+energy = 0.8
 range_z_max = 0
 range_item_cull_mask = 46
 shadow_enabled = true
@@ -466,6 +447,12 @@ offset = Vector2(-382, 0)
 target_position = Vector2(0, 600)
 collision_mask = 15
 script = ExtResource("20_ohqr7")
+
+[node name="Blood" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_dtrll")
+position = Vector2(0, -50)
+texture = ExtResource("4_jd11p")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_h5n1v")
