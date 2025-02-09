@@ -110,6 +110,9 @@ func _remove_player_handler(color, interim_discon):
 	$WinScreen/num_players.text = "Joined: " + str(4 - len(mice)) + "/4"
 	$StartMenu/start.disabled = true
 	$WinScreen/Again.disabled = true
+	$WinScreen/RestartTimer.stop()
+	$WinScreen/CheckBoxButton.uncheck()
+	$WinScreen/CheckBoxButton.disabled = true
 
 func _on_server_disconnect():
 	if first_started:
@@ -120,9 +123,11 @@ func _on_server_disconnect():
 		$WinScreen/RatWins.visible = false
 		$WinScreen/PlayerDisconnected.visible = false
 		$WinScreen/num_players.visible = false
+		$WinScreen/CheckBoxButton.visible = false
 		$HUD.visible = false
 		$StartMenu.visible = false
 		set_physics_process(false)
+		$WinScreen/RestartTimer.stop()
 		$WinScreen/ServerDisconnected.visible = true
 
 func _on_join_pressed():
@@ -195,6 +200,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$WinScreen/Again.visible = false
 	$WinScreen/PlayerDisconnected.visible = false
 	$WinScreen/num_players.visible = false
+	$WinScreen/CheckBoxButton.visible = false
 	$AudioStreamPlayer.stream = mice_active_music
 	$AudioStreamPlayer.play()
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
@@ -263,6 +269,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
 		$WinScreen/num_players.visible = true
+		$WinScreen/CheckBoxButton.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -308,6 +315,9 @@ func _process(delta: float) -> void:
 		
 	if Input.is_action_just_pressed("TOGGLE LIGHT"):
 		$Darkness.visible = !$Darkness.visible
+	
+	if is_host and game_ended:
+		refresh_play_again_button()
 
 func _on_again_button_pressed() -> void:
 	# make a new maze
@@ -354,3 +364,18 @@ func show_title_menu() -> void:
 	
 	$AudioStreamPlayer.stream = title_sound
 	$AudioStreamPlayer.play()
+
+func refresh_play_again_button() -> void:
+	if $WinScreen/CheckBoxButton.checked and $WinScreen/RestartTimer.is_stopped():
+		$WinScreen/RestartTimer.start()
+	elif (!$WinScreen/CheckBoxButton.checked and !$WinScreen/RestartTimer.is_stopped()):
+		$WinScreen/RestartTimer.stop()
+	
+	if $WinScreen/RestartTimer.is_stopped():
+		$WinScreen/Again.text = "Play Again"
+	else:
+		$WinScreen/Again.text = "Play Again " + "(" + str(ceil($WinScreen/RestartTimer.time_left)) + ")"
+
+func _on_restart_timer_timeout() -> void:
+	if game_ended:
+		$WinScreen/Again.emit_signal("pressed")
