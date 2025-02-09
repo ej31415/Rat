@@ -12,6 +12,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		set_physics_process(true)
 	if "shoot" in anim_name:
 		print(color + " finished shooting animation")
+		$Gun.visible = false
 		set_physics_process(true)
 	if anim_name == "die":
 		$Shadow.visible = false

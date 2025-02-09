@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=52 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_45tb2"]
@@ -27,8 +27,11 @@
 [ext_resource type="Texture2D" uid="uid://dkuy3dt26mgf" path="res://assets/Generic Mouse/Attack/Sheriff lr.png" id="25_62ukp"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="25_ue6sh"]
 [ext_resource type="Texture2D" uid="uid://cc2dlvoa6fwj6" path="res://assets/Generic Mouse/Attack/Sheriff back.png" id="26_vc1pb"]
+[ext_resource type="Texture2D" uid="uid://bsg75afbj0jp6" path="res://assets/Generic Mouse/Attachments/Sheriff gun back no flash.png" id="29_b47bd"]
 [ext_resource type="Texture2D" uid="uid://3sdmhslq6nk1" path="res://assets/Generic Mouse/Attachments/Knife 1 knife.png" id="29_nutvb"]
+[ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="30_r2otk"]
 [ext_resource type="Texture2D" uid="uid://bhpjmtb4h532v" path="res://assets/Generic Mouse/Attachments/Knife 2 knife.png" id="30_upl3j"]
+[ext_resource type="Texture2D" uid="uid://cs3v3qs2rw1fr" path="res://assets/Generic Mouse/Attachments/Sheriff gun lr no flash.png" id="31_w127b"]
 
 [sub_resource type="Gradient" id="Gradient_s0nxo"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -225,6 +228,36 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bweei"]
+light_mode = 2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_frxt3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("29_b47bd")
+}],
+"loop": false,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_r2otk")
+}],
+"loop": false,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("31_w127b")
+}],
+"loop": false,
+"name": &"left",
+"speed": 5.0
+}]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_asjwq"]
 radius = 95.0
 height = 190.0
@@ -333,6 +366,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gun:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"front"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_exyrh"]
 resource_name = "shoot left"
@@ -360,6 +417,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gun:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"left"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_nbms4"]
 resource_name = "shoot up"
@@ -382,6 +463,30 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gun:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"back"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -474,6 +579,21 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath("Knife:visible")
 properties/7/spawn = true
 properties/7/replication_mode = 1
+properties/8/path = NodePath("Gun:animation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Gun:frame")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Gun:flip_h")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("Gun:visible")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("Blood:flip_h")
+properties/12/spawn = true
+properties/12/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
 collision_layer = 4
@@ -532,6 +652,13 @@ material = SubResource("CanvasItemMaterial_piuaj")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_e3fi4")
 animation = &"shoot down"
+
+[node name="Gun" type="AnimatedSprite2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_bweei")
+position = Vector2(0, -50)
+sprite_frames = SubResource("SpriteFrames_frxt3")
+animation = &"front"
 
 [node name="AimView" type="Sprite2D" parent="."]
 visible = false

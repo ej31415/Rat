@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://be70b1rbh61b3"]
+[gd_scene load_steps=54 format=3 uid="uid://be70b1rbh61b3"]
 
 [ext_resource type="Script" path="res://gray_mouse.gd" id="1_fvefs"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_0n1gc"]
@@ -29,7 +29,10 @@
 [ext_resource type="Texture2D" uid="uid://dkuy3dt26mgf" path="res://assets/Generic Mouse/Attack/Sheriff lr.png" id="25_l7tel"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="25_ofl8d"]
 [ext_resource type="Texture2D" uid="uid://cc2dlvoa6fwj6" path="res://assets/Generic Mouse/Attack/Sheriff back.png" id="26_1prcj"]
+[ext_resource type="Texture2D" uid="uid://bsg75afbj0jp6" path="res://assets/Generic Mouse/Attachments/Sheriff gun back no flash.png" id="30_0l2s8"]
 [ext_resource type="Texture2D" uid="uid://3sdmhslq6nk1" path="res://assets/Generic Mouse/Attachments/Knife 1 knife.png" id="30_fqv5o"]
+[ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="31_rv5l5"]
+[ext_resource type="Texture2D" uid="uid://cs3v3qs2rw1fr" path="res://assets/Generic Mouse/Attachments/Sheriff gun lr no flash.png" id="32_7rr42"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lunfw"]
 light_mode = 2
@@ -229,6 +232,36 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hs31r"]
+light_mode = 2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pwry7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_0l2s8")
+}],
+"loop": false,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("31_rv5l5")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_7rr42")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}]
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qy8ku"]
 radius = 95.0
 height = 190.0
@@ -376,6 +409,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gun:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"front"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_bi5kn"]
 resource_name = "shoot left"
@@ -398,6 +455,30 @@ tracks/1/path = NodePath("AnimatedSprite2D:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gun:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"left"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -430,6 +511,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Gun:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"back"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Gun:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
@@ -441,7 +546,7 @@ _data = {
 "shoot up": SubResource("Animation_nm82n")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_75qfu"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_m62ei"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
@@ -466,6 +571,21 @@ properties/6/replication_mode = 1
 properties/7/path = NodePath("Knife:visible")
 properties/7/spawn = true
 properties/7/replication_mode = 1
+properties/8/path = NodePath("Gun:animation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Gun:frame")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Gun:flip_h")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("Gun:visible")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("Blood:flip_h")
+properties/12/spawn = true
+properties/12/replication_mode = 1
 
 [node name="GrayMouse" type="CharacterBody2D"]
 light_mask = 2
@@ -529,8 +649,15 @@ light_mask = 2
 material = SubResource("CanvasItemMaterial_cm2ee")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"attack"
-frame = 1
+animation = &"shoot up"
+
+[node name="Gun" type="AnimatedSprite2D" parent="."]
+visible = false
+light_mask = 2
+material = SubResource("CanvasItemMaterial_hs31r")
+position = Vector2(0, -50)
+sprite_frames = SubResource("SpriteFrames_pwry7")
+animation = &"back"
 
 [node name="AimView" type="Sprite2D" parent="."]
 visible = false
@@ -551,6 +678,6 @@ enabled = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_75qfu")
+replication_config = SubResource("SceneReplicationConfig_m62ei")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

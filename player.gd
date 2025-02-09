@@ -105,6 +105,7 @@ func reset_sprite_to_defaults():
 	$Shadow.visible = true
 	$Blood.visible = false
 	$Knife.visible = false
+	$Gun.visible = false
 
 func _rotation_tween(end_angle: float):
 	var tween := get_tree().create_tween()
@@ -188,10 +189,14 @@ func _physics_process(delta: float) -> void:
 			
 			if velocity.x < 0:
 				$AnimatedSprite2D.flip_h = false
+				$Blood.flip_h = false
 				$Knife.flip_h = false
+				$Gun.flip_h = false
 			else:
 				$AnimatedSprite2D.flip_h = true
+				$Blood.flip_h = true
 				$Knife.flip_h = true
+				$Gun.flip_h = true
 		elif velocity.y != 0:
 			if velocity.y < 0:
 				anim = "gyatt"
@@ -260,6 +265,7 @@ func animate_shoot():
 		new_anim = "shoot down"
 	elif current_anim == "gyatt" or current_anim == "static gyatt":
 		new_anim = "shoot up"
+	$Gun.visible = true
 	$AnimationPlayer.play(new_anim)
 
 @rpc("call_local", "reliable")

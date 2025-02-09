@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dsf2dc76n0gfe"]
+[gd_scene load_steps=44 format=3 uid="uid://dsf2dc76n0gfe"]
 
 [ext_resource type="Script" path="res://ghost_mouse.gd" id="1_vs4wj"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_b4mxp"]
@@ -18,7 +18,13 @@
 [ext_resource type="Texture2D" uid="uid://bc7ie1j1ytc6c" path="res://assets/Ghost Mouse/Side ghost 1.png" id="16_vtrw3"]
 [ext_resource type="Texture2D" uid="uid://3ekekd4c48i1" path="res://assets/Ghost Mouse/Side ghost 2.png" id="17_d0ksc"]
 [ext_resource type="Texture2D" uid="uid://caojieu7u0b28" path="res://assets/Ghost Mouse/Side ghost 3.png" id="18_gcxd3"]
+[ext_resource type="Texture2D" uid="uid://3sdmhslq6nk1" path="res://assets/Generic Mouse/Attachments/Knife 1 knife.png" id="20_cqvcw"]
+[ext_resource type="Texture2D" uid="uid://bhpjmtb4h532v" path="res://assets/Generic Mouse/Attachments/Knife 2 knife.png" id="21_g3eve"]
+[ext_resource type="Texture2D" uid="uid://bsg75afbj0jp6" path="res://assets/Generic Mouse/Attachments/Sheriff gun back no flash.png" id="22_17cpo"]
+[ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="23_w0k2n"]
+[ext_resource type="Texture2D" uid="uid://cs3v3qs2rw1fr" path="res://assets/Generic Mouse/Attachments/Sheriff gun lr no flash.png" id="24_lf0vo"]
 [ext_resource type="Script" path="res://aim.gd" id="24_maemb"]
+[ext_resource type="Texture2D" uid="uid://d1ij1rxp38wvt" path="res://assets/Generic Mouse/Attachments/Die2 blood.png" id="25_c2wrm"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dny3u"]
 light_mode = 2
@@ -347,6 +353,56 @@ _data = {
 "shoot up": SubResource("Animation_ryhco")
 }
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ijyu4"]
+light_mode = 2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q3e0o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_cqvcw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_g3eve")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_knmid"]
+light_mode = 2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tg31q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_17cpo")
+}],
+"loop": false,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_w0k2n")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_lf0vo")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ynkbr"]
+light_mode = 2
+
 [node name="GhostMouse" type="CharacterBody2D"]
 light_mask = 8
 visibility_layer = 8
@@ -412,5 +468,27 @@ light_mask = 8
 visibility_layer = 8
 enabled = false
 zoom = Vector2(0.5, 0.5)
+
+[node name="Knife" type="AnimatedSprite2D" parent="."]
+visible = false
+light_mask = 8
+material = SubResource("CanvasItemMaterial_ijyu4")
+position = Vector2(0, -50)
+sprite_frames = SubResource("SpriteFrames_q3e0o")
+
+[node name="Gun" type="AnimatedSprite2D" parent="."]
+visible = false
+light_mask = 8
+material = SubResource("CanvasItemMaterial_knmid")
+position = Vector2(0, -50)
+sprite_frames = SubResource("SpriteFrames_tg31q")
+animation = &"back"
+
+[node name="Blood" type="Sprite2D" parent="."]
+visible = false
+light_mask = 2
+material = SubResource("CanvasItemMaterial_ynkbr")
+position = Vector2(0, -50)
+texture = ExtResource("25_c2wrm")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
