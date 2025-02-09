@@ -104,6 +104,7 @@ func reset_sprite_to_defaults():
 	$Aim.rotation_degrees = 0
 	$Shadow.visible = true
 	$Blood.visible = false
+	$Knife.visible = false
 
 func _rotation_tween(end_angle: float):
 	var tween := get_tree().create_tween()
@@ -187,8 +188,10 @@ func _physics_process(delta: float) -> void:
 			
 			if velocity.x < 0:
 				$AnimatedSprite2D.flip_h = false
+				$Knife.flip_h = false
 			else:
 				$AnimatedSprite2D.flip_h = true
+				$Knife.flip_h = true
 		elif velocity.y != 0:
 			if velocity.y < 0:
 				anim = "gyatt"
@@ -230,6 +233,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					print(color + " attack!!!")
 					set_physics_process(false)
 					$AnimationPlayer.play("attack")
+					$Knife.visible = true
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:

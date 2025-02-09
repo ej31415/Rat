@@ -222,10 +222,10 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Gun.visible = false
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
-	#for player in get_tree().get_nodes_in_group("player"):
-		#if player.get_node("AnimationPlayer") != null:
-			#player.get_node("AnimationPlayer").stop()
-			#player.get_node("AnimationPlayer").clear_queue()
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.get_node("AnimationPlayer") != null:
+			player.get_node("AnimationPlayer").stop()
+			player.get_node("AnimationPlayer").clear_queue()
 	if player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
 	else:

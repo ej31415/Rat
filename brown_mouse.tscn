@@ -1,9 +1,8 @@
-[gd_scene load_steps=44 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=47 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_45tb2"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_tv7fa"]
-[ext_resource type="Texture2D" uid="uid://d1ij1rxp38wvt" path="res://assets/Generic Mouse/Attachments/Die2 blood.png" id="4_jd11p"]
 [ext_resource type="Texture2D" uid="uid://cf24mmyomivfe" path="res://assets/Generic Mouse/Attack/Knife 1 mouse.png" id="6_2eh0l"]
 [ext_resource type="Texture2D" uid="uid://diiucxji0xqxo" path="res://assets/Generic Mouse/Attack/Knife 2 mouse.png" id="7_6udi8"]
 [ext_resource type="Texture2D" uid="uid://car0ilct25xab" path="res://assets/Generic Mouse/Movement/Diagonal step down 1.png" id="7_dafvd"]
@@ -28,6 +27,8 @@
 [ext_resource type="Texture2D" uid="uid://dkuy3dt26mgf" path="res://assets/Generic Mouse/Attack/Sheriff lr.png" id="25_62ukp"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="25_ue6sh"]
 [ext_resource type="Texture2D" uid="uid://cc2dlvoa6fwj6" path="res://assets/Generic Mouse/Attack/Sheriff back.png" id="26_vc1pb"]
+[ext_resource type="Texture2D" uid="uid://3sdmhslq6nk1" path="res://assets/Generic Mouse/Attachments/Knife 1 knife.png" id="29_nutvb"]
+[ext_resource type="Texture2D" uid="uid://bhpjmtb4h532v" path="res://assets/Generic Mouse/Attachments/Knife 2 knife.png" id="30_upl3j"]
 
 [sub_resource type="Gradient" id="Gradient_s0nxo"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -45,6 +46,23 @@ light_mode = 2
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_h5n1v"]
 light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gm684"]
+light_mode = 2
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g38yx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("29_nutvb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_upl3j")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_piuaj"]
 light_mode = 2
@@ -237,6 +255,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [1]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Knife:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
 
 [sub_resource type="Animation" id="Animation_ads6u"]
 resource_name = "die"
@@ -384,6 +414,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Knife:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"default"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Knife:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fhu0p"]
 _data = {
@@ -395,7 +449,7 @@ _data = {
 "shoot up": SubResource("Animation_nbms4")
 }
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_vfuks"]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6q4xi"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
@@ -405,15 +459,21 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("AnimatedSprite2D:frame")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("Vision:position")
+properties/3/path = NodePath("AnimatedSprite2D:flip_h")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("Vision:rotation")
+properties/4/path = NodePath("Knife:animation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath("Vision:scale")
+properties/5/path = NodePath("Knife:frame")
 properties/5/spawn = true
 properties/5/replication_mode = 1
+properties/6/path = NodePath("Knife:flip_h")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Knife:visible")
+properties/7/spawn = true
+properties/7/replication_mode = 1
 
 [node name="BrownMouse" type="CharacterBody2D"]
 collision_layer = 4
@@ -451,13 +511,20 @@ script = ExtResource("20_ohqr7")
 [node name="Blood" type="Sprite2D" parent="."]
 visible = false
 material = SubResource("CanvasItemMaterial_dtrll")
-position = Vector2(0, -50)
-texture = ExtResource("4_jd11p")
+position = Vector2(-80, -50)
+texture = ExtResource("29_nutvb")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 material = SubResource("CanvasItemMaterial_h5n1v")
 position = Vector2(0, 73.5)
 texture = ExtResource("2_tv7fa")
+
+[node name="Knife" type="AnimatedSprite2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_gm684")
+position = Vector2(0, -50)
+sprite_frames = SubResource("SpriteFrames_g38yx")
+frame = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0.596078, 0.576471, 1)
@@ -487,6 +554,6 @@ enabled = false
 zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_vfuks")
+replication_config = SubResource("SceneReplicationConfig_6q4xi")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
