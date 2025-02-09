@@ -172,7 +172,6 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 			child.starter(true_roles)
 			child.visible = true
 			child.position = $Map.get_start_position(maze, offset)
-			child.get_node("AnimatedSprite2D").position = Vector2(0, 0)
 			# spaghetti code >.<
 			var temp = child.starter(true_roles)
 			if temp != "":

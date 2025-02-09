@@ -53,11 +53,16 @@ func starter(color_to_roles):
 	reset_sprite_to_defaults()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
-		$Camera2D.make_current()
+		$Camera2D.make_current()	
+		if role == "sheriff":
+			$Aim.enabled = true
+		else:
+			$Aim.enabled = false
 		return role
 	else:
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
+		$Aim.enabled = false
 	return ""
 
 func disable_movement():
@@ -81,6 +86,9 @@ func get_shot():
 
 func get_kill_cooldown():
 	return ceil(rat_cooldown - (Time.get_unix_time_from_system() - last_rat_kill))
+	
+func set_aim_view_visible(b: bool):
+	$AimView.visible = b
 	
 func is_alive():
 	return alive
@@ -220,6 +228,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						return
 					if !target.is_alive():
 						return
+					target.set_aim_view_visible(false)
 					die_call.rpc(target.get_color())
 					add_kill.rpc()
 				sheriff_shot = true

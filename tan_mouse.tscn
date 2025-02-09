@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=42 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://lu52y17yncay" path="res://assets/Tan Mouse/Shoot/Green rat left.png" id="21_ie7qn"]
 [ext_resource type="Texture2D" uid="uid://yrtpbxppjjai" path="res://assets/Tan Mouse/Shoot/Rat gun right.png" id="22_jl12u"]
 [ext_resource type="Texture2D" uid="uid://b1s6fr3j3aqly" path="res://assets/Tan Mouse/Shoot/Rat gun back.png" id="23_qkuws"]
+[ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="25_a2oct"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a5kuh"]
 light_mode = 2
@@ -219,18 +220,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_61pn1"]
@@ -439,7 +428,6 @@ properties/5/spawn = true
 properties/5/replication_mode = 1
 
 [node name="TanMouse" type="CharacterBody2D"]
-visible = false
 light_mask = 8
 material = SubResource("CanvasItemMaterial_a5kuh")
 collision_layer = 2
@@ -450,7 +438,7 @@ script = ExtResource("1_bx85c")
 [node name="ViewSphere" type="PointLight2D" parent="."]
 light_mask = 2
 visibility_layer = 2
-position = Vector2(0, 35)
+position = Vector2(0, -15)
 scale = Vector2(15, 15)
 energy = 0.5
 blend_mode = 2
@@ -460,7 +448,6 @@ shadow_item_cull_mask = 0
 texture = SubResource("GradientTexture2D_md08e")
 
 [node name="Vision" type="PointLight2D" parent="."]
-position = Vector2(0, 30)
 rotation = -1.5708
 scale = Vector2(1.5, 1.2)
 range_z_max = 0
@@ -468,30 +455,37 @@ range_item_cull_mask = 39
 shadow_enabled = true
 shadow_item_cull_mask = 32
 texture = ExtResource("2_uk5ia")
-offset = Vector2(-400, 0)
+offset = Vector2(-382, 0)
+
+[node name="Aim" type="RayCast2D" parent="."]
+target_position = Vector2(0, 600)
+collision_mask = 15
+script = ExtResource("20_6xjy5")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 show_behind_parent = true
 light_mask = 8
 material = SubResource("CanvasItemMaterial_84jcd")
-position = Vector2(0, 123.5)
+position = Vector2(0, 73.5)
 texture = ExtResource("2_k803p")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(0.447059, 0.772549, 0, 1)
 light_mask = 8
 material = SubResource("CanvasItemMaterial_v714w")
+position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_31bpd")
-animation = &"static front"
+animation = &"left"
+frame = 1
+
+[node name="AimView" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("25_a2oct")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 25)
+position = Vector2(0, -25)
 shape = SubResource("CapsuleShape2D_7e41u")
-
-[node name="Aim" type="RayCast2D" parent="."]
-target_position = Vector2(0, 500)
-collision_mask = 15
-script = ExtResource("20_6xjy5")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
