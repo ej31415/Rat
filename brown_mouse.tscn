@@ -605,7 +605,6 @@ script = ExtResource("1_2yxuw")
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, -15)
 scale = Vector2(10, 10)
-energy = 0.1
 blend_mode = 2
 range_item_cull_mask = 33
 shadow_enabled = true
@@ -616,7 +615,8 @@ texture = SubResource("GradientTexture2D_60pgy")
 rotation = -1.5708
 scale = Vector2(1.5, 1.2)
 color = Color(0.728822, 0.728822, 0.728822, 1)
-energy = 1.2
+energy = 2.0
+blend_mode = 2
 range_z_max = 0
 range_item_cull_mask = 46
 shadow_enabled = true
