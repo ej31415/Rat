@@ -26,13 +26,13 @@
 [ext_resource type="Texture2D" uid="uid://dtpvum7kha8g6" path="res://assets/Generic Mouse/Movement/Left static.png" id="22_jb6dh"]
 [ext_resource type="Texture2D" uid="uid://coqwqtel0ltpm" path="res://assets/Generic Mouse/Movement/Walk 2 left.png" id="23_7pcne"]
 [ext_resource type="Texture2D" uid="uid://bno0il3qfepdl" path="res://assets/Generic Mouse/Attack/Sheriff front.png" id="24_egxvh"]
-[ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="25_a2oct"]
 [ext_resource type="Texture2D" uid="uid://dkuy3dt26mgf" path="res://assets/Generic Mouse/Attack/Sheriff lr.png" id="25_qgab6"]
 [ext_resource type="Texture2D" uid="uid://cc2dlvoa6fwj6" path="res://assets/Generic Mouse/Attack/Sheriff back.png" id="26_yubdn"]
 [ext_resource type="Texture2D" uid="uid://bsg75afbj0jp6" path="res://assets/Generic Mouse/Attachments/Sheriff gun back no flash.png" id="30_4j7yq"]
 [ext_resource type="Texture2D" uid="uid://3sdmhslq6nk1" path="res://assets/Generic Mouse/Attachments/Knife 1 knife.png" id="30_wj6iu"]
 [ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="31_y5l4n"]
 [ext_resource type="Texture2D" uid="uid://cs3v3qs2rw1fr" path="res://assets/Generic Mouse/Attachments/Sheriff gun lr no flash.png" id="32_5knmu"]
+[ext_resource type="Texture2D" uid="uid://bfjda0hn8531v" path="res://assets/Generic Mouse/Attachments/Crosshair.png" id="33_11lsr"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a5kuh"]
 light_mode = 2
@@ -664,8 +664,8 @@ animation = &"back"
 
 [node name="AimView" type="Sprite2D" parent="."]
 visible = false
-scale = Vector2(0.15, 0.15)
-texture = ExtResource("25_a2oct")
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("33_11lsr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -25)
