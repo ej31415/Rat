@@ -240,10 +240,13 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			$WinScreen/MiceWin.visible = true
 			if sheriff_win:
 				var sheriff
+				var rat
 				for color in color_to_role:
 					if color_to_role[color] == "sheriff":
 						sheriff = color_to_color[color]
-				$WinScreen/WinDetails.text = "[center]The sheriff (" + sheriff + ") killed the rat!"
+					if color_to_role[color] == "rat":
+						rat = color_to_color[color]
+				$WinScreen/WinDetails.text = "[center]The sheriff (" + sheriff + ") killed the rat (" + rat + ")!"
 			else:
 				$WinScreen/WinDetails.text = "[center]One of the mice escaped!"
 			$WinScreen/WinDetails.visible = true
