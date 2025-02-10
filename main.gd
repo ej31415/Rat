@@ -232,7 +232,11 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 		if mice_win:
 			$WinScreen/MiceWin.visible = true
 			if sheriff_win:
-				$WinScreen/WinDetails.text = "[center]The sheriff killed the rat!"
+				var sheriff
+				for color in color_to_role:
+					if color_to_role[color] == "sheriff":
+						sheriff = color
+				$WinScreen/WinDetails.text = "[center]The sheriff (" + sheriff + ") killed the rat!"
 			else:
 				$WinScreen/WinDetails.text = "[center]One of the mice escaped!"
 			$WinScreen/WinDetails.visible = true
@@ -244,7 +248,11 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			if time_out:
 				$WinScreen/WinDetails.text = "[center]Time ran out . . ."
 			else:
-				$WinScreen/WinDetails.text = "[center]The rat killed everyone . . ."
+				var rat
+				for color in color_to_role:
+					if color_to_role[color] == "rat":
+						rat = color
+				$WinScreen/WinDetails.text = "[center]The rat (" + rat + ") killed everyone . . ."
 			$WinScreen/WinDetails.visible = true
 			$AudioStreamPlayer.stream = rat_victory_sound
 			$AudioStreamPlayer.play()
