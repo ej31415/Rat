@@ -42,6 +42,7 @@ func starter(color_to_roles):
 
 	role = color_to_roles[color]
 	alive = true
+	last_rat_kill = Time.get_unix_time_from_system() - 5
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
@@ -49,14 +50,21 @@ func starter(color_to_roles):
 	$ViewSphere.energy = 1
 	$Vision.enabled = true
 	enable_movement()
-	reset_sprite_to_defaults()
+	#reset_sprite_to_defaults()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
+		#reset_sprite_to_defaults()
+		if role == "sheriff":
+			$Aim.enabled = true
+		else:
+			$Aim.enabled = false
 		return role
 	else:
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
+		$Aim.enabled = false
+		#reset_sprite_to_defaults()
 	return ""
 
 func disable_movement():
@@ -81,8 +89,23 @@ func get_shot():
 func get_kill_cooldown():
 	return ceil(rat_cooldown - (Time.get_unix_time_from_system() - last_rat_kill))
 	
+func set_aim_view_visible(b: bool):
+	$AimView.visible = b
+	
 func is_alive():
 	return alive
+	
+func reset_sprite_to_defaults():
+	$Vision.rotation_degrees = -90
+	$ViewSphere.texture_scale = 1
+	$AnimatedSprite2D.animation = "static front"
+	$AnimatedSprite2D.play()
+	$AnimatedSprite2D.stop()
+	$Aim.rotation_degrees = 0
+	$Shadow.visible = true
+	$Blood.visible = false
+	$Knife.visible = false
+	$Gun.visible = false
 
 func _rotation_tween(end_angle: float):
 	var tween := get_tree().create_tween()
@@ -106,19 +129,7 @@ func _rotation_tween(end_angle: float):
 	var target_angle = $Vision.rotation_degrees + diff
 	tween.tween_property($Vision, "rotation_degrees", target_angle, FOV_TWEEN_DURATION)
 	
-func reset_sprite_to_defaults():
-	$Vision.position = Vector2(0, 50)
-	$Vision.scale = Vector2(2.5, 1.2)
-	$Vision.rotation_degrees = -90
-	$ViewSphere.texture_scale = 1
-	$AnimatedSprite2D.animation = "static front"
-	$AnimatedSprite2D.play()
-	$AnimatedSprite2D.stop()
-	$Aim.rotation_degrees = 0
-	
 func set_vision():
-	$Vision.scale = Vector2(2.5, 1.2)
-	$Vision.position = Vector2(0, 50)
 	if velocity.x < 0 and velocity.y < 0:
 		_rotation_tween(45)
 		$Aim.rotation_degrees = 135
@@ -167,20 +178,33 @@ func _physics_process(delta: float) -> void:
 		
 		set_vision()
 		
-		# Set sprite orientation
-		if velocity.x < 0:
-			anim = "left"
-		elif velocity.y > 0:
-			anim = "front"
-		elif velocity.y < 0:
-			anim = "gyatt"
-		elif velocity.x > 0:
-			anim = "right"
+		# Set sprite orientation				
+		if velocity.x != 0:
+			if velocity.y > 0:
+				anim = "diagonal down"
+			elif velocity.y < 0:
+				anim = "diagonal up"
+			else:
+				anim = "left"
+			
+			if velocity.x < 0:
+				$AnimatedSprite2D.flip_h = false
+				$Blood.flip_h = false
+				$Knife.flip_h = false
+				$Gun.flip_h = false
+			else:
+				$AnimatedSprite2D.flip_h = true
+				$Blood.flip_h = true
+				$Knife.flip_h = true
+				$Gun.flip_h = true
+		elif velocity.y != 0:
+			if velocity.y < 0:
+				anim = "gyatt"
+			else:
+				anim = "front"
 		else:
 			if anim == "left":
 				anim = "static left"
-			elif anim == "right":
-				anim = "static right"
 			elif anim == "gyatt":
 				anim = "static gyatt"
 			elif anim == "front":
@@ -214,6 +238,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					print(color + " attack!!!")
 					set_physics_process(false)
 					$AnimationPlayer.play("attack")
+					$Knife.visible = true
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:
@@ -223,25 +248,25 @@ func _unhandled_input(event: InputEvent) -> void:
 						return
 					if !target.is_alive():
 						return
+					target.set_aim_view_visible(false)
 					die_call.rpc(target.get_color())
 					add_kill.rpc()
 				sheriff_shot = true
 				print(color + " shoot!!!")
 				set_physics_process(false)
-				$AnimationPlayer.play(animate_shoot())
+				animate_shoot()
 
-func animate_shoot() -> StringName:
+func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
 	var new_anim = ""
 	if current_anim == "left" or current_anim == "static left":
 		new_anim = "shoot left"
-	elif current_anim == "right" or current_anim == "static right":
-		new_anim = "shoot right"
 	elif current_anim == "front" or current_anim == "static front":
 		new_anim = "shoot down"
 	elif current_anim == "gyatt" or current_anim == "static gyatt":
 		new_anim = "shoot up"
-	return new_anim
+	$Gun.visible = true
+	$AnimationPlayer.play(new_anim)
 
 @rpc("call_local", "reliable")
 func die_call(color):
@@ -258,14 +283,14 @@ func die():
 	set_physics_process(false)
 	$AnimationPlayer.play("die")
 	if is_multiplayer_authority():
-		ghost_instance = spawn_ghost()
-		await get_tree().create_timer(1).timeout
-		fade_out_vision(0.5)
-		await get_tree().create_timer(1).timeout
-		activate_ghost(0.5)
+		ghost_instance = spawn_ghost(self.get_node("AnimatedSprite2D").modulate)
+		await get_tree().create_timer(0.2).timeout
+		fade_out_vision(0.1)
+		await get_tree().create_timer(0.2).timeout
+		activate_ghost(0.1)
 	else:
 		$ViewSphere.enabled = false
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.2).timeout
 	
 
 func fade_out_vision(tween_seconds: float) -> void:
@@ -273,9 +298,11 @@ func fade_out_vision(tween_seconds: float) -> void:
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property($ViewSphere, "energy", 0, tween_seconds)
 	
-func spawn_ghost() -> CharacterBody2D:
+func spawn_ghost(color: Color) -> CharacterBody2D:
 	var ghost := ghost_scene.instantiate()
 	ghost.global_position = global_position
+	color.a = 0.5
+	ghost.get_node("AnimatedSprite2D").modulate = color
 	get_parent().add_child(ghost)
 	if multiplayer.has_multiplayer_peer():
 		ghost.set_multiplayer_authority(multiplayer.get_unique_id())
@@ -291,7 +318,7 @@ func activate_ghost(tween_duration: float):
 		ghost_instance.visible = true
 		
 		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1.8, tween_duration)
-		tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
+		#tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
 		print("setting camera")
 		var camera = ghost_instance.get_node("Camera2D")
 		
