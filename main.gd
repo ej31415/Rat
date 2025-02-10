@@ -17,6 +17,7 @@ var color_to_role = {}
 var color_to_pts = {}
 var color_to_pts_label = {}
 var color_to_baseinst = {}
+var color_to_color = {}
 var id_to_color = {}
 var game_ended = false
 var is_host = false
@@ -54,6 +55,12 @@ func _ready():
 		"sb": sb_mouse,
 		"tan": tan_mouse,
 		"brown": brown_mouse
+	}
+	color_to_color = {
+		"tan": "green",
+		"sb": "blue",
+		"gray": "yellow",
+		"brown": "red"
 	}
 	multiplayer.server_disconnected.connect(_on_server_disconnect)
 
@@ -235,7 +242,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 				var sheriff
 				for color in color_to_role:
 					if color_to_role[color] == "sheriff":
-						sheriff = color
+						sheriff = color_to_color[color]
 				$WinScreen/WinDetails.text = "[center]The sheriff (" + sheriff + ") killed the rat!"
 			else:
 				$WinScreen/WinDetails.text = "[center]One of the mice escaped!"
@@ -251,7 +258,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 				var rat
 				for color in color_to_role:
 					if color_to_role[color] == "rat":
-						rat = color
+						rat = color_to_color[color]
 				$WinScreen/WinDetails.text = "[center]The rat (" + rat + ") killed everyone . . ."
 			$WinScreen/WinDetails.visible = true
 			$AudioStreamPlayer.stream = rat_victory_sound
