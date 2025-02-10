@@ -595,8 +595,8 @@ script = ExtResource("1_fvefs")
 
 [node name="ViewSphere" type="PointLight2D" parent="."]
 position = Vector2(0, -15)
-scale = Vector2(15, 15)
-energy = 0.3
+scale = Vector2(12, 12)
+energy = 0.1
 blend_mode = 2
 range_item_cull_mask = 34
 shadow_enabled = true
