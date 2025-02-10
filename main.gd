@@ -131,6 +131,7 @@ func _on_server_disconnect():
 		$WinScreen/PlayerDisconnected.visible = false
 		$WinScreen/num_players.visible = false
 		$WinScreen/CheckBoxButton.visible = false
+		$WinScreen/WinDetails.visible = false
 		$HUD.visible = false
 		$StartMenu.visible = false
 		set_physics_process(false)
