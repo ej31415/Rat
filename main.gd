@@ -223,10 +223,10 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 
 func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
-	_end_game.rpc(false, false, true, false)
+	_end_game.rpc(false, false, true, false, "")
 
 @rpc("call_local", "reliable", "any_peer")
-func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool) -> void:
+func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String) -> void:
 	if game_ended:
 		return
 	print("game ended!!!")
@@ -255,7 +255,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 						rat = color_to_color[color]
 				$WinScreen/WinDetails.text = "[center]The sheriff (" + sheriff + ") killed the rat (" + rat + ")!"
 			else:
-				$WinScreen/WinDetails.text = "[center]One of the mice escaped!"
+				$WinScreen/WinDetails.text = "[center]One of the mice (" + escaped_color + ") escaped!"
 			$WinScreen/WinDetails.visible = true
 			$AudioStreamPlayer.stream = mice_victory_sound
 			$AudioStreamPlayer.play()
@@ -305,7 +305,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 func _process(delta: float) -> void:
 	var cooldown = -1
 	if player_disconnected and not game_ended:
-		_end_game.rpc(false, false, false, true)
+		_end_game.rpc(false, false, false, true, "")
 	for player in get_tree().get_nodes_in_group("player"):
 		if not player.has_method("get_role"):
 			continue
@@ -313,9 +313,9 @@ func _process(delta: float) -> void:
 		# Check end game
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
-			_end_game.rpc(true, false, false, false)
+			_end_game.rpc(true, false, false, false, color_to_color[player.get_color()])
 		if player.get_role() == "rat" and not game_ended and not player.is_alive():
-			_end_game.rpc(true, true, false, false)
+			_end_game.rpc(true, true, false, false, "")
 			
 		# Check sheriff shot
 		if player.get_shot() == true:
@@ -325,7 +325,7 @@ func _process(delta: float) -> void:
 		cooldown = max(cooldown, player.get_kill_cooldown())
 	
 	if killed == 3 and not game_ended:
-		_end_game.rpc(false, false, false, false)
+		_end_game.rpc(false, false, false, false, "")
 		
 	if cooldown > 0:
 		$HUD/Knife.modulate=Color(60/255.0,60/255.0,60/255.0)
