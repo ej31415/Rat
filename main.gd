@@ -19,6 +19,7 @@ var color_to_pts_label = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var id_to_color = {}
+var role_to_desc = {}
 var game_ended = false
 var is_host = false
 var first_started = false
@@ -61,6 +62,11 @@ func _ready():
 		"sb": "blue",
 		"gray": "yellow",
 		"brown": "red"
+	}
+	role_to_desc = {
+		"mouse": "escape the maze!",
+		"sheriff": "kill the rat!",
+		"rat": "kill everyone."
 	}
 	multiplayer.server_disconnected.connect(_on_server_disconnect)
 
@@ -194,7 +200,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 
-	$HUD/Role.text = "You are a " + role + ". . ."
+	$HUD/Role.text = "You are a " + role + " . . . " + role_to_desc[role]
 	if role == "sheriff":
 		$HUD/Gun.visible = true 
 		$HUD/Gun.modulate = Color(1,1,1)
