@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
 [ext_resource type="PackedScene" uid="uid://be70b1rbh61b3" path="res://gray_mouse.tscn" id="2_nn2rc"]
 [ext_resource type="PackedScene" uid="uid://cip1oahpmpagq" path="res://brown_mouse.tscn" id="3_25c60"]
-[ext_resource type="Texture2D" uid="uid://iyrxxy6o6sts" path="res://assets/Tile Sets/Floors/floor.jpg" id="4_8xaux"]
 [ext_resource type="Texture2D" uid="uid://b1yqxuo30e6kr" path="res://assets/Tile Sets/Walls/Walls 6.png" id="4_jaqq8"]
 [ext_resource type="PackedScene" uid="uid://75nausi002r2" path="res://sb_mouse.tscn" id="4_ya4us"]
 [ext_resource type="PackedScene" uid="uid://bga65g3uwmuq1" path="res://tan_mouse.tscn" id="5_lqi8s"]
-[ext_resource type="Texture2D" uid="uid://03qlcaq8dcgo" path="res://assets/Tile Sets/Walls/Walls.jpg" id="6_j188n"]
+[ext_resource type="Texture2D" uid="uid://5bx4w8vv6fp0" path="res://assets/Tile Sets/Floors/Floor.png" id="7_uqj63"]
+[ext_resource type="Texture2D" uid="uid://rmbvsg6rlg8d" path="res://assets/Tile Sets/Walls/Walls.png" id="9_b15hr"]
 [ext_resource type="Script" path="res://timer.gd" id="10_al2ht"]
 [ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="10_dpgvo"]
 [ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
@@ -33,7 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://bm0e3q780eblu" path="res://assets/UI/Knife icon no blood.png" id="94_i526h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1oqjg"]
-texture = ExtResource("4_8xaux")
+texture = ExtResource("7_uqj63")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 
@@ -59,7 +59,7 @@ polygon = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
 polygon = PackedVector2Array(-128, -128, -128, -25.6, 128, -25.6, 128, -128)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2knl5"]
-texture = ExtResource("6_j188n")
+texture = ExtResource("9_b15hr")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/y_sort_origin = 200
@@ -77,7 +77,7 @@ sources/0 = SubResource("TileSetAtlasSource_1afth")
 sources/2 = SubResource("TileSetAtlasSource_2knl5")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_binbo"]
-texture = ExtResource("4_8xaux")
+texture = ExtResource("7_uqj63")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 
