@@ -59,13 +59,13 @@ func starter(color_to_roles):
 			$Aim.enabled = true
 		else:
 			$Aim.enabled = false
-		return role
+		return [role, self.get_node("AnimatedSprite2D").modulate]
 	else:
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
 		$Aim.enabled = false
 		#reset_sprite_to_defaults()
-	return ""
+	return ["", Color(1, 1, 1)]
 
 func disable_movement():
 	$AnimatedSprite2D.animation = "static front"
@@ -317,7 +317,7 @@ func activate_ghost(tween_duration: float):
 		ghost_instance.started = true
 		ghost_instance.visible = true
 		
-		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1.8, tween_duration)
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 0.5, tween_duration)
 		#tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
 		print("setting camera")
 		var camera = ghost_instance.get_node("Camera2D")

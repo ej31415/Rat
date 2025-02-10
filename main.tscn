@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=45 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
+[ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
@@ -323,17 +324,17 @@ script = ExtResource("10_al2ht")
 
 [node name="Panel" type="Panel" parent="TimerCanvasLayer"]
 visible = false
-offset_left = 10.0
-offset_top = 12.0
-offset_right = 272.0
-offset_bottom = 73.0
+offset_left = 441.0
+offset_top = 32.0
+offset_right = 711.0
+offset_bottom = 93.0
 
 [node name="TimeLeft" type="Label" parent="TimerCanvasLayer/Panel"]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 7.0
-offset_right = 215.0
-offset_bottom = 51.0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 256.0
+offset_bottom = 52.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 label_settings = SubResource("LabelSettings_wngka")
 horizontal_alignment = 1
@@ -771,21 +772,34 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
+[node name="PlayerAvatar" type="Sprite2D" parent="HUD"]
+visible = false
+position = Vector2(72, 64)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("26_csx1t")
+
 [node name="Role" type="Label" parent="HUD"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -52.0
-offset_top = -32.0
-offset_right = 52.0
-grow_horizontal = 2
-grow_vertical = 0
+visible = false
+offset_left = 144.0
+offset_top = 40.0
+offset_right = 360.0
+offset_bottom = 88.0
 size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 35
+text = "Role: Sheriff"
 language = "en_US"
+
+[node name="Objective" type="RichTextLabel" parent="HUD"]
+visible = false
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 192.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+text = "Objective: 
+Escape or kill rat"
 
 [node name="HelpMessage" type="Label" parent="HUD"]
 anchors_preset = 1

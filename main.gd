@@ -64,9 +64,9 @@ func _ready():
 		"brown": "red"
 	}
 	role_to_desc = {
-		"mouse": "escape the maze!",
-		"sheriff": "kill the rat!",
-		"rat": "kill everyone."
+		"mouse": "Escape!",
+		"sheriff": "Kill the rat or escape!",
+		"rat": "Kill or delay the mice!"
 	}
 	multiplayer.server_disconnected.connect(_on_server_disconnect)
 
@@ -186,21 +186,30 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$Map.build_maze(maze, offset)
 	
 	var role = "PLACEHOLDER"
+	var color_player = Color(1, 1, 1)
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("starter"):
 			child.starter(true_roles)
 			child.visible = true
 			child.position = $Map.get_start_position(maze, offset)
 			child.reset_sprite_to_defaults()
-			# spaghetti code >.<
+			
+			# Extract necessary statuses
 			var temp = child.starter(true_roles)
-			if temp != "":
-				role = temp
+			if temp[0] != "":
+				role = temp[0]
+			if temp[1] != Color(1, 1, 1):
+				color_player = temp[1]
 
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 
-	$HUD/Role.text = "You are a " + role + " . . . " + role_to_desc[role]
+	$HUD/PlayerAvatar.modulate = color_player
+	$HUD/PlayerAvatar.visible = true
+	$HUD/Role.text = role.capitalize()
+	$HUD/Role.visible = true
+	$HUD/Objective.text = role_to_desc[role]
+	$HUD/Objective.visible = true
 	if role == "sheriff":
 		$HUD/Gun.visible = true 
 		$HUD/Gun.modulate = Color(1,1,1)
