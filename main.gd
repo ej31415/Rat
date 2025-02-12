@@ -68,7 +68,25 @@ func _ready():
 		"sheriff": "Kill the rat or escape!",
 		"rat": "Kill or delay the mice!"
 	}
+
+	# instant-start for debugging
+	var args = Array(OS.get_cmdline_args())
+	if args.has("--quickstart"):
+		_quick_start() # Usage guide is immediately above the function def
 	multiplayer.server_disconnected.connect(_on_server_disconnect)
+
+# To use quick-start:
+# 1. "Debug" -> "Customize Run Instances" -> Add "--quickstart" to main run arguments
+# 2. Start up game with 4 instances
+# 3. Press host button on one of the instances within 3 seconds. Game should then start up automatically
+func _quick_start():
+	_on_skip_pressed()
+	await get_tree().create_timer(3).timeout
+	if !is_host:
+		_on_join_pressed()
+	await get_tree().create_timer(0.5).timeout
+	if is_host:
+		_on_start_pressed()
 
 func _on_host_pressed():
 	peer.create_server(135)
@@ -246,7 +264,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
 	for player in get_tree().get_nodes_in_group("player"):
-		if player.get_node("AnimationPlayer") != null:
+		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
 			player.get_node("AnimationPlayer").clear_queue()
 	if player_discon:
