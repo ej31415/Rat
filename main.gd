@@ -89,6 +89,7 @@ func _quick_start():
 		_on_start_pressed()
 
 func _on_host_pressed():
+	$SoundEffects.play()
 	peer.create_server(135)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
@@ -163,6 +164,7 @@ func _on_server_disconnect():
 		$WinScreen/ServerDisconnected.visible = true
 
 func _on_join_pressed():
+	$SoundEffects.play()
 	var error = peer.create_client($StartMenu/ip.text, 135)
 	if error == OK:
 		multiplayer.multiplayer_peer = peer
@@ -175,6 +177,7 @@ func _on_join_pressed():
 		$StartMenu/error.visible = true
 
 func _on_disconnect_pressed():
+	$SoundEffects.play()
 	peer.close()
 	multiplayer.multiplayer_peer = peer
 	Player.roles = Player.roles_copy.duplicate()
@@ -185,6 +188,7 @@ func _on_disconnect_pressed():
 	$StartMenu/joined.visible = false
 
 func _on_start_pressed():
+	$SoundEffects.play()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
 	start_helper.rpc(maze, offset, color_to_role, color_to_pts)
@@ -377,6 +381,7 @@ func _process(delta: float) -> void:
 		refresh_play_again_button()
 
 func _on_again_button_pressed() -> void:
+	$SoundEffects.play()
 	# make a new maze
 	$Map._ready()
 	var maze = $Map.get_maze()
@@ -394,17 +399,8 @@ func random_role_assignment():
 	for i in range(colors.size()):
 		color_to_role[colors[i]] = roles[i]
 
-func _on_title_screen_animation_finished():
-	$StartMenu/Skip.visible = false
-	$StartMenu/host.visible = true
-	$StartMenu/join.visible = true
-	$StartMenu/label.visible = true
-	$StartMenu/ip.visible = true
-	
-	$AudioStreamPlayer.stream = title_sound
-	$AudioStreamPlayer.play()
-
 func _on_skip_pressed() -> void:
+	$SoundEffects.play()
 	show_title_menu()
 
 func _on_title_sequence_finished() -> void:
@@ -424,8 +420,10 @@ func show_title_menu() -> void:
 
 func refresh_play_again_button() -> void:
 	if $WinScreen/CheckBoxButton.checked and $WinScreen/RestartTimer.is_stopped():
+		$SoundEffects.play()
 		$WinScreen/RestartTimer.start()
 	elif (!$WinScreen/CheckBoxButton.checked and !$WinScreen/RestartTimer.is_stopped()):
+		$SoundEffects.play()
 		$WinScreen/RestartTimer.stop()
 	
 	if $WinScreen/RestartTimer.is_stopped():

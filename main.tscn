@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=46 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
+[ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
@@ -769,6 +770,9 @@ stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("26_a2wbr")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
