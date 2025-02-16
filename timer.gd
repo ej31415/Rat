@@ -2,6 +2,8 @@ extends CanvasLayer
 
 var ms_left
 
+var warned = false
+
 func start(ms: int) -> void:
 	$Panel.visible = true
 	$Timer.paused = false
@@ -30,6 +32,9 @@ func _process(delta: float) -> void:
 		$Panel/TimeLeft.text = _pad(str(minutes), 2) + " : " + _pad(str(seconds), 2) + " : " + _pad(str(milliseconds), 3)
 		if ms_left < 1000*10:
 			$Panel/TimeLeft.label_settings.font_color = Color(1.0, 0, 0)
+			if not $Alarm.playing and not warned:
+				$Alarm.play()
+				warned = true
 
 func _on_timer_timeout() -> void:
 	ms_left = 0

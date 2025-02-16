@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=47 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
+[ext_resource type="AudioStream" uid="uid://jw7j2e2j350p" path="res://assets/Music/time_warning.mp3" id="16_v0r1l"]
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
@@ -342,6 +343,9 @@ horizontal_alignment = 1
 
 [node name="Timer" type="Timer" parent="TimerCanvasLayer"]
 one_shot = true
+
+[node name="Alarm" type="AudioStreamPlayer" parent="TimerCanvasLayer"]
+stream = ExtResource("16_v0r1l")
 
 [node name="WinScreen" type="CanvasLayer" parent="."]
 
