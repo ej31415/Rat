@@ -4,6 +4,7 @@ var enabled := false
 
 func _init() -> void:
 	SPEED = 1500
+	walk_sound = preload("res://assets/Music/walking.mp3")
 	
 func _ready() -> void:
 	super.set_physics_process(true)

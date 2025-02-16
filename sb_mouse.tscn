@@ -675,6 +675,8 @@ libraries = {
 "": SubResource("AnimationLibrary_fhu0p")
 }
 
+[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
+
 [node name="Camera2D" type="Camera2D" parent="."]
 light_mask = 8
 visibility_layer = 8

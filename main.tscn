@@ -773,6 +773,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SoundEffects" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("26_a2wbr")
+volume_db = -5.0
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

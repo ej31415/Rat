@@ -401,6 +401,7 @@ func random_role_assignment():
 
 func _on_skip_pressed() -> void:
 	$SoundEffects.play()
+	$StartMenu/VideoContainer/TitleSequence.stop()
 	show_title_menu()
 
 func _on_title_sequence_finished() -> void:
