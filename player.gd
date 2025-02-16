@@ -230,7 +230,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			$AnimatedSprite2D.stop()
 			if $SoundEffects.playing:
-				$SoundEffects.stop()
+				$SoundEffects.stream.loop = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
@@ -342,7 +342,7 @@ func activate_ghost(tween_duration: float):
 		ghost_instance.started = true
 		ghost_instance.visible = true
 		
-		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 0.5, tween_duration)
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1, tween_duration)
 		#tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
 		print("setting camera")
 		var camera = ghost_instance.get_node("Camera2D")
