@@ -7,6 +7,7 @@ static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
 var SPEED = 600.0
+var sprinting = false
 const FOV_TWEEN_DURATION = 0.075
 const rat_cooldown = 10
 var anim = "static front"
@@ -23,6 +24,7 @@ var death_sound
 var knife_sound
 var shot_sound
 var walk_sound
+var sprint_sound
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -36,6 +38,7 @@ func _init() -> void:
 	knife_sound = preload("res://assets/Music/knife_stab.mp3")
 	shot_sound = preload("res://assets/Music/gunshot.mp3")
 	walk_sound = preload("res://assets/Music/walking.mp3")
+	sprint_sound = preload("res://assets/Music/sprinting.mp3")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -174,9 +177,15 @@ func _physics_process(delta: float) -> void:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		
 		if role == "rat" and Input.is_action_pressed("SHIFT"):
+			if not sprinting:
+				sprinting = true
+				$SoundEffects.stop()
 			direction *= 2.0
 			$AnimatedSprite2D.speed_scale = 1.5
 		else:
+			if sprinting:
+				sprinting = false
+				$SoundEffects.stop()
 			$AnimatedSprite2D.speed_scale = 1.0
 		if is_multiplayer_authority():
 			if direction:
@@ -224,7 +233,10 @@ func _physics_process(delta: float) -> void:
 		if velocity.length() > 0:
 			$AnimatedSprite2D.play()
 			if not $SoundEffects.playing:
-				$SoundEffects.stream = walk_sound
+				if sprinting:
+					$SoundEffects.stream = sprint_sound
+				else:
+					$SoundEffects.stream = walk_sound
 				$SoundEffects.stream.loop = true
 				$SoundEffects.play()
 		else:
