@@ -421,10 +421,8 @@ func show_title_menu() -> void:
 
 func refresh_play_again_button() -> void:
 	if $WinScreen/CheckBoxButton.checked and $WinScreen/RestartTimer.is_stopped():
-		$SoundEffects.play()
 		$WinScreen/RestartTimer.start()
 	elif (!$WinScreen/CheckBoxButton.checked and !$WinScreen/RestartTimer.is_stopped()):
-		$SoundEffects.play()
 		$WinScreen/RestartTimer.stop()
 	
 	if $WinScreen/RestartTimer.is_stopped():
@@ -435,3 +433,7 @@ func refresh_play_again_button() -> void:
 func _on_restart_timer_timeout() -> void:
 	if game_ended:
 		$WinScreen/Again.emit_signal("pressed")
+
+# TODO: connect more signals to this function
+func _on_any_button_click() -> void:
+	$SoundEffects.play()

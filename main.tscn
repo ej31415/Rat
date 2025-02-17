@@ -918,6 +918,7 @@ bbcode_enabled = true
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
 [connection signal="timeout" from="WinScreen/RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="button_up" from="WinScreen/CheckBoxButton" to="." method="_on_any_button_click"]
 [connection signal="button_up" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_button_up"]
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
