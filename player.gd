@@ -119,6 +119,7 @@ func reset_sprite_to_defaults():
 	$Blood.visible = false
 	$Knife.visible = false
 	$Gun.visible = false
+	$SoundEffects.stop()
 
 func _rotation_tween(end_angle: float):
 	var tween := get_tree().create_tween()

@@ -118,6 +118,7 @@ func _add_player(id = 1):
 	if len(mice) == 0:
 		$WinScreen/Again.disabled = false
 		$StartMenu/start.disabled = false
+		$WinScreen/CheckBoxButton.disabled = false
 
 func _remove_player(id):
 	var color = id_to_color[id]
