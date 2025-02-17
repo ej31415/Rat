@@ -413,7 +413,6 @@ motion_mode = 1
 script = ExtResource("1_vs4wj")
 
 [node name="Vision" type="PointLight2D" parent="."]
-visible = false
 light_mask = 8
 visibility_layer = 8
 position = Vector2(0, 50)
@@ -457,6 +456,8 @@ disabled = true
 target_position = Vector2(0, 500)
 collision_mask = 15
 script = ExtResource("24_maemb")
+
+[node name="SoundEffects" type="AudioStreamPlayer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

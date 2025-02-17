@@ -19,6 +19,11 @@ var sheriff_shot = false
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
 
+var death_sound
+var knife_sound
+var shot_sound
+var walk_sound
+
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
 	role = roles[idx]
@@ -26,6 +31,11 @@ func _init() -> void:
 	alive = true
 	started = false
 	ghost_scene = preload("res://ghost_mouse.tscn")
+	
+	death_sound = preload("res://assets/Music/death_sound.mp3")
+	knife_sound = preload("res://assets/Music/knife_stab.mp3")
+	shot_sound = preload("res://assets/Music/gunshot.mp3")
+	walk_sound = preload("res://assets/Music/walking.mp3")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -178,7 +188,7 @@ func _physics_process(delta: float) -> void:
 		
 		set_vision()
 		
-		# Set sprite orientation				
+		# Set sprite orientation
 		if velocity.x != 0:
 			if velocity.y > 0:
 				anim = "diagonal down"
@@ -213,8 +223,14 @@ func _physics_process(delta: float) -> void:
 		$AnimatedSprite2D.animation = anim
 		if velocity.length() > 0:
 			$AnimatedSprite2D.play()
+			if not $SoundEffects.playing:
+				$SoundEffects.stream = walk_sound
+				$SoundEffects.stream.loop = true
+				$SoundEffects.play()
 		else:
 			$AnimatedSprite2D.stop()
+			if $SoundEffects.playing:
+				$SoundEffects.stream.loop = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
@@ -239,6 +255,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					set_physics_process(false)
 					$AnimationPlayer.play("attack")
 					$Knife.visible = true
+					$SoundEffects.stream = knife_sound
+					$SoundEffects.stream.loop = false
+					$SoundEffects.play()
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:
@@ -255,6 +274,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				print(color + " shoot!!!")
 				set_physics_process(false)
 				animate_shoot()
+				$SoundEffects.stream = shot_sound
+				$SoundEffects.stream.loop = false
+				$SoundEffects.play()
 
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
@@ -283,6 +305,9 @@ func die():
 	set_physics_process(false)
 	$AnimationPlayer.play("die")
 	if is_multiplayer_authority():
+		$SoundEffects.stream = death_sound
+		$SoundEffects.stream.loop = false
+		$SoundEffects.play()
 		ghost_instance = spawn_ghost(self.get_node("AnimatedSprite2D").modulate)
 		await get_tree().create_timer(0.2).timeout
 		fade_out_vision(0.1)
@@ -317,7 +342,7 @@ func activate_ghost(tween_duration: float):
 		ghost_instance.started = true
 		ghost_instance.visible = true
 		
-		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 0.5, tween_duration)
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1, tween_duration)
 		#tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
 		print("setting camera")
 		var camera = ghost_instance.get_node("Camera2D")
