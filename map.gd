@@ -202,6 +202,15 @@ func _is_cell_visitable(mat: Array, r: int, c: int) -> bool:
 		return false
 	return true
 
+# `maze` should be a fully transformed maze (after post-processing)
+func get_spawn_area(maze: Array, n_candidate_rows: int, bottom_padding: int) -> Array:
+	var candidates := []
+	for r in range(len(maze) - 1 - bottom_padding, len(maze) - 2 - bottom_padding - n_candidate_rows, -1):
+		for c in range(len(maze[r])):
+			if maze[r][c] == 0:
+				candidates.append(Vector2i(r, c))
+	return candidates
+	
 # Places the maze tiles on the map based on a provided matrix of integers 0, 1, and 2.
 # 0 = open tile, 1 = wall tile (top texture), 2 = wall tile (side texture), 3 = finish line
 func build_maze(mat: Array, offset: Vector2i) -> void:
@@ -223,8 +232,9 @@ func erase_maze(mat: Array, offset: Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(8, 8), 2), 2)
-	maze = _add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, 4)))
+	var padding := 4
+	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(10, 10), 2), 2)
+	maze = _add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, padding)))
 	_pretty_print_mat(maze)
 	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
 	build_maze(maze, offset)
