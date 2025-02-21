@@ -212,9 +212,10 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	var color_player = Color(1, 1, 1)
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("starter"):
+			var spawn_pos: Vector2i = $Map.get_spawn_area(maze, 4, 4).pick_random()
 			child.starter(true_roles)
 			child.visible = true
-			child.position = $Map.get_start_position(maze, offset)
+			child.position = $Map/Floor.map_to_local(Vector2i(spawn_pos.y, spawn_pos.x) + offset) + ($Map/Floor.tile_set.tile_size as Vector2)*Vector2(0.75, -0.75)
 			child.reset_sprite_to_defaults()
 			
 			# Extract necessary statuses
