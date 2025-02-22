@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=41 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -13,8 +13,6 @@
 [ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="10_dpgvo"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="AudioStream" uid="uid://jw7j2e2j350p" path="res://assets/Music/time_warning.mp3" id="16_v0r1l"]
-[ext_resource type="Texture2D" uid="uid://pcy304ingk8v" path="res://assets/Win Screens/Maze exit Win screen no rat.png" id="17_v6ua3"]
-[ext_resource type="Texture2D" uid="uid://du5vcugcof17v" path="res://assets/Win Screens/Win screens maze exit found rat.png" id="18_cdugv"]
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
@@ -358,7 +356,6 @@ offset_top = 64.0
 offset_right = 4088.0
 offset_bottom = 2112.0
 scale = Vector2(0.285, 0.285)
-texture = ExtResource("17_v6ua3")
 
 [node name="WinAddon" type="TextureRect" parent="WinScreen"]
 visible = false
@@ -367,7 +364,6 @@ offset_top = 64.0
 offset_right = 4088.0
 offset_bottom = 2112.0
 scale = Vector2(0.285, 0.285)
-texture = ExtResource("18_cdugv")
 
 [node name="WinDetails" type="RichTextLabel" parent="WinScreen"]
 visible = false
@@ -385,7 +381,6 @@ grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
-text = "[center]adsfadsfasdfasdfasdfa"
 
 [node name="PlayerDisconnected" type="Label" parent="WinScreen"]
 visible = false
