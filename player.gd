@@ -2,14 +2,21 @@ extends CharacterBody2D
 
 class_name Player
 
+const FOV_TWEEN_DURATION = 0.075
+const RAT_COOLDOWN = 10
+const MAX_STAMINA = 100
+const STAMINA_USE_DURATION = 2 # number of seconds from 100 to 0 stamina
+const STAMINA_REC_DURATION = 10 # number of seconds from 0 to 100 stamina
+const SPRINT_THRESHOLD = 40 # at least this value stamina to sprint
+
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
 var SPEED = 600.0
+var stamina = MAX_STAMINA
+var can_sprint = true
 var sprinting = false
-const FOV_TWEEN_DURATION = 0.075
-const rat_cooldown = 10
 var anim = "static front"
 var role = ""
 var started = false
@@ -68,6 +75,9 @@ func starter(color_to_roles):
 		$Camera2D.make_current()
 		if role == "sheriff":
 			$Aim.enabled = true
+		elif role == "rat":
+			stamina = 100
+			can_sprint = true
 		else:
 			$Aim.enabled = false
 		return [role, self.get_node("AnimatedSprite2D").modulate]
@@ -101,7 +111,10 @@ func get_shot():
 	return sheriff_shot
 
 func get_kill_cooldown():
-	return ceil(rat_cooldown - (Time.get_unix_time_from_system() - last_rat_kill))
+	return ceil(RAT_COOLDOWN - (Time.get_unix_time_from_system() - last_rat_kill))
+
+func get_stamina_value():
+	return stamina
 	
 func set_aim_view_visible(b: bool):
 	$AimView.visible = b
@@ -173,6 +186,29 @@ func set_vision():
 		_rotation_tween(180)
 		$Aim.rotation_degrees = -90
 
+func _process_sprinting(delta: float, direction: Vector2)-> Vector2:
+	if Input.is_action_pressed("SHIFT") and can_sprint:
+		if not sprinting:
+			sprinting = true
+			$SoundEffects.stop()
+		direction *= 2.0
+		$AnimatedSprite2D.speed_scale = 1.5
+		
+		stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
+		if stamina == 0:
+			can_sprint = false
+	else:
+		if sprinting:
+			sprinting = false
+			$SoundEffects.stop()
+		$AnimatedSprite2D.speed_scale = 1.0
+		
+		if not Input.is_action_pressed("SHIFT"):
+			stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
+			if stamina >= SPRINT_THRESHOLD:
+				can_sprint = true
+	return direction
+
 func _physics_process(delta: float) -> void:
 	if !alive:
 		return
@@ -181,17 +217,8 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		
-		if role == "rat" and Input.is_action_pressed("SHIFT"):
-			if not sprinting:
-				sprinting = true
-				$SoundEffects.stop()
-			direction *= 2.0
-			$AnimatedSprite2D.speed_scale = 1.5
-		else:
-			if sprinting:
-				sprinting = false
-				$SoundEffects.stop()
-			$AnimatedSprite2D.speed_scale = 1.0
+		if role == "rat":
+			direction = _process_sprinting(delta, direction)
 		if is_multiplayer_authority():
 			if direction:
 				velocity = direction * SPEED
@@ -256,7 +283,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
 				for child in get_tree().get_nodes_in_group("player"):
-					if Time.get_unix_time_from_system() - last_rat_kill < rat_cooldown:
+					if Time.get_unix_time_from_system() - last_rat_kill < RAT_COOLDOWN:
 						print(color + " on kill cooldown")
 						break
 					if child.has_method("die"):

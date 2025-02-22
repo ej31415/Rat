@@ -264,6 +264,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	elif role == "rat":
 		$HUD/Knife.visible = true
 		$HUD/KnifeCooldown.visible = true
+		$HUD/Stamina.visible = true
 	
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/Background.visible = false
@@ -294,6 +295,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Gun.visible = false
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
+	$HUD/Stamina.visible = false
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
@@ -392,6 +394,10 @@ func _process(delta: float) -> void:
 			
 		# Check rat kill time
 		cooldown = max(cooldown, player.get_kill_cooldown())
+		
+		# Check stamina
+		if $HUD/Stamina.visible and player.get_role() == "rat":
+			$HUD/Stamina.value = player.get_stamina_value()
 	
 	if killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false, false, "")
