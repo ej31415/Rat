@@ -63,11 +63,9 @@ func starter(color_to_roles):
 	$ViewSphere.energy = 1
 	$Vision.enabled = true
 	enable_movement()
-	#reset_sprite_to_defaults()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
-		#reset_sprite_to_defaults()
 		if role == "sheriff":
 			$Aim.enabled = true
 		else:
@@ -77,7 +75,6 @@ func starter(color_to_roles):
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
 		$Aim.enabled = false
-		#reset_sprite_to_defaults()
 	return ["", Color(1, 1, 1)]
 
 func disable_movement():
@@ -108,6 +105,11 @@ func set_aim_view_visible(b: bool):
 func is_alive():
 	return alive
 	
+func clear_addons():
+	$Blood.visible = false
+	$Knife.visible = false
+	$Gun.visible = false
+	
 func reset_sprite_to_defaults():
 	$Vision.rotation_degrees = -90
 	$ViewSphere.texture_scale = 1
@@ -116,9 +118,7 @@ func reset_sprite_to_defaults():
 	$AnimatedSprite2D.stop()
 	$Aim.rotation_degrees = 0
 	$Shadow.visible = true
-	$Blood.visible = false
-	$Knife.visible = false
-	$Gun.visible = false
+	clear_addons()
 	$SoundEffects.stop()
 
 func _rotation_tween(end_angle: float):
@@ -316,6 +316,9 @@ func die():
 	alive = false
 	$Vision.enabled = false
 	set_physics_process(false)
+	$AnimationPlayer.stop()
+	$AnimationPlayer.clear_queue()
+	clear_addons()
 	$AnimationPlayer.play("die")
 	if is_multiplayer_authority():
 		$SoundEffects.stream = death_sound
