@@ -7,7 +7,6 @@ func _init() -> void:
 	walk_sound = preload("res://assets/Music/ghost_moving.mp3")
 	
 func _ready() -> void:
-	super._ready()
 	super.set_physics_process(true)
 	started = false
 	visible = false

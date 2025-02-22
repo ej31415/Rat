@@ -7,10 +7,11 @@ var peer = ENetMultiplayerPeer.new()
 @export var brown_mouse: PackedScene
 @export var sb_mouse: PackedScene
 @export var tan_mouse: PackedScene
-var title_sound
-var mice_active_music
-var mice_victory_sound
-var rat_victory_sound
+var title_sound; var mice_active_music; var mice_victory_sound; var rat_victory_sound
+var scrn_maze_exit; var scrn_maze_exit_addon
+var scrn_sheriff; var scrn_sheriff_addon
+var scrn_rat_kills; var scrn_rat_kills_addon
+var scrn_timeout; var scrn_timeout_addon
 
 var mice = []
 var color_to_role = {}
@@ -18,6 +19,7 @@ var color_to_pts = {}
 var color_to_pts_label = {}
 var color_to_baseinst = {}
 var color_to_color = {}
+var color_to_code = {}
 var id_to_color = {}
 var role_to_desc = {}
 var game_ended = false
@@ -32,11 +34,26 @@ func _init() -> void:
 	brown_mouse = preload("res://brown_mouse.tscn")
 	sb_mouse = preload("res://sb_mouse.tscn")
 	tan_mouse = preload("res://tan_mouse.tscn")
+	mice = [[gray_mouse, "gray"], [brown_mouse, "brown"], [sb_mouse, "sb"], [tan_mouse, "tan"]]
+	
+	_load_music()
+	_load_win_screens()
+
+func _load_music():
 	title_sound = preload("res://assets/Music/Start Title.mp3")
 	mice_active_music = preload("res://assets/Music/mice_active_music.mp3")
 	mice_victory_sound = preload("res://assets/Music/Mice Win Sound.mp3")
 	rat_victory_sound = preload("res://assets/Music/Rat Win Sound.mp3") 
-	mice = [[gray_mouse, "gray"], [brown_mouse, "brown"], [sb_mouse, "sb"], [tan_mouse, "tan"]]
+	
+func _load_win_screens():
+	scrn_maze_exit = preload("res://assets/Win Screens/Maze exit Win screen no rat.png")
+	scrn_maze_exit_addon = preload("res://assets/Win Screens/Win screens maze exit found rat.png")
+	scrn_sheriff = preload("res://assets/Win Screens/Mice sheriff Win screens.png")
+	scrn_sheriff_addon = preload("res://assets/Win Screens/Mice sheriff Win screens gun.png")
+	scrn_rat_kills = preload("res://assets/Win Screens/Win screen rat kills all .png")
+	scrn_rat_kills_addon = preload("res://assets/Win Screens/Win screen rat kills all knife.png")
+	scrn_timeout = preload("res://assets/Win Screens/Win screens run out of time.png")
+	scrn_timeout_addon = preload("res://assets/Win Screens/Win screens run out of time timer.png")
 
 func _ready():
 	color_to_pts = {
@@ -62,6 +79,12 @@ func _ready():
 		"sb": "blue",
 		"gray": "yellow",
 		"brown": "red"
+	}
+	color_to_code = {
+		"red": Color("#ff5e60"),
+		"yellow": Color("#b69500"),
+		"blue": Color("#0069ed"),
+		"green": Color("#48ac4f")
 	}
 	role_to_desc = {
 		"mouse": "Escape!",
@@ -151,9 +174,10 @@ func _on_server_disconnect():
 	if first_started:
 		$TimerCanvasLayer.end_timer()
 		$AudioStreamPlayer.stop()
+		$WinScreen/Background.visible = false
 		$WinScreen/Again.visible = false
-		$WinScreen/MiceWin.visible = false
-		$WinScreen/RatWins.visible = false
+		$WinScreen/WinArt.visible = false
+		$WinScreen/WinAddon.visible = false
 		$WinScreen/PlayerDisconnected.visible = false
 		$WinScreen/num_players.visible = false
 		$WinScreen/CheckBoxButton.visible = false
@@ -242,8 +266,9 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 		$HUD/KnifeCooldown.visible = true
 	
 	$TimerCanvasLayer.start(1000*60)
-	$WinScreen/MiceWin.visible = false
-	$WinScreen/RatWins.visible = false
+	$WinScreen/Background.visible = false
+	$WinScreen/WinArt.visible = false
+	$WinScreen/WinAddon.visible = false
 	$WinScreen/WinDetails.visible = false
 	$WinScreen/Again.visible = false
 	$WinScreen/PlayerDisconnected.visible = false
@@ -277,35 +302,46 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
 	else:
 		if mice_win:
-			$WinScreen/MiceWin.visible = true
 			if sheriff_win:
-				var sheriff
-				var rat
+				$WinScreen/WinArt.texture = scrn_sheriff
+				$WinScreen/WinAddon.texture = scrn_sheriff_addon
+				var sheriff_color
 				for color in color_to_role:
 					if color_to_role[color] == "sheriff":
-						sheriff = color_to_color[color]
-					if color_to_role[color] == "rat":
-						rat = color_to_color[color]
-				$WinScreen/WinDetails.text = "[center]The sheriff (" + sheriff + ") killed the rat (" + rat + ")!"
+						sheriff_color = color_to_color[color]
+				$WinScreen/WinArt.modulate = color_to_code[sheriff_color]
+				$WinScreen/WinAddon.modulate = Color(1, 1, 1, 1)
+				$WinScreen/WinDetails.text = "[center]The sheriff has killed the rat!"
 			else:
-				$WinScreen/WinDetails.text = "[center]One of the mice (" + escaped_color + ") escaped!"
-			$WinScreen/WinDetails.visible = true
+				$WinScreen/WinArt.texture = scrn_maze_exit
+				$WinScreen/WinAddon.texture = scrn_maze_exit_addon
+				$WinScreen/WinArt.modulate = Color(1, 1, 1, 1)
+				$WinScreen/WinAddon.modulate = color_to_code[escaped_color]
+				$WinScreen/WinDetails.text = "[center]The " + escaped_color + " mouse escaped!"
 			$AudioStreamPlayer.stream = mice_victory_sound
 			$AudioStreamPlayer.play()
 		else:
+			var rat_color
+			for color in color_to_role:
+				if color_to_role[color] == "rat":
+					rat_color = color_to_color[color]
 			$TimerCanvasLayer/Panel/TimeLeft.text = "00 : 00 : 000"
-			$WinScreen/RatWins.visible = true
 			if time_out:
+				$WinScreen/WinArt.texture = scrn_timeout
+				$WinScreen/WinAddon.texture = scrn_timeout_addon
 				$WinScreen/WinDetails.text = "[center]Time ran out . . ."
 			else:
-				var rat
-				for color in color_to_role:
-					if color_to_role[color] == "rat":
-						rat = color_to_color[color]
-				$WinScreen/WinDetails.text = "[center]The rat (" + rat + ") killed everyone . . ."
-			$WinScreen/WinDetails.visible = true
+				$WinScreen/WinArt.texture = scrn_rat_kills
+				$WinScreen/WinAddon.texture = scrn_rat_kills_addon
+				$WinScreen/WinDetails.text = "[center]The rat (" + rat_color + ") killed everyone . . ."
+			$WinScreen/WinArt.modulate = color_to_code[rat_color]
+			$WinScreen/WinAddon.modulate = Color(1, 1, 1, 1)
 			$AudioStreamPlayer.stream = rat_victory_sound
 			$AudioStreamPlayer.play()
+		$WinScreen/Background.visible = true
+		$WinScreen/WinArt.visible = true
+		$WinScreen/WinAddon.visible = true
+		$WinScreen/WinDetails.visible = true
 	
 	# reset player positions and lock
 	for player in get_tree().get_nodes_in_group("player"):

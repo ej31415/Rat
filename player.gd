@@ -80,9 +80,13 @@ func starter(color_to_roles):
 func disable_movement():
 	$AnimatedSprite2D.animation = "static front"
 	set_physics_process(false)
+	if ghost_instance and is_instance_valid(ghost_instance):
+		ghost_instance.set_physics_process(false)
 	
 func enable_movement():
 	set_physics_process(true)
+	if ghost_instance and is_instance_valid(ghost_instance):
+		ghost_instance.set_physics_process(true)
 
 func get_player():
 	return self

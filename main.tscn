@@ -11,10 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://rmbvsg6rlg8d" path="res://assets/Tile Sets/Walls/Walls.png" id="9_b15hr"]
 [ext_resource type="Script" path="res://timer.gd" id="10_al2ht"]
 [ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="10_dpgvo"]
-[ext_resource type="Texture2D" uid="uid://cm7i2qjv5cn0b" path="res://assets/Win Screens/Mice_win.png" id="11_jrcn4"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
-[ext_resource type="Texture2D" uid="uid://dgaq6grhh38wp" path="res://assets/Win Screens/Rat_wins.png" id="13_y2lfq"]
 [ext_resource type="AudioStream" uid="uid://jw7j2e2j350p" path="res://assets/Music/time_warning.mp3" id="16_v0r1l"]
+[ext_resource type="Texture2D" uid="uid://pcy304ingk8v" path="res://assets/Win Screens/Maze exit Win screen no rat.png" id="17_v6ua3"]
+[ext_resource type="Texture2D" uid="uid://du5vcugcof17v" path="res://assets/Win Screens/Win screens maze exit found rat.png" id="18_cdugv"]
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
@@ -345,14 +345,11 @@ stream = ExtResource("16_v0r1l")
 
 [node name="WinScreen" type="CanvasLayer" parent="."]
 
-[node name="MiceWin" type="TextureRect" parent="WinScreen"]
+[node name="Background" type="ColorRect" parent="WinScreen"]
 visible = false
-offset_left = 92.0
-offset_top = 70.0
-offset_right = 4188.0
-offset_bottom = 2118.0
-scale = Vector2(0.221157, 0.221157)
-texture = ExtResource("11_jrcn4")
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
 
 [node name="Again" type="Button" parent="WinScreen"]
 visible = false
@@ -372,14 +369,23 @@ theme_override_font_sizes/font_size = 28
 disabled = true
 text = "Play Again"
 
-[node name="RatWins" type="TextureRect" parent="WinScreen"]
+[node name="WinArt" type="TextureRect" parent="WinScreen"]
 visible = false
-offset_left = 92.0
-offset_top = 75.0
-offset_right = 4602.0
-offset_bottom = 2330.0
-scale = Vector2(0.201313, 0.201313)
-texture = ExtResource("13_y2lfq")
+offset_left = -8.0
+offset_top = 64.0
+offset_right = 4088.0
+offset_bottom = 2112.0
+scale = Vector2(0.285, 0.285)
+texture = ExtResource("17_v6ua3")
+
+[node name="WinAddon" type="TextureRect" parent="WinScreen"]
+visible = false
+offset_left = -8.0
+offset_top = 64.0
+offset_right = 4088.0
+offset_bottom = 2112.0
+scale = Vector2(0.285, 0.285)
+texture = ExtResource("18_cdugv")
 
 [node name="WinDetails" type="RichTextLabel" parent="WinScreen"]
 visible = false
@@ -389,14 +395,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -520.0
-offset_top = 69.0
+offset_top = 116.0
 offset_right = 520.0
-offset_bottom = 109.0
+offset_bottom = 156.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 28
 bbcode_enabled = true
+text = "[center]adsfadsfasdfasdfasdfa"
 
 [node name="PlayerDisconnected" type="Label" parent="WinScreen"]
 visible = false
