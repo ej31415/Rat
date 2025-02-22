@@ -351,24 +351,6 @@ offset_right = 1152.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 
-[node name="Again" type="Button" parent="WinScreen"]
-visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -128.0
-offset_top = -136.0
-offset_right = 128.0
-offset_bottom = -72.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 28
-disabled = true
-text = "Play Again"
-
 [node name="WinArt" type="TextureRect" parent="WinScreen"]
 visible = false
 offset_left = -8.0
@@ -448,6 +430,24 @@ autowrap_mode = 2
 [node name="RestartTimer" type="Timer" parent="WinScreen"]
 wait_time = 10.0
 one_shot = true
+
+[node name="Again" type="Button" parent="WinScreen"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -136.0
+offset_right = 128.0
+offset_bottom = -72.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 28
+disabled = true
+text = "Play Again"
 
 [node name="CheckBoxButton" type="TextureButton" parent="WinScreen"]
 visible = false
@@ -927,8 +927,8 @@ bbcode_enabled = true
 [connection signal="pressed" from="StartMenu/disconnect" to="." method="_on_disconnect_pressed"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="TimerCanvasLayer/Timer" to="TimerCanvasLayer" method="_on_timer_timeout"]
-[connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
 [connection signal="timeout" from="WinScreen/RestartTimer" to="." method="_on_restart_timer_timeout"]
+[connection signal="pressed" from="WinScreen/Again" to="." method="_on_again_button_pressed"]
 [connection signal="button_up" from="WinScreen/CheckBoxButton" to="." method="_on_any_button_click"]
 [connection signal="button_up" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_button_up"]
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
