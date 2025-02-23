@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -27,13 +27,9 @@
 [ext_resource type="Script" path="res://help_dialog.gd" id="89_6vxhg"]
 [ext_resource type="Texture2D" uid="uid://yo2css7gn6y0" path="res://assets/Brown Mouse/Front/Brown front step left.png" id="90_muood"]
 [ext_resource type="Texture2D" uid="uid://rbqtpvbk8ytd" path="res://assets/UI Sprites/right_arrow.png" id="90_pnvh2"]
-[ext_resource type="Texture2D" uid="uid://cxwghgrnp7qcb" path="res://assets/Brown Mouse/Brown head.png" id="90_yerap"]
-[ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="91_58q8h"]
 [ext_resource type="Texture2D" uid="uid://cubvfbgohpio3" path="res://assets/Brown Mouse/Attack/Red knife 2.png" id="91_wbe5m"]
-[ext_resource type="Texture2D" uid="uid://o8dc0qtkkpae" path="res://assets/Strawberry Blonde Mouse/Sb mouse head.png" id="92_d7uxc"]
 [ext_resource type="Texture2D" uid="uid://bihxa3fs8umja" path="res://assets/Strawberry Blonde Mouse/Shoot/Blue gun front.png" id="92_ql6vx"]
 [ext_resource type="Texture2D" uid="uid://dm05pyoxhtnuq" path="res://assets/UI/Gun icon.png" id="93_jk6us"]
-[ext_resource type="Texture2D" uid="uid://cy4m6rpentofe" path="res://assets/Tan Mouse/Tan head.png" id="93_mcssf"]
 [ext_resource type="Texture2D" uid="uid://bm0e3q780eblu" path="res://assets/UI/Knife icon no blood.png" id="94_i526h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1oqjg"]
@@ -815,10 +811,10 @@ Escape or kill rat"
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -274.0
-offset_top = 24.0
-offset_right = -33.0
-offset_bottom = 49.0
+offset_left = -248.0
+offset_top = 8.0
+offset_right = -7.0
+offset_bottom = 33.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 20
@@ -828,55 +824,63 @@ text = "Press [tab] for controls"
 visible = false
 
 [node name="GrayHead" type="Sprite2D" parent="HUD/ScoreBoard"]
-modulate = Color(0.917647, 0.756863, 0, 1)
-position = Vector2(1047.5, 69.5)
-scale = Vector2(0.214844, 0.214844)
-texture = ExtResource("91_58q8h")
+modulate = Color(0.713726, 0.584314, 0, 1)
+position = Vector2(1047.5, 64.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
 [node name="SBHead" type="Sprite2D" parent="HUD/ScoreBoard"]
-modulate = Color(0.356863, 0.607843, 1, 1)
-position = Vector2(1047.5, 102.5)
-scale = Vector2(0.214844, 0.214844)
-texture = ExtResource("92_d7uxc")
+modulate = Color(0, 0.411765, 0.929412, 1)
+position = Vector2(1047.5, 103.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
 [node name="TanHead" type="Sprite2D" parent="HUD/ScoreBoard"]
-modulate = Color(0.447059, 0.772549, 0, 1)
-position = Vector2(1047.5, 136.5)
-scale = Vector2(0.214844, 0.214844)
-texture = ExtResource("93_mcssf")
+modulate = Color(0.282353, 0.67451, 0.309804, 1)
+position = Vector2(1047.5, 144.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
 [node name="BrownHead" type="Sprite2D" parent="HUD/ScoreBoard"]
-modulate = Color(1, 0.596078, 0.576471, 1)
-position = Vector2(1047.5, 170.5)
-scale = Vector2(0.214844, 0.214844)
-texture = ExtResource("90_yerap")
+modulate = Color(1, 0.368627, 0.376471, 1)
+position = Vector2(1047.5, 182.5)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
 [node name="GrayPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
-offset_top = 58.0
-offset_right = 1135.0
-offset_bottom = 81.0
+offset_top = 50.0
+offset_right = 1140.0
+offset_bottom = 80.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 25
 text = " 0 pts"
 
 [node name="SBPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
-offset_top = 91.0
-offset_right = 1135.0
-offset_bottom = 114.0
+offset_top = 89.0
+offset_right = 1140.0
+offset_bottom = 119.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 25
 text = " 0 pts"
 
 [node name="TanPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
-offset_top = 125.0
-offset_right = 1135.0
-offset_bottom = 148.0
+offset_top = 129.0
+offset_right = 1140.0
+offset_bottom = 159.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 25
 text = " 0 pts"
 
 [node name="BrownPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1070.0
-offset_top = 159.0
-offset_right = 1135.0
-offset_bottom = 182.0
+offset_top = 169.0
+offset_right = 1140.0
+offset_bottom = 199.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 25
 text = " 0 pts"
 
 [node name="Gun" type="Sprite2D" parent="HUD"]
