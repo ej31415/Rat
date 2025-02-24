@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://player.gd" id="1_xwc5q"]
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_a52gx"]
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_tpbry"]
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_xwc5q")
@@ -10,6 +10,6 @@ script = ExtResource("1_xwc5q")
 [node name="input" type="AudioStreamPlayer" parent="."]
 bus = &"Record"
 
-[node name="output" type="AudioStreamPlayer3D" parent="."]
-stream = SubResource("AudioStreamGenerator_a52gx")
+[node name="output" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_tpbry")
 autoplay = true
