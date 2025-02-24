@@ -12,6 +12,7 @@ var scrn_maze_exit; var scrn_maze_exit_addon
 var scrn_sheriff; var scrn_sheriff_addon
 var scrn_rat_kills; var scrn_rat_kills_addon
 var scrn_timeout; var scrn_timeout_addon
+var gray_head; var sb_head; var tan_head; var brown_head
 
 var mice = []
 var color_to_role = {}
@@ -20,6 +21,7 @@ var color_to_pts_label = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var color_to_code = {}
+var color_to_lbhead = {}
 var id_to_color = {}
 var role_to_desc = {}
 var game_ended = false
@@ -29,6 +31,7 @@ var player_disconnected = false
 
 static var rat_killed = 0
 static var sheriff_killed = 0
+static var lbhead_positions = [Vector2i(100, 100), Vector2i(100, 200), Vector2i(100, 300), Vector2i(100, 400)]
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -86,6 +89,12 @@ func _ready():
 		"yellow": Color("#b69500"),
 		"blue": Color("#0069ed"),
 		"green": Color("#48ac4f")
+	}
+	color_to_lbhead = {
+		"gray": $HUD/Leaderboard/GrayHead,
+		"sb": $HUD/Leaderboard/SBHead,
+		"tan": $HUD/Leaderboard/TanHead,
+		"brown": $HUD/Leaderboard/BrownHead
 	}
 	role_to_desc = {
 		"mouse": "Escape!",
@@ -247,6 +256,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	
 	$StartMenu.visible = false
 	$HUD/ScoreBoard.visible = true
+	$HUD/Leaderboard.visible = false
 	_hide_roles()
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
@@ -303,6 +313,11 @@ func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
 	_end_game.rpc(false, false, true, false, "")
 
+func ascending_compare(a, b):
+	if a[1] < b[1]:
+		return false
+	return true
+
 @rpc("call_local", "reliable", "any_peer")
 func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String) -> void:
 	if game_ended:
@@ -316,6 +331,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/KnifeCooldown.visible = false
 	$HUD/Stamina.visible = false
 	_show_roles()
+	
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
@@ -398,7 +414,17 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
-		
+	
+	# get winners
+	var lb := []
+	for color in color_to_pts:
+		lb.append([color, color_to_pts[color]])
+	lb.sort_custom(ascending_compare)
+	print(lb)
+	for i in range(len(lb)):
+		color_to_lbhead[lb[i][0]].position = lbhead_positions[i]
+	$HUD/Leaderboard.visible = true
+	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
 		$WinScreen/num_players.visible = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,7 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
-[ext_resource type="Texture2D" uid="uid://mwt3ploj152k" path="res://assets/Gray Mouse/Gray head.png" id="24_y8v2j"]
 [ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
 [ext_resource type="Texture2D" uid="uid://b81vxitxhs6k0" path="res://assets/UI/Stamina Texture.png" id="29_udgh8"]
@@ -645,21 +644,29 @@ bbcode_enabled = true
 [node name="Leaderboard" type="CanvasGroup" parent="HUD"]
 visible = false
 
-[node name="FirstPlace" type="Sprite2D" parent="HUD/Leaderboard"]
-position = Vector2(580, 181)
-texture = ExtResource("24_y8v2j")
+[node name="GrayHead" type="Sprite2D" parent="HUD/Leaderboard"]
+modulate = Color(0.713726, 0.584314, 0, 1)
+position = Vector2(317, 193)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
-[node name="SecondPlace" type="Sprite2D" parent="HUD/Leaderboard"]
-position = Vector2(267, 309)
-texture = ExtResource("24_y8v2j")
+[node name="SBHead" type="Sprite2D" parent="HUD/Leaderboard"]
+modulate = Color(0, 0.411765, 0.929412, 1)
+position = Vector2(482, 195)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
-[node name="ThirdPlace" type="Sprite2D" parent="HUD/Leaderboard"]
-position = Vector2(859, 375)
-texture = ExtResource("24_y8v2j")
+[node name="TanHead" type="Sprite2D" parent="HUD/Leaderboard"]
+modulate = Color(0.282353, 0.67451, 0.309804, 1)
+position = Vector2(642, 196)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
-[node name="FourthPlace" type="Sprite2D" parent="HUD/Leaderboard"]
-position = Vector2(542, 524)
-texture = ExtResource("24_y8v2j")
+[node name="BrownHead" type="Sprite2D" parent="HUD/Leaderboard"]
+modulate = Color(1, 0.368627, 0.376471, 1)
+position = Vector2(807, 195)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("26_csx1t")
 
 [node name="Stamina" type="TextureProgressBar" parent="HUD"]
 visible = false
