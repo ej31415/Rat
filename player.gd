@@ -26,6 +26,11 @@ var next_rat_kill = 0
 var sheriff_shot = false
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
+var idx: int
+var effect: AudioEffectCapture
+var playback: AudioStreamGeneratorPlayback
+var input
+var output
 
 var death_sound
 var knife_sound
@@ -51,9 +56,17 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
 func _ready():
+	input = $input
+	output = $output
 	add_to_group("player")
 	if role == "":
 		print("role not set")
+	if (is_multiplayer_authority()):
+		input.stream = AudioStreamMicrophone.new()
+		input.play()
+		idx = AudioServer.get_bus_index("Record")
+		effect = AudioServer.get_bus_effect(idx, 0)
+	playback = output.get_stream_playback()
 
 func starter(color_to_roles):
 	if ghost_instance and is_instance_valid(ghost_instance):
@@ -119,7 +132,7 @@ func get_stamina_value():
 func get_can_sprint():
 	return can_sprint
 	
-func set_aim_view_visible(b: bool):
+func set_aim_view_visble(b: bool):
 	$AimView.visible = b
 	
 func is_alive():
@@ -410,3 +423,15 @@ func add_kill(killer: String):
 		Main.rat_killed += 1
 	if killer == "sheriff":
 		Main.sheriff_killed += 1
+
+func _process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
+	if effect.can_get_buffer(512) and playback.can_push_buffer(512):
+		send_data.rpc(effect.get_buffer(512))
+	effect.clear_buffer()
+
+@rpc("any_peer", "call_remote", "reliable")
+func send_data(data : PackedVector2Array):
+	for i in range(0,512):
+		playback.push_frame(data[i])
