@@ -2,20 +2,27 @@ extends CharacterBody2D
 
 class_name Player
 
+const FOV_TWEEN_DURATION = 0.075
+const RAT_COOLDOWN = 10
+const MAX_STAMINA = 100
+const STAMINA_USE_DURATION = 2 # number of seconds from 100 to 0 stamina
+const STAMINA_REC_DURATION = 10 # number of seconds from 0 to 100 stamina
+const SPRINT_THRESHOLD = 40 # at least this value stamina to sprint
+
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
 var SPEED = 600.0
+var stamina = MAX_STAMINA
+var can_sprint = true
 var sprinting = false
-const FOV_TWEEN_DURATION = 0.075
-const rat_cooldown = 10
 var anim = "static front"
 var role = ""
 var started = false
 var color = ""
 var alive = true
-var last_rat_kill = 0
+var next_rat_kill = 0
 var sheriff_shot = false
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
@@ -55,7 +62,7 @@ func starter(color_to_roles):
 
 	role = color_to_roles[color]
 	alive = true
-	last_rat_kill = Time.get_unix_time_from_system() - 5
+	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
@@ -63,13 +70,14 @@ func starter(color_to_roles):
 	$ViewSphere.energy = 1
 	$Vision.enabled = true
 	enable_movement()
-	#reset_sprite_to_defaults()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
 		$Camera2D.make_current()
-		#reset_sprite_to_defaults()
 		if role == "sheriff":
 			$Aim.enabled = true
+		elif role == "rat":
+			stamina = 100
+			can_sprint = true
 		else:
 			$Aim.enabled = false
 		return [role, self.get_node("AnimatedSprite2D").modulate]
@@ -77,15 +85,18 @@ func starter(color_to_roles):
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
 		$Aim.enabled = false
-		#reset_sprite_to_defaults()
 	return ["", Color(1, 1, 1)]
 
 func disable_movement():
 	$AnimatedSprite2D.animation = "static front"
 	set_physics_process(false)
+	if ghost_instance and is_instance_valid(ghost_instance):
+		ghost_instance.set_physics_process(false)
 	
 func enable_movement():
 	set_physics_process(true)
+	if ghost_instance and is_instance_valid(ghost_instance):
+		ghost_instance.set_physics_process(true)
 
 func get_player():
 	return self
@@ -100,13 +111,21 @@ func get_shot():
 	return sheriff_shot
 
 func get_kill_cooldown():
-	return ceil(rat_cooldown - (Time.get_unix_time_from_system() - last_rat_kill))
+	return ceil(next_rat_kill - Time.get_unix_time_from_system())
+
+func get_stamina_value():
+	return stamina
 	
 func set_aim_view_visible(b: bool):
 	$AimView.visible = b
 	
 func is_alive():
 	return alive
+	
+func clear_addons():
+	$Blood.visible = false
+	$Knife.visible = false
+	$Gun.visible = false
 	
 func reset_sprite_to_defaults():
 	$Vision.rotation_degrees = -90
@@ -116,9 +135,7 @@ func reset_sprite_to_defaults():
 	$AnimatedSprite2D.stop()
 	$Aim.rotation_degrees = 0
 	$Shadow.visible = true
-	$Blood.visible = false
-	$Knife.visible = false
-	$Gun.visible = false
+	clear_addons()
 	$SoundEffects.stop()
 
 func _rotation_tween(end_angle: float):
@@ -169,6 +186,29 @@ func set_vision():
 		_rotation_tween(180)
 		$Aim.rotation_degrees = -90
 
+func _process_sprinting(delta: float, direction: Vector2)-> Vector2:
+	if Input.is_action_pressed("SHIFT") and can_sprint:
+		if not sprinting:
+			sprinting = true
+			$SoundEffects.stop()
+		direction *= 2.0
+		$AnimatedSprite2D.speed_scale = 1.5
+		
+		stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
+		if stamina == 0:
+			can_sprint = false
+	else:
+		if sprinting:
+			sprinting = false
+			$SoundEffects.stop()
+		$AnimatedSprite2D.speed_scale = 1.0
+		
+		if not Input.is_action_pressed("SHIFT"):
+			stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
+			if stamina >= SPRINT_THRESHOLD:
+				can_sprint = true
+	return direction
+
 func _physics_process(delta: float) -> void:
 	if !alive:
 		return
@@ -177,17 +217,8 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		
-		if role == "rat" and Input.is_action_pressed("SHIFT"):
-			if not sprinting:
-				sprinting = true
-				$SoundEffects.stop()
-			direction *= 2.0
-			$AnimatedSprite2D.speed_scale = 1.5
-		else:
-			if sprinting:
-				sprinting = false
-				$SoundEffects.stop()
-			$AnimatedSprite2D.speed_scale = 1.0
+		if role == "rat":
+			direction = _process_sprinting(delta, direction)
 		if is_multiplayer_authority():
 			if direction:
 				velocity = direction * SPEED
@@ -251,26 +282,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_multiplayer_authority() and started:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
+				if Time.get_unix_time_from_system() < next_rat_kill:
+					print(color + " on kill cooldown")
+					return
+				var set_cooldown = false
 				for child in get_tree().get_nodes_in_group("player"):
-					if Time.get_unix_time_from_system() - last_rat_kill < rat_cooldown:
-						print(color + " on kill cooldown")
-						break
 					if child.has_method("die"):
-						if child.get_role() == "rat":
-							continue
-						if !child.is_alive():
+						if child.get_role() == "rat" or !child.is_alive():
 							continue
 						if child.position.distance_to(self.position) < 190:
 							die_call.rpc(child.get_color())
-							last_rat_kill = Time.get_unix_time_from_system()
-							add_kill.rpc()
-					print(color + " attack!!!")
-					set_physics_process(false)
-					$AnimationPlayer.play("attack")
-					$Knife.visible = true
-					$SoundEffects.stream = knife_sound
-					$SoundEffects.stream.loop = false
-					$SoundEffects.play()
+							next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN
+							set_cooldown = true
+							add_kill.rpc("rat")
+				print(color + " attack!!!")
+				set_physics_process(false)
+				$AnimationPlayer.play("attack")
+				$Knife.visible = true
+				$SoundEffects.stream = knife_sound
+				$SoundEffects.stream.loop = false
+				$SoundEffects.play()
+				if !set_cooldown:
+					next_rat_kill = Time.get_unix_time_from_system() + ceil(RAT_COOLDOWN / 4)
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:
@@ -282,7 +315,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						return
 					target.set_aim_view_visible(false)
 					die_call.rpc(target.get_color())
-					add_kill.rpc()
+					add_kill.rpc("sheriff")
 				sheriff_shot = true
 				print(color + " shoot!!!")
 				set_physics_process(false)
@@ -316,6 +349,9 @@ func die():
 	alive = false
 	$Vision.enabled = false
 	set_physics_process(false)
+	$AnimationPlayer.stop()
+	$AnimationPlayer.clear_queue()
+	clear_addons()
 	$AnimationPlayer.play("die")
 	if is_multiplayer_authority():
 		$SoundEffects.stream = death_sound
@@ -355,7 +391,7 @@ func activate_ghost(tween_duration: float):
 		ghost_instance.started = true
 		ghost_instance.visible = true
 		
-		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1, tween_duration)
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1.5, tween_duration)
 		#tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
 		print("setting camera")
 		var camera = ghost_instance.get_node("Camera2D")
@@ -366,5 +402,8 @@ func activate_ghost(tween_duration: float):
 		camera.make_current()
 			
 @rpc("call_local", "reliable")
-func add_kill():
-	Main.killed += 1
+func add_kill(killer: String):
+	if killer == "rat":
+		Main.rat_killed += 1
+	if killer == "sheriff":
+		Main.sheriff_killed += 1

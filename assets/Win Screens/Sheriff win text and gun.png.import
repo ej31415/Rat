@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgaq6grhh38wp"
-path="res://.godot/imported/Rat_wins.png-45f72467b5b254cdefd6a7d15a7fe48c.ctex"
+uid="uid://b2dxsoqg2w50i"
+path="res://.godot/imported/Sheriff win text and gun.png-ae3536b1a23d1a66a0d598649429cc81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Rat_wins.png"
-dest_files=["res://.godot/imported/Rat_wins.png-45f72467b5b254cdefd6a7d15a7fe48c.ctex"]
+source_file="res://assets/Win Screens/Sheriff win text and gun.png"
+dest_files=["res://.godot/imported/Sheriff win text and gun.png-ae3536b1a23d1a66a0d598649429cc81.ctex"]
 
 [params]
 
