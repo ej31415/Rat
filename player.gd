@@ -294,7 +294,7 @@ func _unhandled_input(event: InputEvent) -> void:
 							die_call.rpc(child.get_color())
 							next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN
 							set_cooldown = true
-							add_kill.rpc()
+							add_kill.rpc("rat")
 				print(color + " attack!!!")
 				set_physics_process(false)
 				$AnimationPlayer.play("attack")
@@ -315,7 +315,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						return
 					target.set_aim_view_visible(false)
 					die_call.rpc(target.get_color())
-					add_kill.rpc()
+					add_kill.rpc("sheriff")
 				sheriff_shot = true
 				print(color + " shoot!!!")
 				set_physics_process(false)
@@ -402,5 +402,8 @@ func activate_ghost(tween_duration: float):
 		camera.make_current()
 			
 @rpc("call_local", "reliable")
-func add_kill():
-	Main.killed += 1
+func add_kill(killer: String):
+	if killer == "rat":
+		Main.rat_killed += 1
+	if killer == "sheriff":
+		Main.sheriff_killed += 1

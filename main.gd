@@ -27,7 +27,8 @@ var is_host = false
 var first_started = false
 var player_disconnected = false
 
-static var killed = 0
+static var rat_killed = 0
+static var sheriff_killed = 0
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -241,7 +242,8 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	color_to_role = true_roles
 	color_to_pts = pts
 	
-	killed = 0
+	rat_killed = 0
+	sheriff_killed = 0
 	
 	$StartMenu.visible = false
 	$HUD/ScoreBoard.visible = true
@@ -333,11 +335,12 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 				$WinScreen/WinArt.modulate = color_to_code[sheriff_color]
 				$WinScreen/WinDetails.text = "[center]The sheriff has killed the rat!"
 			else:
+				var fixed_color = color_to_color[escaped_color]
 				$WinScreen/WinArt.texture = scrn_maze_exit
 				$WinScreen/WinAddon.texture = scrn_maze_exit_addon
 				$WinScreen/WinArt.modulate = Color(1, 1, 1, 1)
-				$WinScreen/WinAddon.modulate = color_to_code[escaped_color]
-				$WinScreen/WinDetails.text = "[center]The " + escaped_color + " mouse escaped!"
+				$WinScreen/WinAddon.modulate = color_to_code[fixed_color]
+				$WinScreen/WinDetails.text = "[center]The " + fixed_color + " mouse escaped!"
 			$AudioStreamPlayer.stream = mice_victory_sound
 			$AudioStreamPlayer.play()
 		else:
@@ -374,12 +377,24 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			for color in color_to_role:
 				if color_to_role[color] != "rat":
 					color_to_pts[color] += 1
-				if sheriff_win and color_to_role[color] == "sheriff":
-					color_to_pts[color] += 1
+				if sheriff_win:
+					if color_to_role[color] == "sheriff":
+						color_to_pts[color] += 3
+					if color_to_role[color] == "rat":
+						color_to_pts[color] -= 1
+				if color == escaped_color:
+					color_to_pts[color] += 2
 		else:
 			for color in color_to_role:
-				if color_to_role[color] == "rat":
-					color_to_pts[color] += 2
+				if color_to_role[color] == "rat" and time_out:
+						color_to_pts[color] += 1
+		
+		# rat gets points for each kill, sheriff deducted for each kill
+		for color in color_to_role:
+			if color_to_role[color] == "rat":
+				color_to_pts[color] += rat_killed
+			if color_to_role[color] == "sheriff":
+				color_to_pts[color] -= sheriff_killed
 	
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
@@ -401,7 +416,7 @@ func _process(delta: float) -> void:
 		# Check end game
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
-			_end_game.rpc(true, false, false, false, color_to_color[player.get_color()])
+			_end_game.rpc(true, false, false, false, player.get_color())
 		if player.get_role() == "rat" and not game_ended and not player.is_alive():
 			_end_game.rpc(true, true, false, false, "")
 			
@@ -416,7 +431,7 @@ func _process(delta: float) -> void:
 		if $HUD/Stamina.visible and player.get_role() == "rat":
 			$HUD/Stamina.value = player.get_stamina_value()
 	
-	if killed == 3 and not game_ended:
+	if rat_killed + sheriff_killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false, false, "")
 		
 	if cooldown > 0:
