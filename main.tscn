@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=44 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
+[ext_resource type="Script" path="res://minimap.gd" id="25_320b3"]
 [ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
 [ext_resource type="Texture2D" uid="uid://b81vxitxhs6k0" path="res://assets/UI/Stamina Texture.png" id="29_udgh8"]
@@ -675,6 +676,22 @@ grow_vertical = 2
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 20
 text = "Stamina"
+
+[node name="Minimap" type="CanvasLayer" parent="HUD"]
+scale = Vector2(0.25, 0.25)
+transform = Transform2D(0.25, 0, 0, 0.25, 0, 0)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HUD/Minimap"]
+offset_left = 64.0
+offset_top = 2020.0
+offset_right = 564.0
+offset_bottom = 2520.0
+script = ExtResource("25_320b3")
+
+[node name="SubViewport" type="SubViewport" parent="HUD/Minimap/SubViewportContainer"]
+
+[node name="Camera2D" type="Camera2D" parent="HUD/Minimap/SubViewportContainer/SubViewport"]
+zoom = Vector2(0.5, 0.5)
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
 visible = false

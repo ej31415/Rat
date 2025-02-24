@@ -297,6 +297,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$AudioStreamPlayer.stream = mice_active_music
 	$AudioStreamPlayer.play()
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
+	$HUD/Minimap/SubViewportContainer.set_target()
 	game_ended = false
 
 func _on_timer_timeout() -> void:

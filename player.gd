@@ -22,6 +22,7 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var dazed_state = 0
 var next_rat_kill = 0
 var sheriff_shot = false
 var ghost_instance: CharacterBody2D
@@ -62,6 +63,7 @@ func starter(color_to_roles):
 
 	role = color_to_roles[color]
 	alive = true
+	dazed_state = 0
 	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
 	sheriff_shot = false
 	started = true
@@ -118,6 +120,9 @@ func get_stamina_value():
 	
 func get_can_sprint():
 	return can_sprint
+	
+func get_state():
+	return dazed_state
 	
 func set_aim_view_visible(b: bool):
 	$AimView.visible = b
@@ -307,7 +312,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.play()
 				if !set_cooldown:
 					next_rat_kill = Time.get_unix_time_from_system() + ceil(RAT_COOLDOWN / 4)
-			elif role == "sheriff":
+			if role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:
 					return
