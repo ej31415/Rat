@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://bga65g3uwmuq1"]
+[gd_scene load_steps=55 format=3 uid="uid://bga65g3uwmuq1"]
 
 [ext_resource type="Script" path="res://tan_mouse.gd" id="1_bx85c"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_k803p"]
@@ -587,6 +587,9 @@ properties/12/path = NodePath("Blood:flip_h")
 properties/12/spawn = true
 properties/12/replication_mode = 1
 
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_86rln"]
+buffer_length = 2.5
+
 [node name="TanMouse" type="CharacterBody2D"]
 light_mask = 8
 material = SubResource("CanvasItemMaterial_a5kuh")
@@ -686,5 +689,12 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_uqq0g")
+
+[node name="input" type="AudioStreamPlayer" parent="."]
+bus = &"Record"
+
+[node name="output" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_86rln")
+autoplay = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

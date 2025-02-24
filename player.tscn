@@ -1,16 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://hbvx5qskyst2"]
+[gd_scene load_steps=2 format=3 uid="uid://hbvx5qskyst2"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_xwc5q"]
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_tpbry"]
-buffer_length = 2.5
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_xwc5q")
-
-[node name="input" type="AudioStreamPlayer" parent="."]
-bus = &"Record"
-
-[node name="output" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamGenerator_tpbry")
-autoplay = true

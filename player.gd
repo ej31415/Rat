@@ -60,16 +60,6 @@ func _pseudo_ready():
 	if role == "":
 		print("role not set")
 
-func _ready():
-	input = $input
-	output = $output
-	if (is_multiplayer_authority()):
-		input.stream = AudioStreamMicrophone.new()
-		input.play()
-		idx = AudioServer.get_bus_index("Record")
-		effect = AudioServer.get_bus_effect(idx, 0)
-	playback = output.get_stream_playback()
-
 func starter(color_to_roles):
 	if ghost_instance and is_instance_valid(ghost_instance):
 		ghost_instance.queue_free()
@@ -433,6 +423,8 @@ func _process(delta: float) -> void:
 		if effect.can_get_buffer(512) and playback.can_push_buffer(512):
 			send_data.rpc(effect.get_buffer(512))
 		effect.clear_buffer()
+	else:
+		print("no effect")
 
 @rpc("any_peer", "call_remote", "reliable")
 func send_data(data : PackedVector2Array):

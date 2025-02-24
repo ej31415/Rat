@@ -2,8 +2,19 @@ extends Player
 
 func _ready() -> void:
 	super._pseudo_ready()
+	setup_audio()
 	self.color = "sb"
 	print("initialized strawberry blonde mouse")
+
+func setup_audio():
+	input = $input
+	output = $output
+	if is_multiplayer_authority():
+		input.stream = AudioStreamMicrophone.new()
+		input.play()
+		idx = AudioServer.get_bus_index("Record")
+		effect = AudioServer.get_bus_effect(idx, 0)
+	playback = output.get_stream_playback()
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "attack":
