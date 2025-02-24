@@ -19,10 +19,6 @@ config/icon="res://assets/Gray head.ico"
 
 window/stretch/mode="viewport"
 
-[editor]
-
-run/main_run_args="--quickstart"
-
 [file_customization]
 
 folder_colors={

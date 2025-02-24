@@ -450,8 +450,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
 		$HelpControl/Right.emit_signal("button_down")
 		
-	if Input.is_action_just_pressed("TOGGLE LIGHT"):
-		$Darkness.visible = !$Darkness.visible
+	#if Input.is_action_just_pressed("TOGGLE LIGHT"):
+		#$Darkness.visible = !$Darkness.visible
 	
 	if is_host and game_ended:
 		refresh_play_again_button()
