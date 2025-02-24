@@ -211,6 +211,22 @@ func _on_disconnect_pressed():
 	$StartMenu/error.visible = false
 	$StartMenu/host.disabled = false
 	$StartMenu/joined.visible = false
+	
+func _hide_roles():
+	$HUD/ScoreBoard/GrayRole.visible = false
+	$HUD/ScoreBoard/SBRole.visible = false
+	$HUD/ScoreBoard/TanRole.visible = false
+	$HUD/ScoreBoard/BrownRole.visible = false
+
+func _show_roles():
+	$HUD/ScoreBoard/GrayRole.text = color_to_role["gray"].capitalize()
+	$HUD/ScoreBoard/SBRole.text = color_to_role["sb"].capitalize()
+	$HUD/ScoreBoard/TanRole.text = color_to_role["tan"].capitalize()
+	$HUD/ScoreBoard/BrownRole.text = color_to_role["brown"].capitalize()
+	$HUD/ScoreBoard/GrayRole.visible = true
+	$HUD/ScoreBoard/SBRole.visible = true
+	$HUD/ScoreBoard/TanRole.visible = true
+	$HUD/ScoreBoard/BrownRole.visible = true
 
 func _on_start_pressed():
 	$SoundEffects.play()
@@ -229,6 +245,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	
 	$StartMenu.visible = false
 	$HUD/ScoreBoard.visible = true
+	_hide_roles()
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
@@ -296,6 +313,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
 	$HUD/Stamina.visible = false
+	_show_roles()
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
@@ -335,7 +353,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			else:
 				$WinScreen/WinArt.texture = scrn_rat_kills
 				$WinScreen/WinAddon.texture = scrn_rat_kills_addon
-				$WinScreen/WinDetails.text = "[center]The rat (" + rat_color + ") killed everyone . . ."
+				$WinScreen/WinDetails.text = "[center]The rat killed everyone . . ."
 			$WinScreen/WinArt.modulate = color_to_code[rat_color]
 			$AudioStreamPlayer.stream = rat_victory_sound
 			$AudioStreamPlayer.play()
