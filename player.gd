@@ -391,7 +391,7 @@ func activate_ghost(tween_duration: float):
 		ghost_instance.started = true
 		ghost_instance.visible = true
 		
-		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1, tween_duration)
+		tween.tween_property(ghost_instance.get_node("ViewSphere"), "energy", 1.5, tween_duration)
 		#tween.tween_property(ghost_instance.get_node("AnimatedSprite2D"), "modulate", Color("#71bdee87"), tween_duration)
 		print("setting camera")
 		var camera = ghost_instance.get_node("Camera2D")
