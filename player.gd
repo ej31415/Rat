@@ -282,11 +282,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_multiplayer_authority() and started:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
+				if Time.get_unix_time_from_system() < next_rat_kill:
+					print(color + " on kill cooldown")
+					return
 				var set_cooldown = false
 				for child in get_tree().get_nodes_in_group("player"):
-					if Time.get_unix_time_from_system() < next_rat_kill:
-						print(color + " on kill cooldown")
-						break
 					if child.has_method("die"):
 						if child.get_role() == "rat" or !child.is_alive():
 							continue
