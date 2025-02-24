@@ -1,7 +1,7 @@
 extends Player
 
 func _ready() -> void:
-	super._ready()
+	super._pseudo_ready()
 	self.color = "brown"
 	print("initialized brown mouse")
 
