@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb7ks5f340d4s"
-path="res://.godot/imported/Win screen rat kills all knife.png-95f84abeac6d41ac9c99d68f151cf0b8.ctex"
+uid="uid://bikgtxbgt8gd6"
+path="res://.godot/imported/Rat win timeout .png-e737fc98d3e3a38c796ee639e2ce05ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Win screen rat kills all knife.png"
-dest_files=["res://.godot/imported/Win screen rat kills all knife.png-95f84abeac6d41ac9c99d68f151cf0b8.ctex"]
+source_file="res://assets/Win Screens/Rat win timeout .png"
+dest_files=["res://.godot/imported/Rat win timeout .png-e737fc98d3e3a38c796ee639e2ce05ab.ctex"]
 
 [params]
 

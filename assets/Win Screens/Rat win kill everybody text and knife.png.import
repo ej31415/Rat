@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm7i2qjv5cn0b"
-path="res://.godot/imported/Mice_win.png-2050fbae965909d4c7e03118add1ca02.ctex"
+uid="uid://bg12gcediqdff"
+path="res://.godot/imported/Rat win kill everybody text and knife.png-e85280b9c9430e42ff3e324209e86d78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Mice_win.png"
-dest_files=["res://.godot/imported/Mice_win.png-2050fbae965909d4c7e03118add1ca02.ctex"]
+source_file="res://assets/Win Screens/Rat win kill everybody text and knife.png"
+dest_files=["res://.godot/imported/Rat win kill everybody text and knife.png-e85280b9c9430e42ff3e324209e86d78.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c82iu0y0wopdq"
-path="res://.godot/imported/Mice sheriff Win screens gun.png-b3e4a7775149d1a2b57fa91ca3eb59b6.ctex"
+uid="uid://cekejtflwja28"
+path="res://.godot/imported/Sheriff win .png-358e58eb9ac9c6ecc54b86b3b90aff12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Mice sheriff Win screens gun.png"
-dest_files=["res://.godot/imported/Mice sheriff Win screens gun.png-b3e4a7775149d1a2b57fa91ca3eb59b6.ctex"]
+source_file="res://assets/Win Screens/Sheriff win .png"
+dest_files=["res://.godot/imported/Sheriff win .png-358e58eb9ac9c6ecc54b86b3b90aff12.ctex"]
 
 [params]
 

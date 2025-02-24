@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gjb5nu1ikycf"
-path="res://.godot/imported/Win screen rat kills all .png-6dd42767c0533f7a4e20415909293cef.ctex"
+uid="uid://b4375e1xxqsnq"
+path="res://.godot/imported/Rat win kill everybody.png-515308420e982c3c896ff38a788abdcf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Win screen rat kills all .png"
-dest_files=["res://.godot/imported/Win screen rat kills all .png-6dd42767c0533f7a4e20415909293cef.ctex"]
+source_file="res://assets/Win Screens/Rat win kill everybody.png"
+dest_files=["res://.godot/imported/Rat win kill everybody.png-515308420e982c3c896ff38a788abdcf.ctex"]
 
 [params]
 

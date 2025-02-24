@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dn2dymt3uj7kv"
-path="res://.godot/imported/Win screens run out of time.png-e16936ff26c35675b95dca50a27e02aa.ctex"
+uid="uid://bjjg21tup0pqw"
+path="res://.godot/imported/Rat win timeout text and clock.png-6706237bf9d2f49f8e563d012113d52e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Win screens run out of time.png"
-dest_files=["res://.godot/imported/Win screens run out of time.png-e16936ff26c35675b95dca50a27e02aa.ctex"]
+source_file="res://assets/Win Screens/Rat win timeout text and clock.png"
+dest_files=["res://.godot/imported/Rat win timeout text and clock.png-6706237bf9d2f49f8e563d012113d52e.ctex"]
 
 [params]
 

@@ -48,12 +48,12 @@ func _load_music():
 func _load_win_screens():
 	scrn_maze_exit = preload("res://assets/Win Screens/Maze exit Win screen no rat.png")
 	scrn_maze_exit_addon = preload("res://assets/Win Screens/Win screens maze exit found rat.png")
-	scrn_sheriff = preload("res://assets/Win Screens/Mice sheriff Win screens.png")
-	scrn_sheriff_addon = preload("res://assets/Win Screens/Mice sheriff Win screens gun.png")
-	scrn_rat_kills = preload("res://assets/Win Screens/Win screen rat kills all .png")
-	scrn_rat_kills_addon = preload("res://assets/Win Screens/Win screen rat kills all knife.png")
-	scrn_timeout = preload("res://assets/Win Screens/Win screens run out of time.png")
-	scrn_timeout_addon = preload("res://assets/Win Screens/Win screens run out of time timer.png")
+	scrn_sheriff = preload("res://assets/Win Screens/Sheriff win .png")
+	scrn_sheriff_addon = preload("res://assets/Win Screens/Sheriff win text and gun.png")
+	scrn_rat_kills = preload("res://assets/Win Screens/Rat win kill everybody.png")
+	scrn_rat_kills_addon = preload("res://assets/Win Screens/Rat win kill everybody text and knife.png")
+	scrn_timeout = preload("res://assets/Win Screens/Rat win timeout .png")
+	scrn_timeout_addon = preload("res://assets/Win Screens/Rat win timeout text and clock.png")
 
 func _ready():
 	color_to_pts = {
@@ -303,6 +303,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	if player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
 	else:
+		$WinScreen/WinAddon.modulate = Color(1, 1, 1, 1)
 		if mice_win:
 			if sheriff_win:
 				$WinScreen/WinArt.texture = scrn_sheriff
@@ -312,7 +313,6 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 					if color_to_role[color] == "sheriff":
 						sheriff_color = color_to_color[color]
 				$WinScreen/WinArt.modulate = color_to_code[sheriff_color]
-				$WinScreen/WinAddon.modulate = Color(1, 1, 1, 1)
 				$WinScreen/WinDetails.text = "[center]The sheriff has killed the rat!"
 			else:
 				$WinScreen/WinArt.texture = scrn_maze_exit
@@ -337,7 +337,6 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 				$WinScreen/WinAddon.texture = scrn_rat_kills_addon
 				$WinScreen/WinDetails.text = "[center]The rat (" + rat_color + ") killed everyone . . ."
 			$WinScreen/WinArt.modulate = color_to_code[rat_color]
-			$WinScreen/WinAddon.modulate = Color(1, 1, 1, 1)
 			$AudioStreamPlayer.stream = rat_victory_sound
 			$AudioStreamPlayer.play()
 		$WinScreen/Background.visible = true
