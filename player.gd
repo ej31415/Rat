@@ -22,7 +22,7 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
-var last_rat_kill = 0
+var next_rat_kill = 0
 var sheriff_shot = false
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
@@ -62,7 +62,7 @@ func starter(color_to_roles):
 
 	role = color_to_roles[color]
 	alive = true
-	last_rat_kill = Time.get_unix_time_from_system() - 5
+	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
@@ -111,7 +111,7 @@ func get_shot():
 	return sheriff_shot
 
 func get_kill_cooldown():
-	return ceil(RAT_COOLDOWN - (Time.get_unix_time_from_system() - last_rat_kill))
+	return ceil(next_rat_kill - Time.get_unix_time_from_system())
 
 func get_stamina_value():
 	return stamina
@@ -282,26 +282,28 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_multiplayer_authority() and started:
 		if event.is_action_pressed("ATTACK"):
 			if role == "rat":
+				var set_cooldown = false
 				for child in get_tree().get_nodes_in_group("player"):
-					if Time.get_unix_time_from_system() - last_rat_kill < RAT_COOLDOWN:
+					if Time.get_unix_time_from_system() < next_rat_kill:
 						print(color + " on kill cooldown")
 						break
 					if child.has_method("die"):
-						if child.get_role() == "rat":
-							continue
-						if !child.is_alive():
+						if child.get_role() == "rat" or !child.is_alive():
 							continue
 						if child.position.distance_to(self.position) < 190:
 							die_call.rpc(child.get_color())
-							last_rat_kill = Time.get_unix_time_from_system()
+							next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN
+							set_cooldown = true
 							add_kill.rpc()
-					print(color + " attack!!!")
-					set_physics_process(false)
-					$AnimationPlayer.play("attack")
-					$Knife.visible = true
-					$SoundEffects.stream = knife_sound
-					$SoundEffects.stream.loop = false
-					$SoundEffects.play()
+				print(color + " attack!!!")
+				set_physics_process(false)
+				$AnimationPlayer.play("attack")
+				$Knife.visible = true
+				$SoundEffects.stream = knife_sound
+				$SoundEffects.stream.loop = false
+				$SoundEffects.play()
+				if !set_cooldown:
+					next_rat_kill = Time.get_unix_time_from_system() + ceil(RAT_COOLDOWN / 4)
 			elif role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:
