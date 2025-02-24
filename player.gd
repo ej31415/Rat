@@ -429,9 +429,10 @@ func add_kill(killer: String):
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	if effect.can_get_buffer(512) and playback.can_push_buffer(512):
-		send_data.rpc(effect.get_buffer(512))
-	effect.clear_buffer()
+	if effect:
+		if effect.can_get_buffer(512) and playback.can_push_buffer(512):
+			send_data.rpc(effect.get_buffer(512))
+		effect.clear_buffer()
 
 @rpc("any_peer", "call_remote", "reliable")
 func send_data(data : PackedVector2Array):

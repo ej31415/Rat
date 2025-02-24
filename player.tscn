@@ -8,6 +8,7 @@
 script = ExtResource("1_xwc5q")
 
 [node name="input" type="AudioStreamPlayer" parent="."]
+bus = &"Record"
 
 [node name="output" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamGenerator_a52gx")
