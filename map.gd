@@ -56,6 +56,13 @@ func _extend_outer_walls(mat: Array, n_layers: int) -> Array:
 	
 	return mat
 
+func _cap_exit(mat: Array) -> Array:
+	var padding := []
+	padding.resize(len(mat[0]))
+	padding.fill(1)
+	mat.insert(0, padding)
+	return mat
+
 # Returns the local coordinates of one of the maze's starting tiles.
 func get_start_position(mat: Array, offset: Vector2i) -> Vector2i:
 	for r in range(len(mat)-1, -1, -1):
@@ -234,7 +241,7 @@ func erase_maze(mat: Array, offset: Vector2i):
 func _ready() -> void:
 	var padding := 4
 	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(10, 10), 2), 2)
-	maze = _add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, padding)))
+	maze = _cap_exit(_add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, padding))))
 	_pretty_print_mat(maze)
 	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
 	build_maze(maze, offset)

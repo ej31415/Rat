@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=44 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://rmbvsg6rlg8d" path="res://assets/Tile Sets/Walls/Walls.png" id="9_b15hr"]
 [ext_resource type="Script" path="res://timer.gd" id="10_al2ht"]
 [ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="10_dpgvo"]
+[ext_resource type="Texture2D" uid="uid://ded2xgap43jyd" path="res://assets/Tile Sets/Floors/Exit.png" id="10_l3cge"]
 [ext_resource type="FontFile" uid="uid://d26nlkqccxmgq" path="res://assets/Silkscreen-Regular.ttf" id="12_63mnq"]
 [ext_resource type="AudioStream" uid="uid://jw7j2e2j350p" path="res://assets/Music/time_warning.mp3" id="16_v0r1l"]
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
@@ -75,7 +76,7 @@ sources/0 = SubResource("TileSetAtlasSource_1afth")
 sources/2 = SubResource("TileSetAtlasSource_2knl5")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_binbo"]
-texture = ExtResource("7_uqj63")
+texture = ExtResource("10_l3cge")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 
