@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm7i2qjv5cn0b"
-path="res://.godot/imported/Mice_win.png-2050fbae965909d4c7e03118add1ca02.ctex"
+uid="uid://cekejtflwja28"
+path="res://.godot/imported/Sheriff win .png-358e58eb9ac9c6ecc54b86b3b90aff12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Win Screens/Mice_win.png"
-dest_files=["res://.godot/imported/Mice_win.png-2050fbae965909d4c7e03118add1ca02.ctex"]
+source_file="res://assets/Win Screens/Sheriff win .png"
+dest_files=["res://.godot/imported/Sheriff win .png-358e58eb9ac9c6ecc54b86b3b90aff12.ctex"]
 
 [params]
 
