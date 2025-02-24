@@ -116,6 +116,9 @@ func get_kill_cooldown():
 func get_stamina_value():
 	return stamina
 	
+func get_can_sprint():
+	return can_sprint
+	
 func set_aim_view_visible(b: bool):
 	$AimView.visible = b
 	

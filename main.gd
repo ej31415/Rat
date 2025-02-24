@@ -430,6 +430,10 @@ func _process(delta: float) -> void:
 		# Check stamina
 		if $HUD/Stamina.visible and player.get_role() == "rat":
 			$HUD/Stamina.value = player.get_stamina_value()
+			if player.get_can_sprint():
+				$HUD/Stamina.tint_progress = Color("#ffffff")
+			else:
+				$HUD/Stamina.tint_progress = Color("#f71f00")
 	
 	if rat_killed + sheriff_killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false, false, "")
