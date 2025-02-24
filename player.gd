@@ -55,12 +55,14 @@ func _init() -> void:
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
-func _ready():
-	input = $input
-	output = $output
+func _pseudo_ready():
 	add_to_group("player")
 	if role == "":
 		print("role not set")
+
+func _ready():
+	input = $input
+	output = $output
 	if (is_multiplayer_authority()):
 		input.stream = AudioStreamMicrophone.new()
 		input.play()
