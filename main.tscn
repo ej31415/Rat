@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
 [ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
-[ext_resource type="Texture2D" uid="uid://b0jyjm0idsm21" path="res://icon.svg" id="29_n11sv"]
+[ext_resource type="Texture2D" uid="uid://b81vxitxhs6k0" path="res://assets/UI/Stamina Texture.png" id="29_udgh8"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
@@ -962,7 +962,7 @@ grow_vertical = 0
 value = 100.0
 rounded = true
 nine_patch_stretch = true
-texture_progress = ExtResource("29_n11sv")
+texture_progress = ExtResource("29_udgh8")
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="finished" from="StartMenu/VideoContainer/TitleSequence" to="." method="_on_title_sequence_finished"]
