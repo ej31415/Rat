@@ -651,7 +651,8 @@ light_mask = 4
 material = SubResource("CanvasItemMaterial_g3nlh")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_st0pp")
-animation = &"shoot up"
+animation = &"front"
+frame = 1
 
 [node name="Gun" type="AnimatedSprite2D" parent="."]
 visible = false

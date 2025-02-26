@@ -240,7 +240,6 @@ func _on_start_pressed():
 
 @rpc("call_local", "reliable")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Dictionary):
-	print("I got called")
 	first_started = true
 	player_disconnected = false
 	color_to_role = true_roles
@@ -288,6 +287,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 		$HUD/Knife.visible = true
 		$HUD/KnifeCooldown.visible = true
 		$HUD/Stamina.visible = true
+		$HUD/Minimap.visible = true
 	
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/Background.visible = false
@@ -320,6 +320,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
 	$HUD/Stamina.visible = false
+	$HUD/Minimap.visible = false
 	_show_roles()
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
