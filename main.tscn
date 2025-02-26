@@ -649,9 +649,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -384.0
+offset_left = -300.0
 offset_top = -32.0
-offset_right = 392.0
+offset_right = 300.0
 offset_bottom = -9.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -681,17 +681,15 @@ text = "Stamina"
 scale = Vector2(0.25, 0.25)
 transform = Transform2D(0.25, 0, 0, 0.25, 0, 0)
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="HUD/Minimap"]
-offset_left = 64.0
-offset_top = 2020.0
-offset_right = 564.0
-offset_bottom = 2520.0
+[node name="MarginContainer" type="MarginContainer" parent="HUD/Minimap"]
+offset_left = 32.0
+offset_top = 1856.0
+offset_right = 736.0
+offset_bottom = 2560.0
 script = ExtResource("25_320b3")
 
-[node name="SubViewport" type="SubViewport" parent="HUD/Minimap/SubViewportContainer"]
-
-[node name="Camera2D" type="Camera2D" parent="HUD/Minimap/SubViewportContainer/SubViewport"]
-zoom = Vector2(0.5, 0.5)
+[node name="Canvas" type="TextureRect" parent="HUD/Minimap/MarginContainer"]
+layout_mode = 2
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
 visible = false

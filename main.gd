@@ -30,6 +30,8 @@ var player_disconnected = false
 static var rat_killed = 0
 static var sheriff_killed = 0
 
+var quickstart_called = false
+
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
 	brown_mouse = preload("res://brown_mouse.tscn")
@@ -95,7 +97,8 @@ func _ready():
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())
-	if args.has("--quickstart"):
+	if args.has("--quickstart") and not quickstart_called:
+		quickstart_called = true
 		_quick_start() # Usage guide is immediately above the function def
 	multiplayer.server_disconnected.connect(_on_server_disconnect)
 
@@ -237,6 +240,7 @@ func _on_start_pressed():
 
 @rpc("call_local", "reliable")
 func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Dictionary):
+	print("I got called")
 	first_started = true
 	player_disconnected = false
 	color_to_role = true_roles
@@ -297,7 +301,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$AudioStreamPlayer.stream = mice_active_music
 	$AudioStreamPlayer.play()
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
-	$HUD/Minimap/SubViewportContainer.set_target()
+	$HUD/Minimap/MarginContainer.set_target()
 	game_ended = false
 
 func _on_timer_timeout() -> void:
@@ -455,8 +459,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
 		$HelpControl/Right.emit_signal("button_down")
 		
-	#if Input.is_action_just_pressed("TOGGLE LIGHT"):
-		#$Darkness.visible = !$Darkness.visible
+	if Input.is_action_just_pressed("TOGGLE LIGHT"):
+		$Darkness.visible = !$Darkness.visible
 	
 	if is_host and game_ended:
 		refresh_play_again_button()
@@ -498,6 +502,7 @@ func show_title_menu() -> void:
 	$StartMenu/ip.visible = true
 	
 	$AudioStreamPlayer.stream = title_sound
+	$AudioStreamPlayer.stream.loop = true
 	$AudioStreamPlayer.play()
 
 func refresh_play_again_button() -> void:

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drbirs5vaavkq"]
+
+[ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="1_vt26k"]
+
+[node name="Marker" type="Sprite2D"]
+texture = ExtResource("1_vt26k")

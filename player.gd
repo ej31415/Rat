@@ -22,7 +22,6 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
-var dazed_state = 0
 var next_rat_kill = 0
 var sheriff_shot = false
 var ghost_instance: CharacterBody2D
@@ -63,7 +62,6 @@ func starter(color_to_roles):
 
 	role = color_to_roles[color]
 	alive = true
-	dazed_state = 0
 	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
 	sheriff_shot = false
 	started = true
@@ -108,6 +106,9 @@ func get_role():
 
 func get_color():
 	return color
+
+func get_color_prop():
+	return $AnimatedSprite2D.modulate
 	
 func get_shot():
 	return sheriff_shot
@@ -120,9 +121,6 @@ func get_stamina_value():
 	
 func get_can_sprint():
 	return can_sprint
-	
-func get_state():
-	return dazed_state
 	
 func set_aim_view_visible(b: bool):
 	$AimView.visible = b
