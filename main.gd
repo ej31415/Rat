@@ -333,8 +333,16 @@ func show_leaderboard():
 		lb.append([color, color_to_pts[color]])
 	lb.sort_custom(ascending_compare)
 	print(lb)
+	var pt_labels := [
+		$HUD/Leaderboard/ColorRect/PointsOne,
+		$HUD/Leaderboard/ColorRect/PointsTwo,
+		$HUD/Leaderboard/ColorRect/PointsThree,
+		$HUD/Leaderboard/ColorRect/PointsFour
+	]
+	
 	for i in range(len(lb)):
 		color_to_lbhead[lb[i][0]].position = lbhead_positions[i]
+		pt_labels[i].text = str(color_to_pts[lb[i][0]]) + " pts"
 	
 	if is_host:
 		$HUD/Leaderboard/ColorRect/Button.disabled = false
@@ -567,9 +575,10 @@ func _on_restart_timer_timeout() -> void:
 		
 
 func _on_lb_close_button_click() -> void:
-	_on_again_button_pressed()
-	$HUD/Leaderboard.visible = false
 	reset_scores()
+	_on_again_button_pressed()
+	$WinScreen/CheckBoxButton.check()
+	$HUD/Leaderboard.visible = false
 
 # TODO: connect more signals to this function
 func _on_any_button_click() -> void:

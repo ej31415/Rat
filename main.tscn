@@ -691,7 +691,7 @@ offset_top = 278.0
 offset_right = 342.0
 offset_bottom = 318.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/normal_font_size = 30
 text = "#1"
 
 [node name="NumberTwo" type="RichTextLabel" parent="HUD/Leaderboard/ColorRect"]
@@ -701,28 +701,76 @@ offset_top = 278.0
 offset_right = 504.0
 offset_bottom = 318.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/normal_font_size = 30
 text = "#2"
 
 [node name="NumberThree" type="RichTextLabel" parent="HUD/Leaderboard/ColorRect"]
 layout_mode = 0
-offset_left = 622.0
+offset_left = 624.0
 offset_top = 278.0
-offset_right = 662.0
+offset_right = 664.0
 offset_bottom = 318.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/normal_font_size = 30
 text = "#3"
 
 [node name="NumberFour" type="RichTextLabel" parent="HUD/Leaderboard/ColorRect"]
 layout_mode = 0
-offset_left = 790.0
+offset_left = 788.0
 offset_top = 278.0
-offset_right = 830.0
+offset_right = 828.0
 offset_bottom = 318.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
-theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/normal_font_size = 30
 text = "#4"
+
+[node name="PointsOne" type="Label" parent="HUD/Leaderboard/ColorRect"]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 334.0
+offset_right = 380.0
+offset_bottom = 365.0
+theme_override_fonts/font = ExtResource("12_63mnq")
+theme_override_font_sizes/font_size = 24
+text = "nn pts"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsTwo" type="Label" parent="HUD/Leaderboard/ColorRect"]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 334.0
+offset_right = 540.0
+offset_bottom = 365.0
+theme_override_fonts/font = ExtResource("12_63mnq")
+theme_override_font_sizes/font_size = 24
+text = "nn pts"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsThree" type="Label" parent="HUD/Leaderboard/ColorRect"]
+layout_mode = 0
+offset_left = 595.0
+offset_top = 334.0
+offset_right = 700.0
+offset_bottom = 365.0
+theme_override_fonts/font = ExtResource("12_63mnq")
+theme_override_font_sizes/font_size = 24
+text = "nn pts"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointsFour" type="Label" parent="HUD/Leaderboard/ColorRect"]
+layout_mode = 0
+offset_left = 757.0
+offset_top = 334.0
+offset_right = 862.0
+offset_bottom = 365.0
+theme_override_fonts/font = ExtResource("12_63mnq")
+theme_override_font_sizes/font_size = 24
+text = "nn pts"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RichTextLabel" type="Label" parent="HUD/Leaderboard/ColorRect"]
 layout_mode = 0
