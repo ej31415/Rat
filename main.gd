@@ -31,7 +31,9 @@ var player_disconnected = false
 
 static var rat_killed = 0
 static var sheriff_killed = 0
-static var lbhead_positions = [Vector2i(100, 100), Vector2i(100, 200), Vector2i(100, 300), Vector2i(100, 400)]
+var lbhead_positions := []
+
+var POINT_THRESHOLD := 4
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -91,16 +93,22 @@ func _ready():
 		"green": Color("#48ac4f")
 	}
 	color_to_lbhead = {
-		"gray": $HUD/Leaderboard/GrayHead,
-		"sb": $HUD/Leaderboard/SBHead,
-		"tan": $HUD/Leaderboard/TanHead,
-		"brown": $HUD/Leaderboard/BrownHead
+		"gray": $HUD/Leaderboard/ColorRect/GrayHead,
+		"sb": $HUD/Leaderboard/ColorRect/SBHead,
+		"tan": $HUD/Leaderboard/ColorRect/TanHead,
+		"brown": $HUD/Leaderboard/ColorRect/BrownHead
 	}
 	role_to_desc = {
 		"mouse": "Escape!",
 		"sheriff": "Kill the rat or escape!",
 		"rat": "Kill or delay the mice!"
 	}
+	lbhead_positions = [
+		$HUD/Leaderboard/ColorRect/GrayHead.position,
+		$HUD/Leaderboard/ColorRect/SBHead.position,
+		$HUD/Leaderboard/ColorRect/TanHead.position,
+		$HUD/Leaderboard/ColorRect/BrownHead.position
+	]
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())
@@ -318,6 +326,28 @@ func ascending_compare(a, b):
 		return false
 	return true
 
+func show_leaderboard():
+	# get winners
+	var lb := []
+	for color in color_to_pts:
+		lb.append([color, color_to_pts[color]])
+	lb.sort_custom(ascending_compare)
+	print(lb)
+	for i in range(len(lb)):
+		color_to_lbhead[lb[i][0]].position = lbhead_positions[i]
+	
+	if is_host:
+		$HUD/Leaderboard/ColorRect/Button.disabled = false
+		$HUD/Leaderboard/ColorRect/Button.text = "Start another game"
+	else:
+		$HUD/Leaderboard/ColorRect/Button.disabled = true
+		$HUD/Leaderboard/ColorRect/Button.text = "Waiting for host to start another game..."
+	$HUD/Leaderboard.visible = true
+
+func reset_scores() -> void:
+	for color in color_to_pts:
+		color_to_pts[color] = 0
+		
 @rpc("call_local", "reliable", "any_peer")
 func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String) -> void:
 	if game_ended:
@@ -415,15 +445,10 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 	
-	# get winners
-	var lb := []
 	for color in color_to_pts:
-		lb.append([color, color_to_pts[color]])
-	lb.sort_custom(ascending_compare)
-	print(lb)
-	for i in range(len(lb)):
-		color_to_lbhead[lb[i][0]].position = lbhead_positions[i]
-	$HUD/Leaderboard.visible = true
+		if color_to_pts[color] >= POINT_THRESHOLD:
+			$WinScreen/CheckBoxButton.uncheck()
+			show_leaderboard()
 	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
@@ -539,6 +564,12 @@ func refresh_play_again_button() -> void:
 func _on_restart_timer_timeout() -> void:
 	if game_ended:
 		$WinScreen/Again.emit_signal("pressed")
+		
+
+func _on_lb_close_button_click() -> void:
+	_on_again_button_pressed()
+	$HUD/Leaderboard.visible = false
+	reset_scores()
 
 # TODO: connect more signals to this function
 func _on_any_button_click() -> void:
