@@ -22,8 +22,12 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var buffed = false
 var next_rat_kill = 0
 var sheriff_shot = false
+var next_cheese_drop = 0
+var cheese = null
+
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
 
@@ -38,6 +42,7 @@ func _init() -> void:
 	role = roles[idx]
 	roles.pop_at(idx)
 	alive = true
+	buffed = false
 	started = false
 	ghost_scene = preload("res://ghost_mouse.tscn")
 	
@@ -62,6 +67,7 @@ func starter(color_to_roles):
 
 	role = color_to_roles[color]
 	alive = true
+	buffed = false
 	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
 	sheriff_shot = false
 	started = true
@@ -329,6 +335,17 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.stream = shot_sound
 				$SoundEffects.stream.loop = false
 				$SoundEffects.play()
+			if role == "mouse":
+				if Time.get_unix_time_from_system() < next_cheese_drop:
+					print(color + " on cheese drop cooldown")
+					return
+				
+				if cheese != null:
+					cheese.queue_free()
+					print(color + " cheese despawned")
+				cheese = Cheese.constructor(self)
+				cheese.add_to_group("cheese")
+				get_parent().add_child(cheese)
 
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation

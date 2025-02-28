@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dyfhd1u3g0y7y"]
+
+[ext_resource type="Texture2D" uid="uid://d00jq3qprr4ob" path="res://assets/Cheese.PNG" id="1_62kuu"]
+[ext_resource type="Script" path="res://cheese.gd" id="2_xsdww"]
+
+[node name="Cheese" type="Sprite2D"]
+light_mask = 15
+texture = ExtResource("1_62kuu")
+script = ExtResource("2_xsdww")
