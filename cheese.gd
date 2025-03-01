@@ -15,8 +15,10 @@ static func constructor(owner: Player):
 	obj.consumed = false
 	obj.last_contact = Time.get_unix_time_from_system()
 	obj.global_position = obj.spawned_from.global_position
+	obj.add_to_group("cheese")
+	owner.get_parent().add_child(obj)
 	print(owner.color + " placed cheese")
-	return obj
+	
 	
 func _process(delta: float) -> void:
 	if spawned_from.position.distance_to(self.position) < dist_radius:

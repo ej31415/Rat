@@ -340,12 +340,7 @@ func _unhandled_input(event: InputEvent) -> void:
 					print(color + " on cheese drop cooldown")
 					return
 				
-				if cheese != null:
-					cheese.queue_free()
-					print(color + " cheese despawned")
-				cheese = Cheese.constructor(self)
-				cheese.add_to_group("cheese")
-				get_parent().add_child(cheese)
+				cheese_create_call.rpc(color)
 
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
@@ -430,3 +425,20 @@ func add_kill(killer: String):
 		Main.rat_killed += 1
 	if killer == "sheriff":
 		Main.sheriff_killed += 1
+		
+@rpc("call_local", "reliable")
+func cheese_create_call(owner_color: String):
+	# Search for owner node
+	var owner = null
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_color") and player.get_color() == owner_color:
+			owner = player
+	if owner == null:
+		print("cheese constructor cannot find owner")
+	
+	if owner.cheese != null:
+		owner.cheese.queue_free()
+		print(color + " cheese despawned")
+	
+	owner.cheese = Cheese.constructor(owner)
+	

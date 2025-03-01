@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dyfhd1u3g0y7y"]
+[gd_scene load_steps=4 format=3 uid="uid://dyfhd1u3g0y7y"]
 
 [ext_resource type="Texture2D" uid="uid://d00jq3qprr4ob" path="res://assets/Cheese.PNG" id="1_62kuu"]
 [ext_resource type="Script" path="res://cheese.gd" id="2_xsdww"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_svd46"]
+light_mode = 2
+
 [node name="Cheese" type="Sprite2D"]
+modulate = Color(0.716296, 0.716296, 0.716296, 1)
 light_mask = 15
+material = SubResource("CanvasItemMaterial_svd46")
 texture = ExtResource("1_62kuu")
 script = ExtResource("2_xsdww")
