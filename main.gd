@@ -34,7 +34,7 @@ static var rat_killed = 0
 static var sheriff_killed = 0
 var lbhead_positions := []
 
-var POINT_THRESHOLD := 4
+var POINT_THRESHOLD := 11
 
 var quickstart_called = false
 
@@ -112,6 +112,8 @@ func _ready():
 		$HUD/Leaderboard/TextureRect/TanHead.position,
 		$HUD/Leaderboard/TextureRect/BrownHead.position
 	]
+	
+	$HUD/ScoreBoard/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " wins!"
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())

@@ -628,6 +628,19 @@ offset_bottom = 202.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 23
 
+[node name="PointGoal" type="Label" parent="HUD/ScoreBoard"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 980.0
+offset_top = 215.0
+offset_right = 1136.0
+offset_bottom = 240.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 20
+text = "First to XX wins!"
+
 [node name="Gun" type="Sprite2D" parent="HUD"]
 visible = false
 position = Vector2(1080, 576)
@@ -734,57 +747,57 @@ text = "Start New Round"
 
 [node name="PointsOne" type="Label" parent="HUD/Leaderboard/TextureRect"]
 layout_mode = 0
-offset_left = 395.96
+offset_left = 384.96
 offset_top = 147.0
-offset_right = 500.96
-offset_bottom = 178.0
+offset_right = 520.96
+offset_bottom = 187.0
 theme_override_fonts/font = ExtResource("12_63mnq")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 31
 text = "nn pts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointsTwo" type="Label" parent="HUD/Leaderboard/TextureRect"]
 layout_mode = 0
-offset_left = 106.96
+offset_left = 95.9601
 offset_top = 191.0
-offset_right = 211.96
-offset_bottom = 222.0
+offset_right = 231.96
+offset_bottom = 231.0
 theme_override_fonts/font = ExtResource("12_63mnq")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 31
 text = "nn pts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointsThree" type="Label" parent="HUD/Leaderboard/TextureRect"]
 layout_mode = 0
-offset_left = 674.0
+offset_left = 663.0
 offset_top = 240.0
-offset_right = 779.0
-offset_bottom = 271.0
+offset_right = 799.0
+offset_bottom = 280.0
 theme_override_fonts/font = ExtResource("12_63mnq")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 31
 text = "nn pts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointsFour" type="Label" parent="HUD/Leaderboard/TextureRect"]
 layout_mode = 0
-offset_left = 952.0
+offset_left = 941.0
 offset_top = 340.0
-offset_right = 1057.0
-offset_bottom = 371.0
+offset_right = 1077.0
+offset_bottom = 380.0
 theme_override_fonts/font = ExtResource("12_63mnq")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 31
 text = "nn pts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="RichTextLabel" type="Label" parent="HUD/Leaderboard/TextureRect"]
 layout_mode = 0
-offset_left = 309.0
+offset_left = 338.06
 offset_top = -36.0
-offset_right = 816.0
+offset_right = 845.06
 offset_bottom = 113.0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 56
@@ -793,7 +806,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Gradient" type="TextureRect" parent="HUD/Leaderboard"]
-visible = false
 offset_right = 1166.0
 offset_bottom = 674.0
 mouse_filter = 2
