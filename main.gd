@@ -96,10 +96,10 @@ func _ready():
 		"green": Color("#48ac4f")
 	}
 	color_to_lbhead = {
-		"gray": $HUD/Leaderboard/ColorRect/GrayHead,
-		"sb": $HUD/Leaderboard/ColorRect/SBHead,
-		"tan": $HUD/Leaderboard/ColorRect/TanHead,
-		"brown": $HUD/Leaderboard/ColorRect/BrownHead
+		"gray": $HUD/Leaderboard/TextureRect/GrayHead,
+		"sb": $HUD/Leaderboard/TextureRect/SBHead,
+		"tan": $HUD/Leaderboard/TextureRect/TanHead,
+		"brown": $HUD/Leaderboard/TextureRect/BrownHead
 	}
 	role_to_desc = {
 		"mouse": "Escape!",
@@ -107,10 +107,10 @@ func _ready():
 		"rat": "Kill or delay the mice!"
 	}
 	lbhead_positions = [
-		$HUD/Leaderboard/ColorRect/GrayHead.position,
-		$HUD/Leaderboard/ColorRect/SBHead.position,
-		$HUD/Leaderboard/ColorRect/TanHead.position,
-		$HUD/Leaderboard/ColorRect/BrownHead.position
+		$HUD/Leaderboard/TextureRect/GrayHead.position,
+		$HUD/Leaderboard/TextureRect/SBHead.position,
+		$HUD/Leaderboard/TextureRect/TanHead.position,
+		$HUD/Leaderboard/TextureRect/BrownHead.position
 	]
 
 	# instant-start for debugging
@@ -347,10 +347,10 @@ func show_leaderboard():
 	lb.sort_custom(ascending_compare)
 	print(lb)
 	var pt_labels := [
-		$HUD/Leaderboard/ColorRect/PointsOne,
-		$HUD/Leaderboard/ColorRect/PointsTwo,
-		$HUD/Leaderboard/ColorRect/PointsThree,
-		$HUD/Leaderboard/ColorRect/PointsFour
+		$HUD/Leaderboard/TextureRect/PointsOne,
+		$HUD/Leaderboard/TextureRect/PointsTwo,
+		$HUD/Leaderboard/TextureRect/PointsThree,
+		$HUD/Leaderboard/TextureRect/PointsFour
 	]
 	
 	for i in range(len(lb)):
@@ -358,11 +358,11 @@ func show_leaderboard():
 		pt_labels[i].text = str(color_to_pts[lb[i][0]]) + " pts"
 	
 	if is_host:
-		$HUD/Leaderboard/ColorRect/Button.disabled = false
-		$HUD/Leaderboard/ColorRect/Button.text = "Start another game"
+		$HUD/Leaderboard/TextureRect/Button.disabled = false
+		$HUD/Leaderboard/TextureRect/Button.text = "Start another game"
 	else:
-		$HUD/Leaderboard/ColorRect/Button.disabled = true
-		$HUD/Leaderboard/ColorRect/Button.text = "Waiting for host to start another game..."
+		$HUD/Leaderboard/TextureRect/Button.disabled = true
+		$HUD/Leaderboard/TextureRect/Button.text = "Waiting for host to start another game..."
 	$HUD/Leaderboard.visible = true
 
 func reset_scores() -> void:
