@@ -442,3 +442,6 @@ func cheese_create_call(owner_color: String):
 	
 	owner.cheese = Cheese.constructor(owner)
 	
+func buff():
+	self.buffed = true
+	$ViewSphere.scale = Vector2(30, 30)

@@ -44,5 +44,5 @@ func _process(delta: float) -> void:
 		obj_pos.y = clamp(obj_pos.y, 0, canvas.size.y)
 		markers[player].position = obj_pos
 		
-		if not player.is_alive():
+		if not player.is_alive() or (player.buffed and player.get_role() != "rat"):
 			markers[player].visible = false
