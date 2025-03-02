@@ -472,6 +472,8 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	for color in color_to_pts:
 		if color_to_pts[color] >= POINT_THRESHOLD:
 			$WinScreen/CheckBoxButton.uncheck()
+			$WinScreen/Again.disabled = true
+			await get_tree().create_timer(2).timeout
 			show_leaderboard()
 	
 	if is_host: # allow only host to start new game
@@ -613,6 +615,7 @@ func _on_lb_close_button_click() -> void:
 	reset_scores()
 	_on_again_button_pressed()
 	$WinScreen/CheckBoxButton.check()
+	$WinScreen/Again.disabled = false
 	$HUD/Leaderboard.visible = false
 
 # TODO: connect more signals to this function
