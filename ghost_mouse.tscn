@@ -445,7 +445,7 @@ texture = ExtResource("3_8dguo")
 light_mask = 8
 visibility_layer = 8
 sprite_frames = SubResource("SpriteFrames_st0pp")
-animation = &"diagonal up"
+animation = &"front"
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
