@@ -6,7 +6,7 @@ var canvas_scale
 @onready var canvas = $Canvas
 var marker = preload("res://marker.tscn")
 var markers = {}
-var zoom = 1.5
+var zoom = 5.0
 
 func _ready() -> void:
 	set_process(false)
@@ -46,3 +46,5 @@ func _process(delta: float) -> void:
 		
 		if not player.is_alive() or (player.buffed and player.get_role() != "rat"):
 			markers[player].visible = false
+		else:
+			markers[player].visible = true

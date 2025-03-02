@@ -8,6 +8,9 @@ const MAX_STAMINA = 100
 const STAMINA_USE_DURATION = 2 # number of seconds from 100 to 0 stamina
 const STAMINA_REC_DURATION = 10 # number of seconds from 0 to 100 stamina
 const SPRINT_THRESHOLD = 40 # at least this value stamina to sprint
+const CHEESE_DROP_COOLDOWN = 10
+const BUFF_TIME = 15
+const BUFF_COOLDOWN = 35
 
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
@@ -87,12 +90,12 @@ func starter(color_to_roles):
 			can_sprint = true
 		else:
 			$Aim.enabled = false
-		return [role, self.get_node("AnimatedSprite2D").modulate]
+		return [role, self.get_node("AnimatedSprite2D").modulate, color]
 	else:
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
 		$Aim.enabled = false
-	return ["", Color(1, 1, 1)]
+	return ["", Color(1, 1, 1), ""]
 
 func disable_movement():
 	$AnimatedSprite2D.animation = "static front"
@@ -128,6 +131,12 @@ func get_stamina_value():
 	
 func get_can_sprint():
 	return can_sprint
+	
+func get_buff_progress():
+	return (buff_end - Time.get_unix_time_from_system()) * 100 / BUFF_TIME
+	
+func get_cheese_drop_cooldown():
+	return ceil(next_cheese_drop - Time.get_unix_time_from_system())
 	
 func set_aim_view_visible(b: bool):
 	$AimView.visible = b
@@ -446,11 +455,12 @@ func cheese_create_call(owner_color: String):
 		print(color + " cheese despawned")
 	
 	owner.cheese = Cheese.constructor(owner)
-	owner.next_cheese_drop = Time.get_unix_time_from_system() + 10
+	owner.next_cheese_drop = Time.get_unix_time_from_system() + CHEESE_DROP_COOLDOWN
 	
 func buff():
 	self.buffed = true
-	self.buff_end = Time.get_unix_time_from_system() + 10
+	self.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
+	self.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
 	$ViewSphere.scale = Vector2(30, 30)
 	
 func unbuff():

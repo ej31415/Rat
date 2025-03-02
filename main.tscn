@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=47 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,10 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
+[ext_resource type="Texture2D" uid="uid://d00jq3qprr4ob" path="res://assets/Cheese.PNG" id="24_kern2"]
 [ext_resource type="Script" path="res://minimap.gd" id="25_320b3"]
+[ext_resource type="Texture2D" uid="uid://cyab63vx2i11a" path="res://assets/UI/green_circle.png" id="25_geud4"]
 [ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
-[ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="26_fud3m"]
+[ext_resource type="Texture2D" uid="uid://cagfbjlpqckhe" path="res://assets/UI/minimap.png" id="28_n6ua0"]
 [ext_resource type="Texture2D" uid="uid://b81vxitxhs6k0" path="res://assets/UI/Stamina Texture.png" id="29_udgh8"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
@@ -643,6 +645,29 @@ theme_override_fonts/normal_font = ExtResource("12_63mnq")
 theme_override_font_sizes/normal_font_size = 80
 bbcode_enabled = true
 
+[node name="Cheese" type="TextureProgressBar" parent="HUD"]
+visible = false
+modulate = Color(0.804743, 0.804743, 0.804743, 1)
+offset_left = 24.0
+offset_top = 528.0
+offset_right = 124.0
+offset_bottom = 628.0
+rounded = true
+fill_mode = 4
+nine_patch_stretch = true
+texture_over = ExtResource("24_kern2")
+texture_progress = ExtResource("25_geud4")
+
+[node name="CheeseCooldown" type="RichTextLabel" parent="HUD"]
+visible = false
+offset_left = 34.0
+offset_top = 538.0
+offset_right = 114.0
+offset_bottom = 618.0
+theme_override_fonts/normal_font = ExtResource("12_63mnq")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+
 [node name="Stamina" type="TextureProgressBar" parent="HUD"]
 visible = false
 anchors_preset = 7
@@ -692,7 +717,7 @@ script = ExtResource("25_320b3")
 
 [node name="Canvas" type="TextureRect" parent="HUD/Minimap/MarginContainer"]
 layout_mode = 2
-texture = ExtResource("26_fud3m")
+texture = ExtResource("28_n6ua0")
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
 visible = false
