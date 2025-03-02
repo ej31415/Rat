@@ -23,6 +23,7 @@ var started = false
 var color = ""
 var alive = true
 var buffed = false
+var buff_end = 0
 var next_rat_kill = 0
 var sheriff_shot = false
 var next_cheese_drop = 0
@@ -203,22 +204,24 @@ func _process_sprinting(delta: float, direction: Vector2)-> Vector2:
 		if not sprinting:
 			sprinting = true
 			$SoundEffects.stop()
-		direction *= 2.0
-		$AnimatedSprite2D.speed_scale = 1.5
+		direction *= 1.8
+		$AnimatedSprite2D.speed_scale = 1.8
 		
-		stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
-		if stamina == 0:
-			can_sprint = false
+		if role == "rat":
+			stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
+			if stamina == 0:
+				can_sprint = false
 	else:
 		if sprinting:
 			sprinting = false
 			$SoundEffects.stop()
 		$AnimatedSprite2D.speed_scale = 1.0
 		
-		if not Input.is_action_pressed("SHIFT"):
-			stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
-			if stamina >= SPRINT_THRESHOLD:
-				can_sprint = true
+		if role == "rat":
+			if not Input.is_action_pressed("SHIFT"):
+				stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
+				if stamina >= SPRINT_THRESHOLD:
+					can_sprint = true
 	return direction
 
 func _physics_process(delta: float) -> void:
@@ -229,13 +232,12 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		
-		if role == "rat":
+		if role == "rat" or buffed:
 			direction = _process_sprinting(delta, direction)
-		if is_multiplayer_authority():
-			if direction:
-				velocity = direction * SPEED
-			else:
-				velocity = Vector2.ZERO
+		if direction:
+			velocity = direction * SPEED
+		else:
+			velocity = Vector2.ZERO
 		
 		move_and_slide()
 		
@@ -287,6 +289,9 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.stop()
 			if $SoundEffects.playing:
 				$SoundEffects.stream.loop = false
+	
+	if Time.get_unix_time_from_system() > buff_end:
+		self.unbuff()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
@@ -441,7 +446,13 @@ func cheese_create_call(owner_color: String):
 		print(color + " cheese despawned")
 	
 	owner.cheese = Cheese.constructor(owner)
+	owner.next_cheese_drop = Time.get_unix_time_from_system() + 10
 	
 func buff():
 	self.buffed = true
+	self.buff_end = Time.get_unix_time_from_system() + 10
 	$ViewSphere.scale = Vector2(30, 30)
+	
+func unbuff():
+	self.buffed = false
+	$ViewSphere.scale = Vector2(10, 10)

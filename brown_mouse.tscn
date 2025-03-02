@@ -99,7 +99,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"diagonal down",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -116,7 +116,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"diagonal up",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -144,7 +144,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"front",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -161,7 +161,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"gyatt",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -178,7 +178,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"left",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
