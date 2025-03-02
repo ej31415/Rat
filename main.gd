@@ -113,7 +113,7 @@ func _ready():
 		$HUD/Leaderboard/TextureRect/BrownHead.position
 	]
 	
-	$HUD/ScoreBoard/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " wins!"
+	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())
@@ -275,6 +275,11 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
+	if pts.values() == [0,0,0,0]:
+		$HUD/PointGoal.visible = true
+		$HUD/PointGoal.modulate = Color("#ffffffff")
+		fade_out_point_goal()
+	
 	var role = "PLACEHOLDER"
 	var color_player = Color(1, 1, 1)
 	for child in get_tree().get_nodes_in_group("player"):
@@ -331,7 +336,12 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
 	$HUD/Minimap/MarginContainer.set_target()
 	game_ended = false
-
+	
+func fade_out_point_goal():
+	await get_tree().create_timer(2).timeout
+	var tween := get_tree().create_tween()
+	tween.tween_property($HUD/PointGoal, "modulate", Color("#ffffff00"), 1)
+	
 func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
 	_end_game.rpc(false, false, true, false, "")
@@ -615,10 +625,10 @@ func _on_restart_timer_timeout() -> void:
 
 func _on_lb_close_button_click() -> void:
 	reset_scores()
-	_on_again_button_pressed()
 	$WinScreen/CheckBoxButton.check()
 	$WinScreen/Again.disabled = false
 	$HUD/Leaderboard.visible = false
+	_on_again_button_pressed()
 
 # TODO: connect more signals to this function
 func _on_any_button_click() -> void:

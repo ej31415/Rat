@@ -533,6 +533,23 @@ theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 20
 text = "Press [tab] for controls"
 
+[node name="PointGoal" type="Label" parent="HUD"]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -838.0
+offset_top = 168.0
+offset_right = -271.0
+offset_bottom = 228.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 40
+text = "First to XX points wins!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="ScoreBoard" type="CanvasGroup" parent="HUD"]
 visible = false
 
@@ -627,19 +644,6 @@ offset_right = 1152.0
 offset_bottom = 202.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 23
-
-[node name="PointGoal" type="Label" parent="HUD/ScoreBoard"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 980.0
-offset_top = 215.0
-offset_right = 1136.0
-offset_bottom = 240.0
-grow_horizontal = 0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 20
-text = "First to XX wins!"
 
 [node name="Gun" type="Sprite2D" parent="HUD"]
 visible = false
