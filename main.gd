@@ -26,9 +26,12 @@ var game_ended = false
 var is_host = false
 var first_started = false
 var player_disconnected = false
+var my_color = ""
 
 static var rat_killed = 0
 static var sheriff_killed = 0
+
+var quickstart_called = false
 
 func _init() -> void:
 	gray_mouse = preload("res://gray_mouse.tscn")
@@ -95,7 +98,8 @@ func _ready():
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())
-	if args.has("--quickstart"):
+	if args.has("--quickstart") and not quickstart_called:
+		quickstart_called = true
 		_quick_start() # Usage guide is immediately above the function def
 	multiplayer.server_disconnected.connect(_on_server_disconnect)
 
@@ -267,6 +271,8 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 				role = temp[0]
 			if temp[1] != Color(1, 1, 1):
 				color_player = temp[1]
+			if temp[2] != "":
+				my_color = temp[2]
 
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
@@ -279,11 +285,17 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$HUD/Objective.visible = true
 	if role == "sheriff":
 		$HUD/Gun.visible = true 
-		$HUD/Gun.modulate = Color(1,1,1)
+		$HUD/Gun.modulate = Color(1, 1, 1, 1)
 	elif role == "rat":
 		$HUD/Knife.visible = true
+		$HUD/Knife.modulate = Color(1, 1, 1, 1)
 		$HUD/KnifeCooldown.visible = true
 		$HUD/Stamina.visible = true
+		$HUD/Minimap.visible = true
+	elif role == "mouse":
+		$HUD/Cheese.visible = true
+		$HUD/Cheese.modulate = Color(1, 1, 1, 1)
+		$HUD/CheeseCooldown.visible = true
 	
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/Background.visible = false
@@ -297,6 +309,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$AudioStreamPlayer.stream = mice_active_music
 	$AudioStreamPlayer.play()
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
+	$HUD/Minimap/MarginContainer.set_target()
 	game_ended = false
 
 func _on_timer_timeout() -> void:
@@ -315,6 +328,9 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Knife.visible = false
 	$HUD/KnifeCooldown.visible = false
 	$HUD/Stamina.visible = false
+	$HUD/Minimap.visible = false
+	$HUD/Cheese.visible = false
+	$HUD/CheeseCooldown.visible = false
 	_show_roles()
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
@@ -406,7 +422,6 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var cooldown = -1
 	if player_disconnected and not game_ended:
 		_end_game.rpc(false, false, false, true, "")
 	for player in get_tree().get_nodes_in_group("player"):
@@ -425,7 +440,14 @@ func _process(delta: float) -> void:
 			$HUD/Gun.modulate = Color(60/255.0,60/255.0,60/255.0)
 			
 		# Check rat kill time
-		cooldown = max(cooldown, player.get_kill_cooldown())
+		if player.get_color() == my_color:
+			var cooldown = player.get_kill_cooldown()
+			if cooldown > 0:
+				$HUD/Knife.modulate=Color(60/255.0,60/255.0,60/255.0)
+				$HUD/KnifeCooldown.text = "[center]" + str(cooldown)
+			else:
+				$HUD/Knife.modulate=Color(1, 1, 1)
+				$HUD/KnifeCooldown.clear()
 		
 		# Check stamina
 		if $HUD/Stamina.visible and player.get_role() == "rat":
@@ -434,16 +456,28 @@ func _process(delta: float) -> void:
 				$HUD/Stamina.tint_progress = Color("#ffffff")
 			else:
 				$HUD/Stamina.tint_progress = Color("#f71f00")
+		
+		# Check cheese status
+		if player.get_color() == my_color and player.get_role() != "rat" and not game_ended:
+			var buff_progress_value = player.get_buff_progress()
+			if buff_progress_value > 0:
+				$HUD/Cheese.modulate = Color(1, 1, 1, 1)
+				$HUD/Cheese.visible = true
+				$HUD/Cheese.value = buff_progress_value
+			else:
+				if player.get_role() == "mouse":
+					var cooldown = player.get_cheese_drop_cooldown()
+					if cooldown > 0:
+						$HUD/Cheese.modulate=Color(60/255.0,60/255.0,60/255.0)
+						$HUD/CheeseCooldown.text = "[center]" + str(cooldown)
+					else:
+						$HUD/Cheese.modulate=Color(1, 1, 1)
+						$HUD/CheeseCooldown.clear()
+				else:
+					$HUD/Cheese.visible = false
 	
 	if rat_killed + sheriff_killed == 3 and not game_ended:
 		_end_game.rpc(false, false, false, false, "")
-		
-	if cooldown > 0:
-		$HUD/Knife.modulate=Color(60/255.0,60/255.0,60/255.0)
-		$HUD/KnifeCooldown.text = "[center]" + str(cooldown)
-	else:
-		$HUD/Knife.modulate=Color(1, 1, 1)
-		$HUD/KnifeCooldown.clear()
 		
 	if Input.is_action_just_pressed("HELP"):
 		$HelpControl.visible = !$HelpControl.visible
@@ -454,8 +488,8 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
 		$HelpControl/Right.emit_signal("button_down")
 		
-	#if Input.is_action_just_pressed("TOGGLE LIGHT"):
-		#$Darkness.visible = !$Darkness.visible
+	if Input.is_action_just_pressed("TOGGLE LIGHT"):
+		$Darkness.visible = !$Darkness.visible
 	
 	if is_host and game_ended:
 		refresh_play_again_button()
@@ -497,6 +531,7 @@ func show_title_menu() -> void:
 	$StartMenu/ip.visible = true
 	
 	$AudioStreamPlayer.stream = title_sound
+	$AudioStreamPlayer.stream.loop = true
 	$AudioStreamPlayer.play()
 
 func refresh_play_again_button() -> void:
