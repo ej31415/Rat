@@ -460,10 +460,11 @@ func _process(delta: float) -> void:
 		# Check cheese status
 		if player.get_color() == my_color and player.get_role() != "rat" and not game_ended:
 			var buff_progress_value = player.get_buff_progress()
+			$HUD/Cheese.value = buff_progress_value
 			if buff_progress_value > 0:
 				$HUD/Cheese.modulate = Color(1, 1, 1, 1)
 				$HUD/Cheese.visible = true
-				$HUD/Cheese.value = buff_progress_value
+				$HUD/CheeseCooldown.clear()
 			else:
 				if player.get_role() == "mouse":
 					var cooldown = player.get_cheese_drop_cooldown()
