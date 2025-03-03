@@ -68,11 +68,15 @@ func starter(color_to_roles):
 	if ghost_instance and is_instance_valid(ghost_instance):
 		ghost_instance.queue_free()
 		ghost_instance = null
-
+	
+	var now = Time.get_unix_time_from_system()
+	next_rat_kill = now + RAT_COOLDOWN / 2
+	next_cheese_drop = now
+	buff_end = now - 1
+	
 	role = color_to_roles[color]
 	alive = true
 	buffed = false
-	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
@@ -208,13 +212,11 @@ func set_vision():
 		_rotation_tween(180)
 		$Aim.rotation_degrees = -90
 
-func _process_sprinting(delta: float, direction: Vector2)-> Vector2:
-	if Input.is_action_pressed("SHIFT") and can_sprint:
+func _process_sprinting(delta: float, direction: Vector2) -> Vector2:
+	if Input.is_action_pressed("SHIFT") and ((role == "rat" and can_sprint) or buffed):
 		if not sprinting:
 			sprinting = true
 			$SoundEffects.stop()
-		direction *= 1.8
-		$AnimatedSprite2D.speed_scale = 1.8
 		
 		if role == "rat":
 			stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
@@ -224,13 +226,19 @@ func _process_sprinting(delta: float, direction: Vector2)-> Vector2:
 		if sprinting:
 			sprinting = false
 			$SoundEffects.stop()
-		$AnimatedSprite2D.speed_scale = 1.0
 		
 		if role == "rat":
 			if not Input.is_action_pressed("SHIFT"):
 				stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
 				if stamina >= SPRINT_THRESHOLD:
 					can_sprint = true
+			
+	if sprinting:
+		direction *= 1.8
+		$AnimatedSprite2D.speed_scale = 1.8
+	else:
+		$AnimatedSprite2D.speed_scale = 1.0
+		
 	return direction
 
 func _physics_process(delta: float) -> void:
@@ -241,8 +249,7 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		
-		if role == "rat" or buffed:
-			direction = _process_sprinting(delta, direction)
+		direction = _process_sprinting(delta, direction)
 		if direction:
 			velocity = direction * SPEED
 		else:
@@ -461,8 +468,12 @@ func buff():
 	self.buffed = true
 	self.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
 	self.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
-	$ViewSphere.scale = Vector2(30, 30)
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property($ViewSphere, "scale", Vector2(30, 30), 0.5)
 	
 func unbuff():
 	self.buffed = false
-	$ViewSphere.scale = Vector2(10, 10)
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)

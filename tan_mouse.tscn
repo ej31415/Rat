@@ -164,7 +164,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"gyatt",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -181,7 +181,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"left",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -652,7 +652,7 @@ light_mask = 8
 material = SubResource("CanvasItemMaterial_v714w")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_31bpd")
-animation = &"diagonal up"
+animation = &"gyatt"
 frame = 1
 
 [node name="Gun" type="AnimatedSprite2D" parent="."]
