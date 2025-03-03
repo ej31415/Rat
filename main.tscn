@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=65 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://btmm4fokcnqu2" path="res://assets/Post Game/Post game 1st place and lighting.png" id="30_k7k5v"]
 [ext_resource type="Texture2D" uid="uid://bbeq2oxv7igsh" path="res://assets/Post Game/Post game 2nd place.png" id="31_hrjfd"]
 [ext_resource type="Texture2D" uid="uid://cdcnp66kqrdun" path="res://assets/Post Game/Post game 3rd place.png" id="32_48wme"]
+[ext_resource type="Texture2D" uid="uid://bjww7ve44ra1y" path="res://assets/Post Game/Post game cry grey.png" id="33_rnyhg"]
+[ext_resource type="Texture2D" uid="uid://bnpmg8lorps8i" path="res://assets/Post Game/Post game cry color.png" id="34_2tb2k"]
 [ext_resource type="Texture2D" uid="uid://dytynrtqq3uvy" path="res://assets/Help Menu/Controller.png" id="34_bj2iu"]
 [ext_resource type="Texture2D" uid="uid://dmnhyfp87j2nm" path="res://assets/Help Menu/Cheese Placement.png" id="35_bxxan"]
 [ext_resource type="Texture2D" uid="uid://cftvesy3xg3tf" path="res://assets/Help Menu/Trophy.png" id="35_w8vm6"]
@@ -816,10 +818,10 @@ vertical_alignment = 1
 
 [node name="PointsFour" type="Label" parent="HUD/Leaderboard/TextureRect"]
 layout_mode = 0
-offset_left = 923.0
-offset_top = 503.0
-offset_right = 1059.0
-offset_bottom = 543.0
+offset_left = 931.0
+offset_top = 294.0
+offset_right = 1067.0
+offset_bottom = 334.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 31
 text = "nn pts"
@@ -863,6 +865,14 @@ expand_mode = 1
 offset_right = 1152.0
 offset_bottom = 574.0
 mouse_filter = 2
+texture = ExtResource("33_rnyhg")
+expand_mode = 1
+
+[node name="Tears" type="TextureRect" parent="HUD/Leaderboard"]
+offset_right = 1152.0
+offset_bottom = 574.0
+mouse_filter = 2
+texture = ExtResource("34_2tb2k")
 expand_mode = 1
 
 [node name="HelpControl" type="CanvasLayer" parent="."]
@@ -1237,7 +1247,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center][shift][/center]"
+text = "[center][space][/center]"
 
 [node name="Direction5" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
@@ -1253,7 +1263,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center][left click][/center]"
+text = "[center][E][/center]"
 
 [node name="Direction6" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
@@ -1340,7 +1350,7 @@ offset_bottom = 344.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]The mice (not sheriff) can drop cheese (left click). The cheese will quickly disappear if not in the owner's viewsphere.[/center]"
+text = "[center]The mice (not sheriff) can drop cheese (E). The cheese will quickly disappear if not in the owner's viewsphere.[/center]"
 scroll_active = false
 
 [node name="CooldownImage" type="TextureRect" parent="HelpControl/Cheese1"]
@@ -1408,7 +1418,7 @@ offset_bottom = 422.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]When a mouse (including the sheriff) consumes the cheese, the owner and the consumer will gain a series of buffs for a short time: unlimited sprint ability (shift), larger viewsphere, and invisibility from the rat's radar.
+text = "[center]When a mouse (including the sheriff) consumes the cheese, the owner and the consumer will gain a series of buffs for a short time: unlimited sprint ability (space), larger viewsphere, and invisibility from the rat's radar.
 
 The rat can steal the cheese but does not gain any buffs. [/center]"
 scroll_active = false
@@ -1452,7 +1462,7 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "[center]The rat must kill all  mice or stop them from escaping in time.
 
-The rat can sprint for short periods and has a tracker on all the mice![/center]"
+The rat can sprint (space) for short periods and has a tracker on all the mice![/center]"
 scroll_active = false
 
 [node name="Knife" type="CanvasGroup" parent="HelpControl"]
@@ -1550,9 +1560,9 @@ offset_bottom = 406.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]The rat can sprint by holding (shift) but not indefinitely. 
+text = "[center]The rat can sprint by holding (space) but not indefinitely. 
 
-Stamina cannot replenish when holding (shift). If stamina is depleted, the rat cannot sprint until the bar turns green.[/center]"
+Stamina cannot replenish when holding (space). If stamina is depleted, the rat cannot sprint until the bar turns green.[/center]"
 scroll_active = false
 
 [node name="Sheriff" type="CanvasGroup" parent="HelpControl"]
@@ -1592,7 +1602,7 @@ offset_bottom = 400.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]The sheriff is one of the mice, with a special job to shoot the rat.
+text = "[center]The sheriff is one of the mice, with a special job to shoot (E) the rat.
 
 The sheriff can escape the maze too but will get more points by killing the rat.[/center]"
 scroll_active = false
@@ -1815,8 +1825,8 @@ text = "Table of Contents"
 [connection signal="button_up" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_button_up"]
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
-[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
+[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Controller" to="HelpControl" method="_on_controller_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Scoring" to="HelpControl" method="_on_scoring_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Cheese" to="HelpControl" method="_on_cheese_button_down"]
