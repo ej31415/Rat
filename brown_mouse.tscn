@@ -99,7 +99,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"diagonal down",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -116,7 +116,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"diagonal up",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -144,7 +144,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"front",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -161,7 +161,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"gyatt",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -178,7 +178,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"left",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -615,7 +615,7 @@ texture = SubResource("GradientTexture2D_60pgy")
 rotation = -1.5708
 scale = Vector2(1.5, 1.2)
 color = Color(0.728822, 0.728822, 0.728822, 1)
-energy = 2.0
+energy = 1.8
 blend_mode = 2
 range_z_max = 0
 range_item_cull_mask = 46

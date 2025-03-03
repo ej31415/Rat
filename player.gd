@@ -8,6 +8,9 @@ const MAX_STAMINA = 100
 const STAMINA_USE_DURATION = 2 # number of seconds from 100 to 0 stamina
 const STAMINA_REC_DURATION = 10 # number of seconds from 0 to 100 stamina
 const SPRINT_THRESHOLD = 40 # at least this value stamina to sprint
+const CHEESE_DROP_COOLDOWN = 10
+const BUFF_TIME = 15
+const BUFF_COOLDOWN = 35
 
 static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
@@ -22,8 +25,13 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var buffed = false
+var buff_end = 0
 var next_rat_kill = 0
 var sheriff_shot = false
+var next_cheese_drop = 0
+var cheese = null
+
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
 var idx: int
@@ -43,6 +51,7 @@ func _init() -> void:
 	role = roles[idx]
 	roles.pop_at(idx)
 	alive = true
+	buffed = false
 	started = false
 	ghost_scene = preload("res://ghost_mouse.tscn")
 	
@@ -64,10 +73,15 @@ func starter(color_to_roles):
 	if ghost_instance and is_instance_valid(ghost_instance):
 		ghost_instance.queue_free()
 		ghost_instance = null
-
+	
+	var now = Time.get_unix_time_from_system()
+	next_rat_kill = now + RAT_COOLDOWN / 2
+	next_cheese_drop = now
+	buff_end = now - 1
+	
 	role = color_to_roles[color]
 	alive = true
-	next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN / 2
+	buffed = false
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
@@ -85,12 +99,12 @@ func starter(color_to_roles):
 			can_sprint = true
 		else:
 			$Aim.enabled = false
-		return [role, self.get_node("AnimatedSprite2D").modulate]
+		return [role, self.get_node("AnimatedSprite2D").modulate, color]
 	else:
 		$Vision.enabled = false
 		$ViewSphere.enabled = false
 		$Aim.enabled = false
-	return ["", Color(1, 1, 1)]
+	return ["", Color(1, 1, 1), ""]
 
 func disable_movement():
 	$AnimatedSprite2D.animation = "static front"
@@ -111,6 +125,9 @@ func get_role():
 
 func get_color():
 	return color
+
+func get_color_prop():
+	return $AnimatedSprite2D.modulate
 	
 func get_shot():
 	return sheriff_shot
@@ -124,7 +141,13 @@ func get_stamina_value():
 func get_can_sprint():
 	return can_sprint
 	
-func set_aim_view_visble(b: bool):
+func get_buff_progress():
+	return (buff_end - Time.get_unix_time_from_system()) * 100 / BUFF_TIME
+	
+func get_cheese_drop_cooldown():
+	return ceil(next_cheese_drop - Time.get_unix_time_from_system())
+	
+func set_aim_view_visible(b: bool):
 	$AimView.visible = b
 	
 func is_alive():
@@ -194,27 +217,33 @@ func set_vision():
 		_rotation_tween(180)
 		$Aim.rotation_degrees = -90
 
-func _process_sprinting(delta: float, direction: Vector2)-> Vector2:
-	if Input.is_action_pressed("SHIFT") and can_sprint:
+func _process_sprinting(delta: float, direction: Vector2) -> Vector2:
+	if Input.is_action_pressed("SHIFT") and ((role == "rat" and can_sprint) or buffed):
 		if not sprinting:
 			sprinting = true
 			$SoundEffects.stop()
-		direction *= 2.0
-		$AnimatedSprite2D.speed_scale = 1.5
 		
-		stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
-		if stamina == 0:
-			can_sprint = false
+		if role == "rat":
+			stamina = max(0, stamina - MAX_STAMINA / STAMINA_USE_DURATION * delta)
+			if stamina == 0:
+				can_sprint = false
 	else:
 		if sprinting:
 			sprinting = false
 			$SoundEffects.stop()
+		
+		if role == "rat":
+			if not Input.is_action_pressed("SHIFT"):
+				stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
+				if stamina >= SPRINT_THRESHOLD:
+					can_sprint = true
+			
+	if sprinting:
+		direction *= 1.8
+		$AnimatedSprite2D.speed_scale = 1.8
+	else:
 		$AnimatedSprite2D.speed_scale = 1.0
 		
-		if not Input.is_action_pressed("SHIFT"):
-			stamina = min(MAX_STAMINA, stamina + MAX_STAMINA / STAMINA_REC_DURATION * delta)
-			if stamina >= SPRINT_THRESHOLD:
-				can_sprint = true
 	return direction
 
 func _physics_process(delta: float) -> void:
@@ -225,13 +254,11 @@ func _physics_process(delta: float) -> void:
 	if is_multiplayer_authority() and started:
 		var direction := Input.get_vector("LEFT", "RIGHT", "UP", "DOWN").normalized()
 		
-		if role == "rat":
-			direction = _process_sprinting(delta, direction)
-		if is_multiplayer_authority():
-			if direction:
-				velocity = direction * SPEED
-			else:
-				velocity = Vector2.ZERO
+		direction = _process_sprinting(delta, direction)
+		if direction:
+			velocity = direction * SPEED
+		else:
+			velocity = Vector2.ZERO
 		
 		move_and_slide()
 		
@@ -283,6 +310,9 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.stop()
 			if $SoundEffects.playing:
 				$SoundEffects.stream.loop = false
+	
+	if Time.get_unix_time_from_system() > buff_end:
+		self.unbuff()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
@@ -312,7 +342,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.play()
 				if !set_cooldown:
 					next_rat_kill = Time.get_unix_time_from_system() + ceil(RAT_COOLDOWN / 4)
-			elif role == "sheriff":
+			if role == "sheriff":
 				var target = $Aim.get_collider()
 				if sheriff_shot:
 					return
@@ -331,6 +361,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.stream = shot_sound
 				$SoundEffects.stream.loop = false
 				$SoundEffects.play()
+			if role == "mouse":
+				if Time.get_unix_time_from_system() < next_cheese_drop:
+					print(color + " on cheese drop cooldown")
+					return
+				
+				cheese_create_call.rpc(color)
 
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
@@ -415,6 +451,37 @@ func add_kill(killer: String):
 		Main.rat_killed += 1
 	if killer == "sheriff":
 		Main.sheriff_killed += 1
+		
+@rpc("call_local", "reliable")
+func cheese_create_call(owner_color: String):
+	# Search for owner node
+	var owner = null
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_color") and player.get_color() == owner_color:
+			owner = player
+	if owner == null:
+		print("cheese constructor cannot find owner")
+	
+	if owner.cheese != null:
+		owner.cheese.queue_free()
+		print(color + " cheese despawned")
+	
+	owner.cheese = Cheese.constructor(owner)
+	owner.next_cheese_drop = Time.get_unix_time_from_system() + CHEESE_DROP_COOLDOWN
+	
+func buff():
+	self.buffed = true
+	self.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
+	self.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property($ViewSphere, "scale", Vector2(30, 30), 0.5)
+	
+func unbuff():
+	self.buffed = false
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)
 
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
