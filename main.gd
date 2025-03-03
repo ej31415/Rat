@@ -21,7 +21,7 @@ var color_to_pts_label = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var color_to_code = {}
-var color_to_lbhead = {}
+var lb_sprites = []
 var id_to_color = {}
 var role_to_desc = {}
 var game_ended = false
@@ -32,9 +32,8 @@ var my_color = ""
 
 static var rat_killed = 0
 static var sheriff_killed = 0
-var lbhead_positions := []
 
-var POINT_THRESHOLD := 11
+var POINT_THRESHOLD := 3
 
 var quickstart_called = false
 
@@ -95,23 +94,17 @@ func _ready():
 		"blue": Color("#0069ed"),
 		"green": Color("#48ac4f")
 	}
-	color_to_lbhead = {
-		"gray": $HUD/Leaderboard/TextureRect/GrayHead,
-		"sb": $HUD/Leaderboard/TextureRect/SBHead,
-		"tan": $HUD/Leaderboard/TextureRect/TanHead,
-		"brown": $HUD/Leaderboard/TextureRect/BrownHead
-	}
+	lb_sprites = [
+		$HUD/Leaderboard/TextureRect/FirstMouse,
+		$HUD/Leaderboard/TextureRect/SecondMouse,
+		$HUD/Leaderboard/TextureRect/ThirdMouse,
+		$HUD/Leaderboard/TextureRect/FourthMouse
+	]
 	role_to_desc = {
 		"mouse": "Escape!",
 		"sheriff": "Kill the rat or escape!",
 		"rat": "Kill or delay the mice!"
 	}
-	lbhead_positions = [
-		$HUD/Leaderboard/TextureRect/GrayHead.position,
-		$HUD/Leaderboard/TextureRect/SBHead.position,
-		$HUD/Leaderboard/TextureRect/TanHead.position,
-		$HUD/Leaderboard/TextureRect/BrownHead.position
-	]
 	
 	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
 
@@ -365,9 +358,15 @@ func show_leaderboard():
 		$HUD/Leaderboard/TextureRect/PointsFour
 	]
 	
+	var color_to_modulate = {}
+	for child in get_tree().get_nodes_in_group("player"):
+		if child.has_node("AnimatedSprite2D"):
+			color_to_modulate[child.color] = child.get_node("AnimatedSprite2D").modulate
+			
 	for i in range(len(lb)):
-		color_to_lbhead[lb[i][0]].position = lbhead_positions[i]
+		lb_sprites[i].modulate = color_to_modulate[lb[i][0]]
 		pt_labels[i].text = str(color_to_pts[lb[i][0]]) + " pts"
+	$HUD/Leaderboard/Gradient.modulate = color_to_modulate[lb[0][0]]
 	
 	if is_host:
 		$HUD/Leaderboard/TextureRect/Button.disabled = false
