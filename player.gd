@@ -493,7 +493,7 @@ func _process(delta: float) -> void:
 	else:
 		print("no effect")
 
-@rpc("call_remote", "unreliable")
+@rpc("call_remote", "unreliable_ordered")
 func send_data(data : PackedVector2Array):
 	for i in range(0,1024):
 		playback.push_frame(data[i])
