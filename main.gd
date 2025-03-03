@@ -33,7 +33,7 @@ var my_color = ""
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 3
+var POINT_THRESHOLD := 11
 
 var quickstart_called = false
 
@@ -95,10 +95,10 @@ func _ready():
 		"green": Color("#48ac4f")
 	}
 	lb_sprites = [
-		$HUD/Leaderboard/TextureRect/FirstMouse,
-		$HUD/Leaderboard/TextureRect/SecondMouse,
-		$HUD/Leaderboard/TextureRect/ThirdMouse,
-		$HUD/Leaderboard/TextureRect/FourthMouse
+		$HUD/Leaderboard/FirstMouse,
+		$HUD/Leaderboard/SecondMouse,
+		$HUD/Leaderboard/ThirdMouse,
+		$HUD/Leaderboard/FourthMouse
 	]
 	role_to_desc = {
 		"mouse": "Escape!",
@@ -357,16 +357,10 @@ func show_leaderboard():
 		$HUD/Leaderboard/TextureRect/PointsThree,
 		$HUD/Leaderboard/TextureRect/PointsFour
 	]
-	
-	var color_to_modulate = {}
-	for child in get_tree().get_nodes_in_group("player"):
-		if child.has_node("AnimatedSprite2D"):
-			color_to_modulate[child.color] = child.get_node("AnimatedSprite2D").modulate
 			
 	for i in range(len(lb)):
-		lb_sprites[i].modulate = color_to_modulate[lb[i][0]]
+		lb_sprites[i].modulate = color_to_code[color_to_color[lb[i][0]]]
 		pt_labels[i].text = str(color_to_pts[lb[i][0]]) + " pts"
-	$HUD/Leaderboard/Gradient.modulate = color_to_modulate[lb[0][0]]
 	
 	if is_host:
 		$HUD/Leaderboard/TextureRect/Button.disabled = false
