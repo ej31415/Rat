@@ -33,7 +33,7 @@ var my_color = ""
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 11
+var POINT_THRESHOLD := 1
 
 var quickstart_called = false
 
@@ -107,6 +107,8 @@ func _ready():
 	}
 	
 	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
+	
+	$output.add_to_group("output")
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())
@@ -480,6 +482,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			$WinScreen/Again.disabled = true
 			await get_tree().create_timer(2).timeout
 			show_leaderboard()
+			break
 	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
@@ -584,9 +587,11 @@ func _on_skip_pressed() -> void:
 	$SoundEffects.play()
 	$StartMenu/VideoContainer/TitleSequence.stop()
 	show_title_menu()
+	$HelpControl.visible = true
 
 func _on_title_sequence_finished() -> void:
 	show_title_menu()
+	$HelpControl.visible = true
 
 func show_title_menu() -> void:
 	$StartMenu/VideoContainer.visible = false

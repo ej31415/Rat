@@ -34,6 +34,11 @@ var cheese = null
 
 var ghost_instance: CharacterBody2D
 var ghost_scene: PackedScene
+var idx: int
+var effect: AudioEffectCapture
+var playback: AudioStreamGeneratorPlayback
+var input
+var output
 
 var death_sound
 var knife_sound
@@ -59,7 +64,7 @@ func _init() -> void:
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
 
-func _ready():
+func _pseudo_ready():
 	add_to_group("player")
 	if role == "":
 		print("role not set")
@@ -477,3 +482,18 @@ func unbuff():
 	var tween := get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN)
 	tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)
+
+func _process(delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
+	if effect:
+		if effect.can_get_buffer(1024) and playback.can_push_buffer(1024):
+			send_data.rpc(effect.get_buffer(1024))
+		effect.clear_buffer()
+	else:
+		print("no effect")
+
+@rpc("call_remote", "unreliable")
+func send_data(data : PackedVector2Array):
+	for i in range(0,1024):
+		playback.push_frame(data[i])

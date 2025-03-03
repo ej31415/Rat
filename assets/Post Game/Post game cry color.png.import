@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c37585kg3io23"
-path="res://.godot/imported/Post game 4th place.png-ebca204c25805c00b67fc58e97bf134f.ctex"
+uid="uid://bnpmg8lorps8i"
+path="res://.godot/imported/Post game cry color.png-540b17ff0835b8f9384c63966af21a89.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Post Game/Post game 4th place.png"
-dest_files=["res://.godot/imported/Post game 4th place.png-ebca204c25805c00b67fc58e97bf134f.ctex"]
+source_file="res://assets/Post Game/Post game cry color.png"
+dest_files=["res://.godot/imported/Post game cry color.png-540b17ff0835b8f9384c63966af21a89.ctex"]
 
 [params]
 
