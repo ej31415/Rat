@@ -33,7 +33,7 @@ var my_color = ""
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 11
+var POINT_THRESHOLD := 1
 
 var quickstart_called = false
 
@@ -586,9 +586,11 @@ func _on_skip_pressed() -> void:
 	$SoundEffects.play()
 	$StartMenu/VideoContainer/TitleSequence.stop()
 	show_title_menu()
+	$HelpControl.visible = true
 
 func _on_title_sequence_finished() -> void:
 	show_title_menu()
+	$HelpControl.visible = true
 
 func show_title_menu() -> void:
 	$StartMenu/VideoContainer.visible = false
