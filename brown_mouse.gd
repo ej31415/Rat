@@ -7,11 +7,11 @@ func _ready() -> void:
 	print("initialized brown mouse")
 
 func setup_audio():
-	input = $input
 	for child in get_tree().get_nodes_in_group("output"):
 		if child.has_method("get_stream_playback"):
 			output = child
 	if is_multiplayer_authority():
+		input = $input
 		input.stream = AudioStreamMicrophone.new()
 		input.play()
 		idx = AudioServer.get_bus_index("Record")
