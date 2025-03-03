@@ -13,6 +13,7 @@ var scrn_sheriff; var scrn_sheriff_addon
 var scrn_rat_kills; var scrn_rat_kills_addon
 var scrn_timeout; var scrn_timeout_addon
 var gray_head; var sb_head; var tan_head; var brown_head
+var knife; var bloody_knife
 
 var mice = []
 var color_to_role = {}
@@ -43,6 +44,8 @@ func _init() -> void:
 	sb_mouse = preload("res://sb_mouse.tscn")
 	tan_mouse = preload("res://tan_mouse.tscn")
 	mice = [[gray_mouse, "gray"], [brown_mouse, "brown"], [sb_mouse, "sb"], [tan_mouse, "tan"]]
+	knife = preload("res://assets/UI/Knife icon no blood.png")
+	bloody_knife = preload("res://assets/UI/Knife icon blood.png")
 	
 	_load_music()
 	_load_win_screens()
@@ -547,6 +550,10 @@ func _process(delta: float) -> void:
 			else:
 				$HUD/Knife.modulate=Color(1, 1, 1)
 				$HUD/KnifeCooldown.clear()
+			if rat_killed > 0:
+				$HUD/Knife.texture = bloody_knife
+			else:
+				$HUD/Knife.texture = knife
 		
 		# Check stamina
 		if $HUD/Stamina.visible and player.get_role() == "rat":
