@@ -482,6 +482,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			$WinScreen/Again.disabled = true
 			await get_tree().create_timer(2).timeout
 			show_leaderboard()
+			break
 	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
