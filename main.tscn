@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=63 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -28,6 +28,18 @@
 [ext_resource type="Texture2D" uid="uid://btmm4fokcnqu2" path="res://assets/Post Game/Post game 1st place and lighting.png" id="30_k7k5v"]
 [ext_resource type="Texture2D" uid="uid://bbeq2oxv7igsh" path="res://assets/Post Game/Post game 2nd place.png" id="31_hrjfd"]
 [ext_resource type="Texture2D" uid="uid://cdcnp66kqrdun" path="res://assets/Post Game/Post game 3rd place.png" id="32_48wme"]
+[ext_resource type="Texture2D" uid="uid://dytynrtqq3uvy" path="res://assets/Help Menu/Controller.png" id="34_bj2iu"]
+[ext_resource type="Texture2D" uid="uid://dmnhyfp87j2nm" path="res://assets/Help Menu/Cheese Placement.png" id="35_bxxan"]
+[ext_resource type="Texture2D" uid="uid://cftvesy3xg3tf" path="res://assets/Help Menu/Trophy.png" id="35_w8vm6"]
+[ext_resource type="Texture2D" uid="uid://cvjttityvquyy" path="res://assets/UI/Knife icon blood.png" id="36_ul836"]
+[ext_resource type="Texture2D" uid="uid://e827ismefrcr" path="res://assets/Help Menu/Cheese Cooldown.png" id="36_ytkuc"]
+[ext_resource type="Texture2D" uid="uid://oy4ggvluwl8" path="res://assets/Help Menu/Larger Viewsphere.png" id="37_tdlq1"]
+[ext_resource type="Texture2D" uid="uid://bwhfptw1sf7l8" path="res://assets/Help Menu/Cheese Minimap.png" id="38_036f3"]
+[ext_resource type="Texture2D" uid="uid://dl7bbbj0ev143" path="res://assets/Help Menu/Knife Cooldown.png" id="40_6saq5"]
+[ext_resource type="Texture2D" uid="uid://db3commo1c37o" path="res://assets/Help Menu/Stamina Bar.png" id="40_cga5u"]
+[ext_resource type="Texture2D" uid="uid://crr66dpr1d2n7" path="res://assets/Help Menu/Depleted Stamina.png" id="41_pjt7u"]
+[ext_resource type="Texture2D" uid="uid://joaqq473urwg" path="res://assets/Help Menu/Dead Mouse.png" id="43_ahkfk"]
+[ext_resource type="Texture2D" uid="uid://7nbvtxfsenxq" path="res://assets/Help Menu/Sheriff Target.png" id="43_v0co3"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
@@ -326,6 +338,7 @@ theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "waiting for host"
 
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("10_al2ht")
 
 [node name="Panel" type="Panel" parent="TimerCanvasLayer"]
@@ -523,7 +536,7 @@ offset_bottom = 33.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 20
-text = "Press [tab] for controls"
+text = "Press [tab] for help manual"
 
 [node name="PointGoal" type="Label" parent="HUD"]
 visible = false
@@ -872,7 +885,255 @@ grow_vertical = 2
 color = Color(0.340339, 0.340339, 0.340339, 1)
 metadata/_edit_use_anchors_ = true
 
+[node name="TableOfContents" type="CanvasGroup" parent="HelpControl"]
+position = Vector2(0, -38)
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/TableOfContents"]
+offset_left = 496.0
+offset_top = 192.0
+offset_right = 656.0
+offset_bottom = 240.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Manual[/center]"
+
+[node name="Controller" type="TextureButton" parent="HelpControl/TableOfContents"]
+offset_left = 239.0
+offset_top = 230.0
+offset_right = 304.0
+offset_bottom = 295.0
+texture_normal = ExtResource("34_bj2iu")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Controller"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="Scoring" type="TextureButton" parent="HelpControl/TableOfContents"]
+self_modulate = Color(0.593134, 0.593134, 0.593134, 1)
+offset_left = 239.0
+offset_top = 310.0
+offset_right = 304.0
+offset_bottom = 375.0
+texture_normal = ExtResource("35_w8vm6")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Scoring"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -29.5
+offset_top = -22.0
+offset_right = 29.5
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Scoring"
+horizontal_alignment = 1
+
+[node name="Cheese" type="TextureButton" parent="HelpControl/TableOfContents"]
+self_modulate = Color(0.903598, 0.903598, 0.903598, 1)
+offset_left = 352.0
+offset_top = 390.0
+offset_right = 415.0
+offset_bottom = 454.0
+texture_normal = ExtResource("24_kern2")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Cheese"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Cheese"
+horizontal_alignment = 1
+
+[node name="Knife" type="TextureButton" parent="HelpControl/TableOfContents"]
+offset_left = 503.0
+offset_top = 391.0
+offset_right = 568.0
+offset_bottom = 456.0
+texture_normal = ExtResource("36_ul836")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Knife"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Knife
+"
+horizontal_alignment = 1
+
+[node name="Stamina" type="TextureButton" parent="HelpControl/TableOfContents"]
+self_modulate = Color(0.843184, 0.843184, 0.843184, 1)
+offset_left = 584.0
+offset_top = 391.0
+offset_right = 649.0
+offset_bottom = 456.0
+texture_normal = ExtResource("29_udgh8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Stamina"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Stamina"
+horizontal_alignment = 1
+
+[node name="Gun" type="TextureButton" parent="HelpControl/TableOfContents"]
+offset_left = 736.0
+offset_top = 391.0
+offset_right = 801.0
+offset_bottom = 456.0
+texture_normal = ExtResource("93_jk6us")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Gun"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Gun
+"
+horizontal_alignment = 1
+
+[node name="Mouse" type="TextureButton" parent="HelpControl/TableOfContents"]
+self_modulate = Color(0.713726, 0.584314, 0, 1)
+offset_left = 320.0
+offset_top = 247.0
+offset_right = 448.0
+offset_bottom = 376.0
+texture_normal = ExtResource("26_csx1t")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Mouse"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Mouse"
+horizontal_alignment = 1
+
+[node name="Rat" type="TextureButton" parent="HelpControl/TableOfContents"]
+self_modulate = Color(1, 0.368627, 0.376471, 1)
+offset_left = 511.0
+offset_top = 247.0
+offset_right = 639.0
+offset_bottom = 376.0
+texture_normal = ExtResource("26_csx1t")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Rat"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Rat"
+horizontal_alignment = 1
+
+[node name="Sheriff" type="TextureButton" parent="HelpControl/TableOfContents"]
+self_modulate = Color(0, 0.411765, 0.929412, 1)
+offset_left = 704.0
+offset_top = 247.0
+offset_right = 832.0
+offset_bottom = 376.0
+texture_normal = ExtResource("26_csx1t")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="HelpControl/TableOfContents/Sheriff"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Sheriff"
+horizontal_alignment = 1
+
 [node name="Controls" type="CanvasGroup" parent="HelpControl"]
+visible = false
 position = Vector2(0, -38)
 
 [node name="Title" type="RichTextLabel" parent="HelpControl/Controls"]
@@ -977,7 +1238,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center][Shift] (rat only)[/center]"
+text = "[center][shift][/center]"
 
 [node name="Direction5" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
@@ -993,7 +1254,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center][Left click] (rat and sheriff only)[/center]"
+text = "[center][left click][/center]"
 
 [node name="Direction6" type="RichTextLabel" parent="HelpControl/Controls/GridContainer"]
 custom_minimum_size = Vector2(256, 30)
@@ -1001,7 +1262,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]kill[/center]"
+text = "[center]cast ability[/center]"
 
 [node name="Mouse" type="CanvasGroup" parent="HelpControl"]
 visible = false
@@ -1012,9 +1273,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 496.0
+offset_left = 384.0
 offset_top = 154.0
-offset_right = 656.0
+offset_right = 768.0
 offset_bottom = 202.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1043,6 +1304,116 @@ bbcode_enabled = true
 text = "[center]The mice must escape the maze alive before the timer runs out.[/center]"
 scroll_active = false
 
+[node name="Cheese1" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Cheese1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 384.0
+offset_top = 154.0
+offset_right = 768.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Cheese (1)[/center]"
+
+[node name="ViewsphereImage" type="TextureRect" parent="HelpControl/Cheese1"]
+offset_left = 224.0
+offset_top = 209.0
+offset_right = 353.0
+offset_bottom = 329.0
+texture = ExtResource("35_bxxan")
+expand_mode = 1
+
+[node name="ViewsphereCheeseDesc" type="RichTextLabel" parent="HelpControl/Cheese1"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 360.0
+offset_top = 208.0
+offset_right = 616.0
+offset_bottom = 344.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The mice (not sheriff) can drop cheese (left click). The cheese will quickly disappear if not in the owner's viewsphere.[/center]"
+scroll_active = false
+
+[node name="CooldownImage" type="TextureRect" parent="HelpControl/Cheese1"]
+offset_left = 808.0
+offset_top = 328.0
+offset_right = 905.0
+offset_bottom = 417.0
+texture = ExtResource("36_ytkuc")
+expand_mode = 1
+
+[node name="CooldownDesc" type="RichTextLabel" parent="HelpControl/Cheese1"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 544.0
+offset_top = 344.0
+offset_right = 800.0
+offset_bottom = 392.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Placing or consuming the cheese incurs a cooldown.[/center]"
+scroll_active = false
+
+[node name="Cheese2" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Cheese2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 384.0
+offset_top = 154.0
+offset_right = 768.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Cheese (2)[/center]"
+
+[node name="LargerViewsphereImage" type="TextureRect" parent="HelpControl/Cheese2"]
+offset_left = 216.0
+offset_top = 199.0
+offset_right = 377.0
+offset_bottom = 321.0
+texture = ExtResource("37_tdlq1")
+expand_mode = 1
+
+[node name="RadarImage" type="TextureRect" parent="HelpControl/Cheese2"]
+offset_left = 329.0
+offset_top = 344.0
+offset_right = 410.0
+offset_bottom = 424.0
+texture = ExtResource("38_036f3")
+expand_mode = 1
+
+[node name="BuffDesc" type="RichTextLabel" parent="HelpControl/Cheese2"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 432.0
+offset_top = 209.0
+offset_right = 904.0
+offset_bottom = 422.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]When a mouse (including the sheriff) consumes the cheese, the owner and the consumer will gain a series of buffs for a short time: unlimited sprint ability (shift), larger viewsphere, and invisibility from the rat's radar.
+
+The rat can steal the cheese but does not gain any buffs. [/center]"
+scroll_active = false
+
 [node name="Rat" type="CanvasGroup" parent="HelpControl"]
 visible = false
 
@@ -1063,6 +1434,14 @@ theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "[center]Rat[/center]"
 
+[node name="RatImage" type="TextureRect" parent="HelpControl/Rat"]
+offset_left = 349.0
+offset_top = 209.0
+offset_right = 519.0
+offset_bottom = 379.0
+texture = ExtResource("91_wbe5m")
+expand_mode = 1
+
 [node name="RatDesc" type="RichTextLabel" parent="HelpControl/Rat"]
 custom_minimum_size = Vector2(256, 30)
 offset_left = 592.0
@@ -1072,18 +1451,110 @@ offset_bottom = 432.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]The rat has to kill all the mice.
+text = "[center]The rat must kill all  mice or stop them from escaping in time.
 
-Luckily, the rat can sprint but can NOT recover sprint stamina while holding [shift]![/center]"
+The rat can sprint for short periods and has a tracker on all the mice![/center]"
 scroll_active = false
 
-[node name="RatImage" type="TextureRect" parent="HelpControl/Rat"]
-offset_left = 349.0
-offset_top = 209.0
-offset_right = 519.0
-offset_bottom = 379.0
-texture = ExtResource("91_wbe5m")
+[node name="Knife" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Knife"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 496.0
+offset_top = 154.0
+offset_right = 656.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Knife[/center]"
+
+[node name="DeadMouseImage" type="TextureRect" parent="HelpControl/Knife"]
+offset_left = 280.0
+offset_top = 215.0
+offset_right = 424.0
+offset_bottom = 307.0
+texture = ExtResource("43_ahkfk")
 expand_mode = 1
+
+[node name="KnifeCooldownImage" type="TextureRect" parent="HelpControl/Knife"]
+offset_left = 448.0
+offset_top = 312.0
+offset_right = 544.0
+offset_bottom = 408.0
+texture = ExtResource("40_6saq5")
+expand_mode = 1
+
+[node name="KnifeDesc" type="RichTextLabel" parent="HelpControl/Knife"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 592.0
+offset_top = 228.0
+offset_right = 848.0
+offset_bottom = 432.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The knife kills targets in close range. 
+
+Swinging the knife incurs a cooldown, and completing a kill incurs a longer cooldown.[/center]"
+scroll_active = false
+
+[node name="Stamina" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Stamina"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 496.0
+offset_top = 154.0
+offset_right = 656.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Stamina[/center]"
+
+[node name="StaminaFullImage" type="TextureRect" parent="HelpControl/Stamina"]
+offset_left = 246.0
+offset_top = 240.0
+offset_right = 549.0
+offset_bottom = 256.0
+texture = ExtResource("40_cga5u")
+expand_mode = 1
+
+[node name="StaminaLowImage" type="TextureRect" parent="HelpControl/Stamina"]
+offset_left = 246.0
+offset_top = 344.0
+offset_right = 550.0
+offset_bottom = 360.0
+texture = ExtResource("41_pjt7u")
+expand_mode = 1
+
+[node name="SprintDesc" type="RichTextLabel" parent="HelpControl/Stamina"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 566.0
+offset_top = 217.0
+offset_right = 894.0
+offset_bottom = 406.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The rat can sprint by holding (shift) but not indefinitely. 
+
+Stamina cannot replenish when holding (shift). If stamina is depleted, the rat cannot sprint until the bar turns green.[/center]"
+scroll_active = false
 
 [node name="Sheriff" type="CanvasGroup" parent="HelpControl"]
 visible = false
@@ -1115,16 +1586,158 @@ expand_mode = 1
 
 [node name="SheriffDesc" type="RichTextLabel" parent="HelpControl/Sheriff"]
 custom_minimum_size = Vector2(256, 30)
-offset_left = 592.0
-offset_top = 252.0
-offset_right = 848.0
-offset_bottom = 396.0
+offset_left = 557.0
+offset_top = 224.0
+offset_right = 885.0
+offset_bottom = 400.0
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
-text = "[center]The sheriff's job is to shoot the rat.
+text = "[center]The sheriff is one of the mice, with a special job to shoot the rat.
 
-Be careful, though! You only have 1 bullet.[/center]"
+The sheriff can escape the maze too but will get more points by killing the rat.[/center]"
+scroll_active = false
+
+[node name="Gun" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Gun"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 496.0
+offset_top = 154.0
+offset_right = 656.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Gun[/center]"
+
+[node name="ShootImage" type="TextureRect" parent="HelpControl/Gun"]
+offset_left = 304.0
+offset_top = 312.0
+offset_right = 528.0
+offset_bottom = 424.0
+texture = ExtResource("43_v0co3")
+expand_mode = 1
+
+[node name="GunIcon" type="TextureRect" parent="HelpControl/Gun"]
+offset_left = 368.0
+offset_top = 202.0
+offset_right = 464.0
+offset_bottom = 298.0
+texture = ExtResource("93_jk6us")
+expand_mode = 1
+
+[node name="GunDesc" type="RichTextLabel" parent="HelpControl/Gun"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 557.0
+offset_top = 224.0
+offset_right = 885.0
+offset_bottom = 400.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]The gun has a single bullet, capable of killing anyone. The gun can fire into nothing or dead mice so be careful!
+
+The target of the shot is marked by a crosshair.[/center]"
+scroll_active = false
+
+[node name="Scoring" type="CanvasGroup" parent="HelpControl"]
+visible = false
+
+[node name="Title" type="RichTextLabel" parent="HelpControl/Scoring"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 496.0
+offset_top = 154.0
+offset_right = 656.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Scoring[/center]"
+
+[node name="MouseImage" type="TextureRect" parent="HelpControl/Scoring"]
+offset_left = 312.0
+offset_top = 344.0
+offset_right = 392.0
+offset_bottom = 423.0
+texture = ExtResource("90_muood")
+expand_mode = 1
+
+[node name="RatImage" type="TextureRect" parent="HelpControl/Scoring"]
+offset_left = 536.0
+offset_top = 344.0
+offset_right = 616.0
+offset_bottom = 423.0
+texture = ExtResource("91_wbe5m")
+expand_mode = 1
+
+[node name="SheriffImage" type="TextureRect" parent="HelpControl/Scoring"]
+offset_left = 760.0
+offset_top = 344.0
+offset_right = 840.0
+offset_bottom = 423.0
+texture = ExtResource("92_ql6vx")
+expand_mode = 1
+
+[node name="MouseDesc" type="RichTextLabel" parent="HelpControl/Scoring"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 224.0
+offset_top = 199.0
+offset_right = 480.0
+offset_bottom = 375.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Mouse
+
++1 win
++2 escape"
+scroll_active = false
+
+[node name="RatDesc" type="RichTextLabel" parent="HelpControl/Scoring"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 448.0
+offset_top = 199.0
+offset_right = 704.0
+offset_bottom = 375.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Rat
+
++1 per kill
++1 timeout win
+-1 killed by sheriff"
+scroll_active = false
+
+[node name="SheriffDesc" type="RichTextLabel" parent="HelpControl/Scoring"]
+custom_minimum_size = Vector2(256, 30)
+offset_left = 672.0
+offset_top = 199.0
+offset_right = 928.0
+offset_bottom = 375.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "[center]Sheriff
+
++1 win
++2 escape
++3 kill rat
+-1 kill mouse"
 scroll_active = false
 
 [node name="Right" type="TextureButton" parent="HelpControl"]
@@ -1179,6 +1792,15 @@ ignore_texture_size = true
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
 
+[node name="ToTOC" type="Button" parent="HelpControl"]
+visible = false
+offset_left = 801.0
+offset_top = 440.0
+offset_right = 950.0
+offset_bottom = 471.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+text = "Table of Contents"
+
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="finished" from="StartMenu/VideoContainer/TitleSequence" to="." method="_on_title_sequence_finished"]
 [connection signal="pressed" from="StartMenu/Skip" to="." method="_on_skip_pressed"]
@@ -1196,6 +1818,16 @@ metadata/_edit_use_anchors_ = true
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Controller" to="HelpControl" method="_on_controller_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Scoring" to="HelpControl" method="_on_scoring_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Cheese" to="HelpControl" method="_on_cheese_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Knife" to="HelpControl" method="_on_knife_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Stamina" to="HelpControl" method="_on_stamina_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Gun" to="HelpControl" method="_on_gun_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Mouse" to="HelpControl" method="_on_mouse_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Rat" to="HelpControl" method="_on_rat_button_down"]
+[connection signal="button_down" from="HelpControl/TableOfContents/Sheriff" to="HelpControl" method="_on_sheriff_button_down"]
 [connection signal="button_down" from="HelpControl/Right" to="HelpControl" method="_on_right_button_down"]
 [connection signal="button_down" from="HelpControl/Left" to="HelpControl" method="_on_left_button_down"]
 [connection signal="button_down" from="HelpControl/Close" to="HelpControl" method="_on_close_button_down"]
+[connection signal="button_down" from="HelpControl/ToTOC" to="HelpControl" method="_on_to_toc_button_down"]
