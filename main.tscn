@@ -1823,12 +1823,13 @@ visible = false
 [node name="Background" type="ColorRect" parent="RoleScreen"]
 offset_right = 1158.0
 offset_bottom = 659.0
+mouse_filter = 2
 color = Color(0.0904823, 0.0904823, 0.0904823, 1)
 
-[node name="Mouse" type="CanvasGroup" parent="RoleScreen"]
+[node name="Mouse" type="CanvasGroup" parent="RoleScreen/Background"]
 visible = false
 
-[node name="Title" type="Label" parent="RoleScreen/Mouse"]
+[node name="Title" type="Label" parent="RoleScreen/Background/Mouse"]
 offset_left = 329.0
 offset_top = 41.0
 offset_right = 616.0
@@ -1839,7 +1840,7 @@ text = "You are a "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Role" type="Label" parent="RoleScreen/Mouse"]
+[node name="Role" type="Label" parent="RoleScreen/Background/Mouse"]
 offset_left = 569.0
 offset_top = 41.0
 offset_right = 856.0
@@ -1850,11 +1851,11 @@ text = "mouse"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Mouse" type="Sprite2D" parent="RoleScreen/Mouse"]
+[node name="Mouse" type="Sprite2D" parent="RoleScreen/Background/Mouse"]
 position = Vector2(584, 280)
 texture = ExtResource("51_wyll6")
 
-[node name="Description" type="Label" parent="RoleScreen/Mouse"]
+[node name="Description" type="Label" parent="RoleScreen/Background/Mouse"]
 offset_left = 255.0
 offset_top = 451.0
 offset_right = 916.0
@@ -1866,15 +1867,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Mouse"]
+[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Background/Mouse"]
 position = Vector2(491, 324)
 scale = Vector2(0.514445, 0.514445)
 texture = ExtResource("24_kern2")
 
-[node name="Sheriff" type="CanvasGroup" parent="RoleScreen"]
-visible = false
+[node name="Sheriff" type="CanvasGroup" parent="RoleScreen/Background"]
 
-[node name="Title" type="Label" parent="RoleScreen/Sheriff"]
+[node name="Title" type="Label" parent="RoleScreen/Background/Sheriff"]
 offset_left = 297.0
 offset_top = 41.0
 offset_right = 640.0
@@ -1885,7 +1885,7 @@ text = "You are the"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Role" type="Label" parent="RoleScreen/Sheriff"]
+[node name="Role" type="Label" parent="RoleScreen/Background/Sheriff"]
 offset_left = 617.0
 offset_top = 41.0
 offset_right = 904.0
@@ -1897,11 +1897,11 @@ text = "sheriff
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Mouse" type="Sprite2D" parent="RoleScreen/Sheriff"]
+[node name="Mouse" type="Sprite2D" parent="RoleScreen/Background/Sheriff"]
 position = Vector2(584, 280)
 texture = ExtResource("52_3qtnl")
 
-[node name="Description" type="Label" parent="RoleScreen/Sheriff"]
+[node name="Description" type="Label" parent="RoleScreen/Background/Sheriff"]
 offset_left = 255.0
 offset_top = 443.0
 offset_right = 916.0
@@ -1913,15 +1913,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Sheriff"]
+[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Background/Sheriff"]
 position = Vector2(578.5, 292.5)
 scale = Vector2(1.04297, 1.04297)
 texture = ExtResource("53_5qenu")
 
-[node name="Rat" type="CanvasGroup" parent="RoleScreen"]
+[node name="Rat" type="CanvasGroup" parent="RoleScreen/Background"]
 visible = false
 
-[node name="Title" type="Label" parent="RoleScreen/Rat"]
+[node name="Title" type="Label" parent="RoleScreen/Background/Rat"]
 offset_left = 329.0
 offset_top = 41.0
 offset_right = 672.0
@@ -1932,7 +1932,7 @@ text = "You are the"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Role" type="Label" parent="RoleScreen/Rat"]
+[node name="Role" type="Label" parent="RoleScreen/Background/Rat"]
 offset_left = 601.0
 offset_top = 41.0
 offset_right = 888.0
@@ -1943,11 +1943,11 @@ text = "RAT."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Mouse" type="Sprite2D" parent="RoleScreen/Rat"]
+[node name="Mouse" type="Sprite2D" parent="RoleScreen/Background/Rat"]
 position = Vector2(584, 288)
 texture = ExtResource("52_3qtnl")
 
-[node name="Description" type="Label" parent="RoleScreen/Rat"]
+[node name="Description" type="Label" parent="RoleScreen/Background/Rat"]
 offset_left = 255.0
 offset_top = 443.0
 offset_right = 916.0
@@ -1959,7 +1959,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Rat"]
+[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Background/Rat"]
 position = Vector2(582.5, 286.5)
 scale = Vector2(1.04297, 1.04297)
 texture = ExtResource("54_cb5a6")
