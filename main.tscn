@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=64 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -113,7 +113,7 @@ shadow_size = 58
 shadow_color = Color(0, 0, 0, 0.0705882)
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fl2bq"]
-buffer_length = 2.5
+buffer_length = 10.0
 
 [node name="main" type="Node2D" groups=["player"]]
 y_sort_enabled = true
@@ -1805,6 +1805,7 @@ text = "Table of Contents"
 
 [node name="output" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_fl2bq")
+volume_db = 6.0
 autoplay = true
 
 [connection signal="ready" from="Map" to="." method="_ready"]
@@ -1822,8 +1823,8 @@ autoplay = true
 [connection signal="button_up" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_button_up"]
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
-[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
+[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Controller" to="HelpControl" method="_on_controller_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Scoring" to="HelpControl" method="_on_scoring_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Cheese" to="HelpControl" method="_on_cheese_button_down"]
