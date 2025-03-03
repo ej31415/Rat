@@ -12,6 +12,7 @@ var scrn_maze_exit; var scrn_maze_exit_addon
 var scrn_sheriff; var scrn_sheriff_addon
 var scrn_rat_kills; var scrn_rat_kills_addon
 var scrn_timeout; var scrn_timeout_addon
+var gray_head; var sb_head; var tan_head; var brown_head
 
 var mice = []
 var color_to_role = {}
@@ -20,6 +21,7 @@ var color_to_pts_label = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var color_to_code = {}
+var lb_sprites = []
 var id_to_color = {}
 var role_to_desc = {}
 var game_ended = false
@@ -30,6 +32,8 @@ var my_color = ""
 
 static var rat_killed = 0
 static var sheriff_killed = 0
+
+var POINT_THRESHOLD := 3
 
 var quickstart_called = false
 
@@ -90,11 +94,19 @@ func _ready():
 		"blue": Color("#0069ed"),
 		"green": Color("#48ac4f")
 	}
+	lb_sprites = [
+		$HUD/Leaderboard/TextureRect/FirstMouse,
+		$HUD/Leaderboard/TextureRect/SecondMouse,
+		$HUD/Leaderboard/TextureRect/ThirdMouse,
+		$HUD/Leaderboard/TextureRect/FourthMouse
+	]
 	role_to_desc = {
 		"mouse": "Escape!",
 		"sheriff": "Kill the rat or escape!",
 		"rat": "Kill or delay the mice!"
 	}
+	
+	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())
@@ -251,9 +263,15 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	
 	$StartMenu.visible = false
 	$HUD/ScoreBoard.visible = true
+	$HUD/Leaderboard.visible = false
 	_hide_roles()
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
+	
+	if pts.values() == [0,0,0,0]:
+		$HUD/PointGoal.visible = true
+		$HUD/PointGoal.modulate = Color("#ffffffff")
+		fade_out_point_goal()
 	
 	var role = "PLACEHOLDER"
 	var color_player = Color(1, 1, 1)
@@ -311,11 +329,57 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$TimerCanvasLayer/Panel/TimeLeft.label_settings.font_color = Color(1.0, 1.0, 1.0)
 	$HUD/Minimap/MarginContainer.set_target()
 	game_ended = false
-
+	
+func fade_out_point_goal():
+	await get_tree().create_timer(2).timeout
+	var tween := get_tree().create_tween()
+	tween.tween_property($HUD/PointGoal, "modulate", Color("#ffffff00"), 1)
+	
 func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
 	_end_game.rpc(false, false, true, false, "")
 
+func ascending_compare(a, b):
+	if a[1] < b[1]:
+		return false
+	return true
+
+func show_leaderboard():
+	# get winners
+	var lb := []
+	for color in color_to_pts:
+		lb.append([color, color_to_pts[color]])
+	lb.sort_custom(ascending_compare)
+	print(lb)
+	var pt_labels := [
+		$HUD/Leaderboard/TextureRect/PointsOne,
+		$HUD/Leaderboard/TextureRect/PointsTwo,
+		$HUD/Leaderboard/TextureRect/PointsThree,
+		$HUD/Leaderboard/TextureRect/PointsFour
+	]
+	
+	var color_to_modulate = {}
+	for child in get_tree().get_nodes_in_group("player"):
+		if child.has_node("AnimatedSprite2D"):
+			color_to_modulate[child.color] = child.get_node("AnimatedSprite2D").modulate
+			
+	for i in range(len(lb)):
+		lb_sprites[i].modulate = color_to_modulate[lb[i][0]]
+		pt_labels[i].text = str(color_to_pts[lb[i][0]]) + " pts"
+	$HUD/Leaderboard/Gradient.modulate = color_to_modulate[lb[0][0]]
+	
+	if is_host:
+		$HUD/Leaderboard/TextureRect/Button.disabled = false
+		$HUD/Leaderboard/TextureRect/Button.text = "Start another game"
+	else:
+		$HUD/Leaderboard/TextureRect/Button.disabled = true
+		$HUD/Leaderboard/TextureRect/Button.text = "Waiting for host to start another game..."
+	$HUD/Leaderboard.visible = true
+
+func reset_scores() -> void:
+	for color in color_to_pts:
+		color_to_pts[color] = 0
+		
 @rpc("call_local", "reliable", "any_peer")
 func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String) -> void:
 	if game_ended:
@@ -332,6 +396,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Cheese.visible = false
 	$HUD/CheeseCooldown.visible = false
 	_show_roles()
+	
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
@@ -414,7 +479,14 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
-		
+	
+	for color in color_to_pts:
+		if color_to_pts[color] >= POINT_THRESHOLD:
+			$WinScreen/CheckBoxButton.uncheck()
+			$WinScreen/Again.disabled = true
+			await get_tree().create_timer(2).timeout
+			show_leaderboard()
+	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
 		$WinScreen/num_players.visible = true
@@ -549,6 +621,14 @@ func refresh_play_again_button() -> void:
 func _on_restart_timer_timeout() -> void:
 	if game_ended:
 		$WinScreen/Again.emit_signal("pressed")
+		
+
+func _on_lb_close_button_click() -> void:
+	reset_scores()
+	$WinScreen/CheckBoxButton.check()
+	$WinScreen/Again.disabled = false
+	$HUD/Leaderboard.visible = false
+	_on_again_button_pressed()
 
 # TODO: connect more signals to this function
 func _on_any_button_click() -> void:
