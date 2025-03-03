@@ -107,6 +107,8 @@ func _ready():
 	}
 	
 	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
+	
+	$output.add_to_group("output")
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())

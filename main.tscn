@@ -114,6 +114,9 @@ font = ExtResource("10_dpgvo")
 shadow_size = 58
 shadow_color = Color(0, 0, 0, 0.0705882)
 
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fl2bq"]
+buffer_length = 10.0
+
 [node name="main" type="Node2D" groups=["player"]]
 y_sort_enabled = true
 script = ExtResource("1_s4k2t")
@@ -1809,6 +1812,11 @@ offset_right = 950.0
 offset_bottom = 471.0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Table of Contents"
+
+[node name="output" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_fl2bq")
+volume_db = 6.0
+autoplay = true
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="finished" from="StartMenu/VideoContainer/TitleSequence" to="." method="_on_title_sequence_finished"]
