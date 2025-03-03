@@ -8,7 +8,9 @@ func _ready() -> void:
 
 func setup_audio():
 	input = $input
-	output = $output
+	for child in get_tree().get_nodes_in_group("output"):
+		if child.has_method("get_stream_playback"):
+			output = child
 	if is_multiplayer_authority():
 		input.stream = AudioStreamMicrophone.new()
 		input.play()

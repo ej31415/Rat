@@ -92,6 +92,8 @@ func _ready():
 		"sheriff": "Kill the rat or escape!",
 		"rat": "Kill or delay the mice!"
 	}
+	
+	$output.add_to_group("output")
 
 	# instant-start for debugging
 	var args = Array(OS.get_cmdline_args())

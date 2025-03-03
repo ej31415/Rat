@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=44 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -91,6 +91,9 @@ font_size = 31
 font = ExtResource("10_dpgvo")
 shadow_size = 58
 shadow_color = Color(0, 0, 0, 0.0705882)
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fl2bq"]
+buffer_length = 2.5
 
 [node name="main" type="Node2D" groups=["player"]]
 y_sort_enabled = true
@@ -1001,6 +1004,10 @@ texture_normal = ExtResource("23_omg22")
 ignore_texture_size = true
 stretch_mode = 4
 metadata/_edit_use_anchors_ = true
+
+[node name="output" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_fl2bq")
+autoplay = true
 
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="finished" from="StartMenu/VideoContainer/TitleSequence" to="." method="_on_title_sequence_finished"]

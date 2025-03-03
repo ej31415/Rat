@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=54 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
@@ -587,9 +587,6 @@ properties/12/path = NodePath("Blood:flip_h")
 properties/12/spawn = true
 properties/12/replication_mode = 1
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_phc7p"]
-buffer_length = 2.5
-
 [node name="SBMouse" type="CharacterBody2D"]
 light_mask = 4
 material = SubResource("CanvasItemMaterial_awjhh")
@@ -691,9 +688,5 @@ replication_config = SubResource("SceneReplicationConfig_y7w3x")
 
 [node name="input" type="AudioStreamPlayer" parent="."]
 bus = &"Record"
-
-[node name="output" type="AudioStreamPlayer" parent="."]
-stream = SubResource("AudioStreamGenerator_phc7p")
-autoplay = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
