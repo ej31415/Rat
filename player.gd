@@ -487,13 +487,13 @@ func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 	if effect:
-		if effect.can_get_buffer(1024) and playback.can_push_buffer(1024):
-			send_data.rpc(effect.get_buffer(1024))
+		if effect.can_get_buffer(2048) and playback.can_push_buffer(2048):
+			send_data.rpc(effect.get_buffer(2048))
 		effect.clear_buffer()
 	else:
 		print("no effect")
 
 @rpc("call_remote", "unreliable")
 func send_data(data : PackedVector2Array):
-	for i in range(0,1024):
+	for i in range(0,2048):
 		playback.push_frame(data[i])
