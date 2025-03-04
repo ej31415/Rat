@@ -1862,7 +1862,7 @@ offset_right = 916.0
 offset_bottom = 589.0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 30
-text = "Escape the maze alive! Give another mouse a cheese to get a speed and vision buff."
+text = "Escape alive! Give another mouse a cheese (E) to get sprint ability and vision buff."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -1873,6 +1873,7 @@ scale = Vector2(0.514445, 0.514445)
 texture = ExtResource("24_kern2")
 
 [node name="Sheriff" type="CanvasGroup" parent="RoleScreen/Background"]
+visible = false
 
 [node name="Title" type="Label" parent="RoleScreen/Background/Sheriff"]
 offset_left = 297.0
@@ -1908,7 +1909,7 @@ offset_right = 916.0
 offset_bottom = 581.0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 30
-text = "Eliminate the rat. Only got one shot, though!"
+text = "Eliminate the rat with one shot(E)!"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -1954,7 +1955,7 @@ offset_right = 916.0
 offset_bottom = 581.0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 30
-text = "Kill all the mice. Don't let them escape."
+text = "Kill all mice (E). Don't let them escape!"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

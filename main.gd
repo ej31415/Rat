@@ -316,7 +316,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 		_paint_role_screen($RoleScreen/Background/Mouse, my_color)
 	
 	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(3).timeout
 	var tween := get_tree().create_tween()
 	var role_screen_color: Color = $RoleScreen/Background.modulate
 	role_screen_color.a = 0
