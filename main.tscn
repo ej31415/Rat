@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=70 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -42,6 +42,10 @@
 [ext_resource type="Texture2D" uid="uid://crr66dpr1d2n7" path="res://assets/Help Menu/Depleted Stamina.png" id="41_pjt7u"]
 [ext_resource type="Texture2D" uid="uid://joaqq473urwg" path="res://assets/Help Menu/Dead Mouse.png" id="43_ahkfk"]
 [ext_resource type="Texture2D" uid="uid://7nbvtxfsenxq" path="res://assets/Help Menu/Sheriff Target.png" id="43_v0co3"]
+[ext_resource type="Texture2D" uid="uid://cf24mmyomivfe" path="res://assets/Generic Mouse/Attack/Knife 1 mouse.png" id="51_wyll6"]
+[ext_resource type="Texture2D" uid="uid://bno0il3qfepdl" path="res://assets/Generic Mouse/Attack/Sheriff front.png" id="52_3qtnl"]
+[ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="53_5qenu"]
+[ext_resource type="Texture2D" uid="uid://bhpjmtb4h532v" path="res://assets/Generic Mouse/Attachments/Knife 2 knife.png" id="54_cb5a6"]
 [ext_resource type="Texture2D" uid="uid://ccqid262rhwy7" path="res://assets/Splash screen/74.png" id="83_18v7m"]
 [ext_resource type="VideoStream" path="res://assets/Title Sequence.ogv" id="84_fcisw"]
 [ext_resource type="Texture2D" uid="uid://dlyub6sbpgjcx" path="res://assets/UI/Skip button.png" id="85_mrld5"]
@@ -1812,6 +1816,154 @@ offset_right = 950.0
 offset_bottom = 471.0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Table of Contents"
+
+[node name="RoleScreen" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Background" type="ColorRect" parent="RoleScreen"]
+offset_right = 1158.0
+offset_bottom = 659.0
+mouse_filter = 2
+color = Color(0.0904823, 0.0904823, 0.0904823, 1)
+
+[node name="Mouse" type="CanvasGroup" parent="RoleScreen/Background"]
+visible = false
+
+[node name="Title" type="Label" parent="RoleScreen/Background/Mouse"]
+offset_left = 329.0
+offset_top = 41.0
+offset_right = 616.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 60
+text = "You are a "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Role" type="Label" parent="RoleScreen/Background/Mouse"]
+offset_left = 569.0
+offset_top = 41.0
+offset_right = 856.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 60
+text = "mouse"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mouse" type="Sprite2D" parent="RoleScreen/Background/Mouse"]
+position = Vector2(584, 280)
+texture = ExtResource("51_wyll6")
+
+[node name="Description" type="Label" parent="RoleScreen/Background/Mouse"]
+offset_left = 255.0
+offset_top = 451.0
+offset_right = 916.0
+offset_bottom = 589.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 30
+text = "Escape alive! Give another mouse a cheese (E) to get sprint ability and vision buff."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Background/Mouse"]
+position = Vector2(491, 324)
+scale = Vector2(0.514445, 0.514445)
+texture = ExtResource("24_kern2")
+
+[node name="Sheriff" type="CanvasGroup" parent="RoleScreen/Background"]
+visible = false
+
+[node name="Title" type="Label" parent="RoleScreen/Background/Sheriff"]
+offset_left = 297.0
+offset_top = 41.0
+offset_right = 640.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 60
+text = "You are the"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Role" type="Label" parent="RoleScreen/Background/Sheriff"]
+offset_left = 617.0
+offset_top = 41.0
+offset_right = 904.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 60
+text = "sheriff
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mouse" type="Sprite2D" parent="RoleScreen/Background/Sheriff"]
+position = Vector2(584, 280)
+texture = ExtResource("52_3qtnl")
+
+[node name="Description" type="Label" parent="RoleScreen/Background/Sheriff"]
+offset_left = 255.0
+offset_top = 443.0
+offset_right = 916.0
+offset_bottom = 581.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 30
+text = "Eliminate the rat with one shot(E)!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Background/Sheriff"]
+position = Vector2(578.5, 292.5)
+scale = Vector2(1.04297, 1.04297)
+texture = ExtResource("53_5qenu")
+
+[node name="Rat" type="CanvasGroup" parent="RoleScreen/Background"]
+visible = false
+
+[node name="Title" type="Label" parent="RoleScreen/Background/Rat"]
+offset_left = 329.0
+offset_top = 41.0
+offset_right = 672.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 60
+text = "You are the"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Role" type="Label" parent="RoleScreen/Background/Rat"]
+offset_left = 601.0
+offset_top = 41.0
+offset_right = 888.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 60
+text = "RAT."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mouse" type="Sprite2D" parent="RoleScreen/Background/Rat"]
+position = Vector2(584, 288)
+texture = ExtResource("52_3qtnl")
+
+[node name="Description" type="Label" parent="RoleScreen/Background/Rat"]
+offset_left = 255.0
+offset_top = 443.0
+offset_right = 916.0
+offset_bottom = 581.0
+theme_override_fonts/font = ExtResource("10_dpgvo")
+theme_override_font_sizes/font_size = 30
+text = "Kill all mice (E). Don't let them escape!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="RoleScreen/Background/Rat"]
+position = Vector2(582.5, 286.5)
+scale = Vector2(1.04297, 1.04297)
+texture = ExtResource("54_cb5a6")
 
 [node name="output" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_fl2bq")

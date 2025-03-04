@@ -34,7 +34,7 @@ var my_color = ""
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 1
+var POINT_THRESHOLD := 11
 
 var quickstart_called = false
 
@@ -250,6 +250,15 @@ func _show_roles():
 	$HUD/ScoreBoard/TanRole.visible = true
 	$HUD/ScoreBoard/BrownRole.visible = true
 
+func _disable_role_screens() -> void:
+	$RoleScreen/Background/Mouse.visible = false
+	$RoleScreen/Background/Sheriff.visible = false
+	$RoleScreen/Background/Rat.visible = false
+
+func _paint_role_screen(scn: CanvasGroup, color_name: String) -> void:
+	scn.get_node("Role").add_theme_color_override("font_color", color_to_code[color_to_color[color_name]])
+	scn.get_node("Mouse").modulate = color_to_code[color_to_color[color_name]]
+
 func _on_start_pressed():
 	$SoundEffects.play()
 	var maze = $Map.get_maze()
@@ -273,11 +282,6 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
-	if pts.values() == [0,0,0,0]:
-		$HUD/PointGoal.visible = true
-		$HUD/PointGoal.modulate = Color("#ffffffff")
-		fade_out_point_goal()
-	
 	var role = "PLACEHOLDER"
 	var color_player = Color(1, 1, 1)
 	for child in get_tree().get_nodes_in_group("player"):
@@ -296,10 +300,36 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 				color_player = temp[1]
 			if temp[2] != "":
 				my_color = temp[2]
-
+	
+	_disable_role_screens()
+	$RoleScreen.visible = true
+	$RoleScreen/Background.modulate.a = 1
+	
+	if role == "sheriff":
+		$RoleScreen/Background/Sheriff.visible = true
+		_paint_role_screen($RoleScreen/Background/Sheriff, my_color)
+	elif role == "rat":
+		$RoleScreen/Background/Rat.visible = true
+		_paint_role_screen($RoleScreen/Background/Rat, my_color)
+	elif role == "mouse":
+		$RoleScreen/Background/Mouse.visible = true
+		_paint_role_screen($RoleScreen/Background/Mouse, my_color)
+	
+	
+	await get_tree().create_timer(3).timeout
+	var tween := get_tree().create_tween()
+	var role_screen_color: Color = $RoleScreen/Background.modulate
+	role_screen_color.a = 0
+	tween.tween_property($RoleScreen/Background, "modulate", role_screen_color, 1)
+	
+	if pts.values() == [0,0,0,0]:
+		$HUD/PointGoal.visible = true
+		$HUD/PointGoal.modulate = Color("#ffffffff")
+		fade_out_point_goal()
+		
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
-
+	
 	$HUD/PlayerAvatar.modulate = color_player
 	$HUD/PlayerAvatar.visible = true
 	$HUD/Role.text = role.capitalize()
