@@ -8,6 +8,7 @@ var peer = ENetMultiplayerPeer.new()
 @export var sb_mouse: PackedScene
 @export var tan_mouse: PackedScene
 var title_sound; var mice_active_music; var mice_victory_sound; var rat_victory_sound
+var got_mice_music; var got_rat_music; var got_sheriff_music
 var scrn_maze_exit; var scrn_maze_exit_addon
 var scrn_sheriff; var scrn_sheriff_addon
 var scrn_rat_kills; var scrn_rat_kills_addon
@@ -52,6 +53,9 @@ func _init() -> void:
 
 func _load_music():
 	title_sound = preload("res://assets/Music/Start Title.mp3")
+	got_mice_music = preload("res://assets/Music/boom.mp3")
+	got_rat_music = preload("res://assets/Music/dark boom.mp3")
+	got_sheriff_music = preload("res://assets/Music/Cowboy.mp3")
 	mice_active_music = preload("res://assets/Music/mice_active_music.mp3")
 	mice_victory_sound = preload("res://assets/Music/Mice Win Sound.mp3")
 	rat_victory_sound = preload("res://assets/Music/Rat Win Sound.mp3") 
@@ -241,10 +245,14 @@ func _hide_roles():
 	$HUD/ScoreBoard/BrownRole.visible = false
 
 func _show_roles():
-	$HUD/ScoreBoard/GrayRole.text = color_to_role["gray"].capitalize()
-	$HUD/ScoreBoard/SBRole.text = color_to_role["sb"].capitalize()
-	$HUD/ScoreBoard/TanRole.text = color_to_role["tan"].capitalize()
-	$HUD/ScoreBoard/BrownRole.text = color_to_role["brown"].capitalize()
+	if "gray" in color_to_role:
+		$HUD/ScoreBoard/GrayRole.text = color_to_role["gray"].capitalize()
+	if "sb" in color_to_role:
+		$HUD/ScoreBoard/SBRole.text = color_to_role["sb"].capitalize()
+	if "tan" in color_to_role:
+		$HUD/ScoreBoard/TanRole.text = color_to_role["tan"].capitalize()
+	if "brown" in color_to_role:
+		$HUD/ScoreBoard/BrownRole.text = color_to_role["brown"].capitalize()
 	$HUD/ScoreBoard/GrayRole.visible = true
 	$HUD/ScoreBoard/SBRole.visible = true
 	$HUD/ScoreBoard/TanRole.visible = true
@@ -308,12 +316,18 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	if role == "sheriff":
 		$RoleScreen/Background/Sheriff.visible = true
 		_paint_role_screen($RoleScreen/Background/Sheriff, my_color)
+		$AudioStreamPlayer.stream = got_sheriff_music
+		$AudioStreamPlayer.play()
 	elif role == "rat":
 		$RoleScreen/Background/Rat.visible = true
 		_paint_role_screen($RoleScreen/Background/Rat, my_color)
+		$AudioStreamPlayer.stream = got_rat_music
+		$AudioStreamPlayer.play()
 	elif role == "mouse":
 		$RoleScreen/Background/Mouse.visible = true
 		_paint_role_screen($RoleScreen/Background/Mouse, my_color)
+		$AudioStreamPlayer.stream = got_mice_music
+		$AudioStreamPlayer.play()
 	
 	
 	await get_tree().create_timer(3).timeout

@@ -13,28 +13,27 @@ func _ready() -> void:
 	canvas_scale = canvas.size / (get_viewport().get_visible_rect().size * zoom)
 
 func set_target():
-	if len(markers) == 0:
-		for player in get_tree().get_nodes_in_group("player"):
-			if player.has_method("get_role"):
-				var new_marker = marker.instantiate()
-				canvas.add_child(new_marker)
-				if player.get_role() == "rat":
-					target = player
-					new_marker.modulate = player.get_color_prop()
-					new_marker.position = canvas.size / 2
-				else:
-					new_marker.modulate = player.get_color_prop()
-				markers[player] = new_marker
-				new_marker.visible = true
-	else:
-		for player in markers:
+	for player in markers:
+		markers[player].queue_free()
+	markers = {}
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_role"):
+			var new_marker = marker.instantiate()
+			canvas.add_child(new_marker)
 			if player.get_role() == "rat":
 				target = player
-			markers[player].visible = true
+				new_marker.modulate = player.get_color_prop()
+				new_marker.position = canvas.size / 2
+			else:
+				new_marker.modulate = player.get_color_prop()
+			markers[player] = new_marker
+			new_marker.visible = true
 	set_process(true)
 
 func _process(delta: float) -> void:
 	for player in markers:
+		if !is_instance_valid(player):
+			continue
 		var obj_pos = (player.position - target.position) * canvas_scale + canvas.size / 2
 		if canvas.get_rect().has_point(obj_pos + canvas.position):
 			markers[player].scale = Vector2(1, 1)
