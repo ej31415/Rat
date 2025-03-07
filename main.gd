@@ -245,10 +245,14 @@ func _hide_roles():
 	$HUD/ScoreBoard/BrownRole.visible = false
 
 func _show_roles():
-	$HUD/ScoreBoard/GrayRole.text = color_to_role["gray"].capitalize()
-	$HUD/ScoreBoard/SBRole.text = color_to_role["sb"].capitalize()
-	$HUD/ScoreBoard/TanRole.text = color_to_role["tan"].capitalize()
-	$HUD/ScoreBoard/BrownRole.text = color_to_role["brown"].capitalize()
+	if "gray" in color_to_role:
+		$HUD/ScoreBoard/GrayRole.text = color_to_role["gray"].capitalize()
+	if "sb" in color_to_role:
+		$HUD/ScoreBoard/SBRole.text = color_to_role["sb"].capitalize()
+	if "tan" in color_to_role:
+		$HUD/ScoreBoard/TanRole.text = color_to_role["tan"].capitalize()
+	if "brown" in color_to_role:
+		$HUD/ScoreBoard/BrownRole.text = color_to_role["brown"].capitalize()
 	$HUD/ScoreBoard/GrayRole.visible = true
 	$HUD/ScoreBoard/SBRole.visible = true
 	$HUD/ScoreBoard/TanRole.visible = true
