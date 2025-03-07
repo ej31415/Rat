@@ -8,6 +8,7 @@ var peer = ENetMultiplayerPeer.new()
 @export var sb_mouse: PackedScene
 @export var tan_mouse: PackedScene
 var title_sound; var mice_active_music; var mice_victory_sound; var rat_victory_sound
+var got_mice_music; var got_rat_music; var got_sheriff_music
 var scrn_maze_exit; var scrn_maze_exit_addon
 var scrn_sheriff; var scrn_sheriff_addon
 var scrn_rat_kills; var scrn_rat_kills_addon
@@ -52,6 +53,9 @@ func _init() -> void:
 
 func _load_music():
 	title_sound = preload("res://assets/Music/Start Title.mp3")
+	got_mice_music = preload("res://assets/Music/boom.mp3")
+	got_rat_music = preload("res://assets/Music/dark boom.mp3")
+	got_sheriff_music = preload("res://assets/Music/Cowboy.mp3")
 	mice_active_music = preload("res://assets/Music/mice_active_music.mp3")
 	mice_victory_sound = preload("res://assets/Music/Mice Win Sound.mp3")
 	rat_victory_sound = preload("res://assets/Music/Rat Win Sound.mp3") 
@@ -308,12 +312,18 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	if role == "sheriff":
 		$RoleScreen/Background/Sheriff.visible = true
 		_paint_role_screen($RoleScreen/Background/Sheriff, my_color)
+		$AudioStreamPlayer.stream = got_sheriff_music
+		$AudioStreamPlayer.play()
 	elif role == "rat":
 		$RoleScreen/Background/Rat.visible = true
 		_paint_role_screen($RoleScreen/Background/Rat, my_color)
+		$AudioStreamPlayer.stream = got_rat_music
+		$AudioStreamPlayer.play()
 	elif role == "mouse":
 		$RoleScreen/Background/Mouse.visible = true
 		_paint_role_screen($RoleScreen/Background/Mouse, my_color)
+		$AudioStreamPlayer.stream = got_mice_music
+		$AudioStreamPlayer.play()
 	
 	
 	await get_tree().create_timer(3).timeout
