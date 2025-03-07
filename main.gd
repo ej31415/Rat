@@ -132,7 +132,7 @@ func _quick_start():
 
 func _on_host_pressed():
 	$SoundEffects.play()
-	peer.create_server(135)
+	peer.create_server(60000)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_connected.connect(_add_player)
 	multiplayer.peer_disconnected.connect(_remove_player)
@@ -209,7 +209,7 @@ func _on_server_disconnect():
 
 func _on_join_pressed():
 	$SoundEffects.play()
-	var error = peer.create_client($StartMenu/ip.text, 135)
+	var error = peer.create_client($StartMenu/ip.text, 60000)
 	if error == OK:
 		multiplayer.multiplayer_peer = peer
 		$StartMenu/host.disabled = true

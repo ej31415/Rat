@@ -1818,6 +1818,21 @@ stream = SubResource("AudioStreamGenerator_fl2bq")
 volume_db = 6.0
 autoplay = true
 
+[node name="output2" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_fl2bq")
+volume_db = 6.0
+autoplay = true
+
+[node name="output3" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_fl2bq")
+volume_db = 6.0
+autoplay = true
+
+[node name="output4" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamGenerator_fl2bq")
+volume_db = 6.0
+autoplay = true
+
 [connection signal="ready" from="Map" to="." method="_ready"]
 [connection signal="finished" from="StartMenu/VideoContainer/TitleSequence" to="." method="_on_title_sequence_finished"]
 [connection signal="pressed" from="StartMenu/Skip" to="." method="_on_skip_pressed"]
