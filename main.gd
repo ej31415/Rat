@@ -35,7 +35,7 @@ var my_color = ""
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 11
+var POINT_THRESHOLD := 8
 
 var quickstart_called = false
 
