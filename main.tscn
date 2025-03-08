@@ -1967,7 +1967,7 @@ texture = ExtResource("54_cb5a6")
 
 [node name="output" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamGenerator_fl2bq")
-volume_db = 6.0
+volume_db = -80.0
 autoplay = true
 
 [connection signal="ready" from="Map" to="." method="_ready"]
