@@ -430,7 +430,6 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	print("game ended!!!")
 	$TimerCanvasLayer.end_timer.rpc()
 	game_ended = true
-	await get_tree().create_timer(1).timeout
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
