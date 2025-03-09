@@ -438,6 +438,8 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$HUD/Minimap.visible = false
 	$HUD/Cheese.visible = false
 	$HUD/CheeseCooldown.visible = false
+	$WinScreen/Again.disabled = false
+	$WinScreen/CheckBoxButton.check()
 	_show_roles()
 	
 	for player in get_tree().get_nodes_in_group("player"):
@@ -616,12 +618,15 @@ func _process(delta: float) -> void:
 		refresh_play_again_button()
 
 func _on_again_button_pressed() -> void:
+	$WinScreen/Again.disabled = true
+	$WinScreen/CheckBoxButton.uncheck()
 	$SoundEffects.play()
 	# make a new maze
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
-	random_role_assignment()
+	if is_host:
+		random_role_assignment()
 	start_helper.rpc(maze, offset, color_to_role, color_to_pts)
 
 # assign random roles to colors based on existing roles and colors
