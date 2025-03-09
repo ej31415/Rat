@@ -239,7 +239,7 @@ func erase_maze(mat: Array, offset: Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var size := 8
+	var size := 10
 	var args = Array(OS.get_cmdline_args())
 	if args.has("--demo"):
 		size = 5
