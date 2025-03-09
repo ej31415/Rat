@@ -628,6 +628,7 @@ func _on_again_button_pressed() -> void:
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
+	random_role_assignment()
 	if is_host:
 		random_role_assignment()
 	start_helper.rpc(maze, offset, color_to_role, color_to_pts)

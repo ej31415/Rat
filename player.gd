@@ -45,7 +45,6 @@ var knife_sound
 var shot_sound
 var walk_sound
 var sprint_sound
-var angel_sound
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -61,7 +60,6 @@ func _init() -> void:
 	shot_sound = preload("res://assets/Music/gunshot.mp3")
 	walk_sound = preload("res://assets/Music/walking.mp3")
 	sprint_sound = preload("res://assets/Music/sprinting.mp3")
-	angel_sound = preload("res://assets/Music/angelic.mp3")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -407,8 +405,6 @@ func die():
 		await get_tree().create_timer(0.2).timeout
 		fade_out_vision(0.1)
 		await get_tree().create_timer(0.2).timeout
-		$SoundEffects.stream = angel_sound
-		$SoundEffects.play()
 		activate_ghost(0.1)
 	else:
 		$ViewSphere.enabled = false
