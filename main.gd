@@ -428,8 +428,14 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	if game_ended:
 		return
 	print("game ended!!!")
-	game_ended = true
 	$TimerCanvasLayer.end_timer.rpc()
+	game_ended = true
+	await get_tree().create_timer(1).timeout
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
+			player.get_node("AnimationPlayer").stop()
+			player.get_node("AnimationPlayer").clear_queue()
+			player.get_node("SoundEffects").stop()
 	$AudioStreamPlayer.stop()
 	$HUD/Gun.visible = false
 	$HUD/Knife.visible = false
@@ -441,11 +447,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	$WinScreen/Again.disabled = false
 	$WinScreen/CheckBoxButton.check()
 	_show_roles()
-	
-	for player in get_tree().get_nodes_in_group("player"):
-		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
-			player.get_node("AnimationPlayer").stop()
-			player.get_node("AnimationPlayer").clear_queue()
+
 	if player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
 	else:
@@ -542,6 +544,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 func _process(delta: float) -> void:
 	if player_disconnected and not game_ended:
 		_end_game.rpc(false, false, false, true, "")
+	
 	for player in get_tree().get_nodes_in_group("player"):
 		if not player.has_method("get_role"):
 			continue
