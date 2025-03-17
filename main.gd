@@ -430,6 +430,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	print("game ended!!!")
 	$TimerCanvasLayer.end_timer.rpc()
 	game_ended = true
+	await get_tree().create_timer(1).timeout
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
@@ -541,7 +542,25 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if player_disconnected and not game_ended:
+	if Input.is_action_just_pressed("HELP"):
+		$HelpControl.visible = !$HelpControl.visible
+	
+	if Input.is_action_just_pressed("LEFT") and $HelpControl.visible:
+		$HelpControl/Left.emit_signal("button_down")
+	
+	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
+		$HelpControl/Right.emit_signal("button_down")
+		
+	if Input.is_action_just_pressed("TOGGLE LIGHT"):
+		$Darkness.visible = !$Darkness.visible
+	
+	if is_host and game_ended:
+		refresh_play_again_button()
+	
+	if game_ended:
+		return
+		
+	if player_disconnected:
 		_end_game.rpc(false, false, false, true, "")
 	
 	for player in get_tree().get_nodes_in_group("player"):
@@ -550,9 +569,9 @@ func _process(delta: float) -> void:
 			
 		# Check end game
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
-		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
+		if $Map/Exit.get_cell_source_id(player_tile) != -1 and player.get_role() != "rat":
 			_end_game.rpc(true, false, false, false, player.get_color())
-		if player.get_role() == "rat" and not game_ended and not player.is_alive():
+		if player.get_role() == "rat" and not player.is_alive():
 			_end_game.rpc(true, true, false, false, "")
 			
 		# Check sheriff shot
@@ -582,7 +601,7 @@ func _process(delta: float) -> void:
 				$HUD/Stamina.tint_progress = Color("#f71f00")
 		
 		# Check cheese status
-		if player.get_color() == my_color and player.get_role() != "rat" and not game_ended:
+		if player.get_color() == my_color and player.get_role() != "rat":
 			var buff_progress_value = player.get_buff_progress()
 			$HUD/Cheese.value = buff_progress_value
 			if buff_progress_value > 0:
@@ -601,23 +620,8 @@ func _process(delta: float) -> void:
 				else:
 					$HUD/Cheese.visible = false
 	
-	if rat_killed + sheriff_killed == 3 and not game_ended:
+	if rat_killed + sheriff_killed == 3:
 		_end_game.rpc(false, false, false, false, "")
-		
-	if Input.is_action_just_pressed("HELP"):
-		$HelpControl.visible = !$HelpControl.visible
-	
-	if Input.is_action_just_pressed("LEFT") and $HelpControl.visible:
-		$HelpControl/Left.emit_signal("button_down")
-	
-	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
-		$HelpControl/Right.emit_signal("button_down")
-		
-	if Input.is_action_just_pressed("TOGGLE LIGHT"):
-		$Darkness.visible = !$Darkness.visible
-	
-	if is_host and game_ended:
-		refresh_play_again_button()
 
 func _on_again_button_pressed() -> void:
 	$WinScreen/Again.disabled = true

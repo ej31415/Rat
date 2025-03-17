@@ -40,11 +40,8 @@ var playback: AudioStreamGeneratorPlayback
 var input
 var output
 
-var death_sound
-var knife_sound
-var shot_sound
-var walk_sound
-var sprint_sound
+var death_sound; var angel_sound
+var knife_sound; var shot_sound; var walk_sound; var sprint_sound
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
@@ -60,6 +57,7 @@ func _init() -> void:
 	shot_sound = preload("res://assets/Music/gunshot.mp3")
 	walk_sound = preload("res://assets/Music/walking.mp3")
 	sprint_sound = preload("res://assets/Music/sprinting.mp3")
+	angel_sound = preload("res://assets/Music/angelic.mp3")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -404,6 +402,9 @@ func die():
 		ghost_instance = spawn_ghost(self.get_node("AnimatedSprite2D").modulate)
 		await get_tree().create_timer(0.2).timeout
 		fade_out_vision(0.1)
+		$SoundEffects.stream = angel_sound
+		$SoundEffects.stream.loop = false
+		$SoundEffects.play()
 		await get_tree().create_timer(0.2).timeout
 		activate_ghost(0.1)
 	else:
