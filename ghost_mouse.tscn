@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://dsf2dc76n0gfe"]
+[gd_scene load_steps=45 format=3 uid="uid://dsf2dc76n0gfe"]
 
 [ext_resource type="Script" path="res://ghost_mouse.gd" id="1_vs4wj"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_b4mxp"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://3ekekd4c48i1" path="res://assets/Ghost Mouse/Side ghost 2.png" id="17_d0ksc"]
 [ext_resource type="Texture2D" uid="uid://caojieu7u0b28" path="res://assets/Ghost Mouse/Side ghost 3.png" id="18_gcxd3"]
 [ext_resource type="Texture2D" uid="uid://3sdmhslq6nk1" path="res://assets/Generic Mouse/Attachments/Knife 1 knife.png" id="20_cqvcw"]
+[ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="20_s8da2"]
 [ext_resource type="Texture2D" uid="uid://bhpjmtb4h532v" path="res://assets/Generic Mouse/Attachments/Knife 2 knife.png" id="21_g3eve"]
 [ext_resource type="Texture2D" uid="uid://bsg75afbj0jp6" path="res://assets/Generic Mouse/Attachments/Sheriff gun back no flash.png" id="22_17cpo"]
 [ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="23_w0k2n"]
@@ -442,8 +443,6 @@ position = Vector2(0, 123.5)
 texture = ExtResource("3_8dguo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-light_mask = 8
-visibility_layer = 8
 sprite_frames = SubResource("SpriteFrames_st0pp")
 animation = &"front"
 frame = 1
@@ -461,11 +460,14 @@ script = ExtResource("24_maemb")
 [node name="SoundEffects" type="AudioStreamPlayer" parent="."]
 
 [node name="Username" type="RichTextLabel" parent="."]
-offset_left = -88.0
+offset_left = -128.0
 offset_top = -167.0
-offset_right = 88.0
+offset_right = 128.0
 offset_bottom = -127.0
+theme_override_fonts/normal_font = ExtResource("20_s8da2")
+theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
+scroll_active = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

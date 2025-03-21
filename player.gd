@@ -431,6 +431,7 @@ func spawn_ghost(color: Color) -> CharacterBody2D:
 	ghost.global_position = global_position
 	color.a = 0.5
 	ghost.get_node("AnimatedSprite2D").modulate = color
+	ghost.get_node("Username").text = "[center](RIP) " + self.username
 	get_parent().add_child(ghost)
 	if multiplayer.has_multiplayer_peer():
 		ghost.set_multiplayer_authority(multiplayer.get_unique_id())
