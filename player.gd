@@ -16,6 +16,8 @@ static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
+var username
+
 var SPEED = 600.0
 var stamina = MAX_STAMINA
 var can_sprint = true
@@ -66,8 +68,15 @@ func _pseudo_ready():
 	add_to_group("player")
 	if role == "":
 		print("role not set")
+		
+func _attach_usernames(id_to_username, id_to_color):
+	for id in id_to_color:
+		if id_to_color[id] == self.color:
+			$Username.text = "[center]" + id_to_username[id]
+			print("found " + id_to_username[id])
 
-func starter(color_to_roles):
+func starter(color_to_roles, id_to_username, id_to_color):
+	print("Starter called with username map: " + str(id_to_username))
 	if ghost_instance and is_instance_valid(ghost_instance):
 		ghost_instance.queue_free()
 		ghost_instance = null
@@ -77,6 +86,7 @@ func starter(color_to_roles):
 	next_cheese_drop = now
 	buff_end = now - 1
 	
+	username = id_to_username[multiplayer.get_unique_id()]
 	role = color_to_roles[color]
 	alive = true
 	buffed = false
@@ -86,6 +96,7 @@ func starter(color_to_roles):
 	$ViewSphere.texture_scale = 1
 	$ViewSphere.energy = 1
 	$Vision.enabled = true
+	_attach_usernames(id_to_username, id_to_color)
 	enable_movement()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true

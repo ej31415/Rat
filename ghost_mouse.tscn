@@ -460,6 +460,13 @@ script = ExtResource("24_maemb")
 
 [node name="SoundEffects" type="AudioStreamPlayer" parent="."]
 
+[node name="Username" type="RichTextLabel" parent="."]
+offset_left = -88.0
+offset_top = -167.0
+offset_right = 88.0
+offset_bottom = -127.0
+bbcode_enabled = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_fhu0p")

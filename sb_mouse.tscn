@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://75nausi002r2"]
+[gd_scene load_steps=55 format=3 uid="uid://75nausi002r2"]
 
 [ext_resource type="Script" path="res://sb_mouse.gd" id="1_2m8vg"]
 [ext_resource type="Texture2D" uid="uid://ddivplqjq3sux" path="res://assets/Shadow.png" id="2_8dqxm"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://ohmmldhnre2e" path="res://assets/Generic Mouse/Attachments/Sheriff gun front no flash.png" id="31_eeilw"]
 [ext_resource type="Texture2D" uid="uid://cs3v3qs2rw1fr" path="res://assets/Generic Mouse/Attachments/Sheriff gun lr no flash.png" id="32_caawa"]
 [ext_resource type="Texture2D" uid="uid://bfjda0hn8531v" path="res://assets/Generic Mouse/Attachments/Crosshair.png" id="33_lvqts"]
+[ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="34_ndp5u"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_awjhh"]
 light_mode = 2
@@ -675,6 +676,17 @@ shape = SubResource("CapsuleShape2D_j67ck")
 libraries = {
 "": SubResource("AnimationLibrary_fhu0p")
 }
+
+[node name="Username" type="RichTextLabel" parent="."]
+light_mask = 4
+offset_left = -128.0
+offset_top = -167.0
+offset_right = 128.0
+offset_bottom = -127.0
+theme_override_fonts/normal_font = ExtResource("34_ndp5u")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+scroll_active = false
 
 [node name="SoundEffects" type="AudioStreamPlayer" parent="."]
 
