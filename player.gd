@@ -73,10 +73,8 @@ func _attach_usernames(id_to_username, id_to_color):
 	for id in id_to_color:
 		if id_to_color[id] == self.color:
 			$Username.text = "[center]" + id_to_username[id]
-			print("found " + id_to_username[id])
 
 func starter(color_to_roles, id_to_username, id_to_color):
-	print("Starter called with username map: " + str(id_to_username))
 	if ghost_instance and is_instance_valid(ghost_instance):
 		ghost_instance.queue_free()
 		ghost_instance = null

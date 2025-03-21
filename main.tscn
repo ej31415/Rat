@@ -283,20 +283,20 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Joined: 1/4"
 
-[node name="label" type="Label" parent="StartMenu"]
+[node name="label" type="RichTextLabel" parent="StartMenu"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = -156.0
-offset_top = 88.984
-offset_right = -116.0
-offset_bottom = 111.984
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_dpgvo")
-text = "IP"
+offset_left = -168.0
+offset_top = 93.984
+offset_right = -128.0
+offset_bottom = 116.984
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]IP"
 
 [node name="username" type="LineEdit" parent="StartMenu"]
 visible = false
@@ -340,35 +340,35 @@ theme_override_colors/font_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "localhost"
 
-[node name="error" type="Label" parent="StartMenu"]
+[node name="error" type="RichTextLabel" parent="StartMenu"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = -61.0
-offset_top = 202.984
-offset_right = 40.0
-offset_bottom = 225.984
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_dpgvo")
-text = "error joining"
+offset_left = -64.0
+offset_top = 200.984
+offset_right = 64.0
+offset_bottom = 223.984
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]error joining"
 
-[node name="joined" type="Label" parent="StartMenu"]
+[node name="joined" type="RichTextLabel" parent="StartMenu"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = -65.0
+offset_left = -80.0
 offset_top = 205.984
-offset_right = 65.0
+offset_right = 80.0
 offset_bottom = 228.984
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_dpgvo")
-text = "waiting for host"
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]waiting for host"
 
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
