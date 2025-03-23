@@ -27,6 +27,7 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var has_buff = false
 var buffed = false
 var buff_end = 0
 var next_rat_kill = 0
@@ -49,9 +50,6 @@ func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
 	role = roles[idx]
 	roles.pop_at(idx)
-	alive = true
-	buffed = false
-	started = false
 	ghost_scene = preload("res://ghost_mouse.tscn")
 	
 	death_sound = preload("res://assets/Music/death_sound.mp3")
@@ -83,11 +81,12 @@ func starter(color_to_roles, id_to_username, id_to_color):
 	next_rat_kill = now + RAT_COOLDOWN / 2
 	next_cheese_drop = now
 	buff_end = now - 1
+	buffed = false
+	has_buff = false
 	
 	username = id_to_username[multiplayer.get_unique_id()]
 	role = color_to_roles[color]
 	alive = true
-	buffed = false
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
@@ -369,11 +368,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.stream.loop = false
 				$SoundEffects.play()
 			if role == "mouse":
-				if Time.get_unix_time_from_system() < next_cheese_drop:
-					print(color + " on cheese drop cooldown")
-					return
-				
-				cheese_create_call.rpc(color)
+				if has_buff:
+					self.buff()
+				else:
+					if Time.get_unix_time_from_system() < next_cheese_drop:
+						print(color + " on cheese drop cooldown")
+						return
+					
+					cheese_create_call.rpc(color)
 
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
@@ -482,6 +484,7 @@ func cheese_create_call(owner_color: String):
 	
 func buff():
 	self.buffed = true
+	self.has_buff = false
 	self.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
 	self.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
 	var tween := get_tree().create_tween()

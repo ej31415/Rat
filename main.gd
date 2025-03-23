@@ -612,24 +612,26 @@ func _process(delta: float) -> void:
 				$HUD/Stamina.tint_progress = Color("#f71f00")
 		
 		# Check cheese status
-		if player.get_color() == my_color and player.get_role() != "rat":
+		if player.get_color() == my_color and player.get_role() == "mouse":
 			var buff_progress_value = player.get_buff_progress()
 			$HUD/Cheese.value = buff_progress_value
 			if buff_progress_value > 0:
 				$HUD/Cheese.modulate = Color(1, 1, 1, 1)
 				$HUD/Cheese.visible = true
+				$HUD/Cheese.flashing = false
 				$HUD/CheeseCooldown.clear()
 			else:
-				if player.get_role() == "mouse":
-					var cooldown = player.get_cheese_drop_cooldown()
-					if cooldown > 0:
-						$HUD/Cheese.modulate=Color(60/255.0,60/255.0,60/255.0)
-						$HUD/CheeseCooldown.text = "[center]" + str(cooldown)
-					else:
-						$HUD/Cheese.modulate=Color(1, 1, 1)
-						$HUD/CheeseCooldown.clear()
+				var cooldown = player.get_cheese_drop_cooldown()
+				if player.has_buff:
+					$HUD/Cheese.flashing = true
+					$HUD/CheeseCooldown.clear()
+				elif cooldown > 0:
+					$HUD/Cheese.modulate.a = 0.5
+					$HUD/CheeseCooldown.text = "[center]" + str(cooldown)
 				else:
-					$HUD/Cheese.visible = false
+					$HUD/Cheese.flashing = false
+					$HUD/Cheese.modulate = Color(1, 1, 1)
+					$HUD/CheeseCooldown.clear()
 	
 	if rat_killed + sheriff_killed == 3:
 		_end_game.rpc(false, false, false, false, "")

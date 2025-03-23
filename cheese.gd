@@ -26,11 +26,10 @@ func _process(delta: float) -> void:
 		if not player.has_method("get_color") or player == spawned_from: # cannot pick up own cheese
 			continue
 		if player.position.distance_to(self.position) < 190:
-			if player.get_role() == "rat":
-				print("RAT STOLE THE CHEESE")
-				self.queue_free()
-			else:
+			if player.get_role() == "mouse":
 				cheese_consumed([player, spawned_from])
+			else:
+				self.queue_free()
 	
 	# Despawn when owner is too far away
 	if consumed or spawned_from.position.distance_to(self.position) < dist_radius:
@@ -41,6 +40,6 @@ func _process(delta: float) -> void:
 
 func cheese_consumed(buff_players: Array):
 	for player in buff_players:
-		player.buff()
+		player.has_buff = true
 		if player.cheese != null:
 			player.cheese.queue_free()

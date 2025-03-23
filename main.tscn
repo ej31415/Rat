@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=72 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://i163uy3tf7l8" path="res://assets/Post Game/leaderboard-background.png" id="26_c13j8"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
+[ext_resource type="Script" path="res://flashing.gd" id="27_66ydx"]
 [ext_resource type="Texture2D" uid="uid://cagfbjlpqckhe" path="res://assets/UI/minimap.png" id="28_n6ua0"]
 [ext_resource type="Texture2D" uid="uid://b81vxitxhs6k0" path="res://assets/UI/Stamina Texture.png" id="29_udgh8"]
 [ext_resource type="Texture2D" uid="uid://btmm4fokcnqu2" path="res://assets/Post Game/Post game 1st place and lighting.png" id="30_k7k5v"]
@@ -725,6 +726,7 @@ fill_mode = 4
 nine_patch_stretch = true
 texture_over = ExtResource("24_kern2")
 texture_progress = ExtResource("25_geud4")
+script = ExtResource("27_66ydx")
 
 [node name="CheeseCooldown" type="RichTextLabel" parent="HUD"]
 visible = false
