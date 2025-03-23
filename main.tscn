@@ -592,6 +592,7 @@ vertical_alignment = 1
 
 [node name="ScoreBoard" type="CanvasGroup" parent="HUD"]
 visible = false
+position = Vector2(0, 8)
 
 [node name="GrayRole" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 914.0

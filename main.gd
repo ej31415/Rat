@@ -140,7 +140,7 @@ func _quick_start():
 		
 func _register_username_wrapper():
 	_register_username.rpc(peer.get_unique_id(), $StartMenu/username.text)
-
+	$StartMenu/username.editable = false
 	
 @rpc("call_local", "reliable", "any_peer")
 func _register_username(id: int, text: String):
@@ -159,7 +159,8 @@ func _on_host_pressed():
 	$StartMenu/num_players.visible = true
 	$StartMenu/host.disabled = true
 	$StartMenu/join.disabled = true
-	_register_username(peer.get_unique_id(), $StartMenu/username.text)
+	$StartMenu/ip.editable = false
+	_register_username_wrapper()
 	is_host = true
 
 func _add_player(id = 1):
@@ -228,6 +229,7 @@ func _on_server_disconnect():
 
 func _on_join_pressed():
 	$SoundEffects.play()
+	$StartMenu/ip.editable = false
 	var error = peer.create_client($StartMenu/ip.text, 135)
 	if error == OK:
 		multiplayer.multiplayer_peer = peer
@@ -239,6 +241,7 @@ func _on_join_pressed():
 		$StartMenu/disconnect.visible = true
 	else:
 		$StartMenu/error.visible = true
+		$StartMenu/ip.editable = true
 
 func _on_disconnect_pressed():
 	$SoundEffects.play()
@@ -250,6 +253,8 @@ func _on_disconnect_pressed():
 	$StartMenu/error.visible = false
 	$StartMenu/host.disabled = false
 	$StartMenu/joined.visible = false
+	$StartMenu/username.editable = true
+	$StartMenu/ip.editable = true
 	
 func _hide_roles():
 	$HUD/ScoreBoard/GrayRole.visible = false
