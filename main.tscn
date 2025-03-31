@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=72 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://jw7j2e2j350p" path="res://assets/Music/time_warning.mp3" id="16_v0r1l"]
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
+[ext_resource type="Texture2D" uid="uid://d1835lx73yhn6" path="res://assets/Help Menu/Question Mark.png" id="22_wycyy"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
 [ext_resource type="Texture2D" uid="uid://d00jq3qprr4ob" path="res://assets/Cheese.PNG" id="24_kern2"]
 [ext_resource type="Script" path="res://minimap.gd" id="25_320b3"]
@@ -23,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://b4ubeafc4snbl" path="res://assets/Music/button_click.mp3" id="26_a2wbr"]
 [ext_resource type="Texture2D" uid="uid://i163uy3tf7l8" path="res://assets/Post Game/leaderboard-background.png" id="26_c13j8"]
 [ext_resource type="Texture2D" uid="uid://sghjqjof4upd" path="res://assets/Generic Mouse/Mouse head.png" id="26_csx1t"]
+[ext_resource type="Script" path="res://flashing.gd" id="27_66ydx"]
 [ext_resource type="Texture2D" uid="uid://cagfbjlpqckhe" path="res://assets/UI/minimap.png" id="28_n6ua0"]
 [ext_resource type="Texture2D" uid="uid://b81vxitxhs6k0" path="res://assets/UI/Stamina Texture.png" id="29_udgh8"]
 [ext_resource type="Texture2D" uid="uid://btmm4fokcnqu2" path="res://assets/Post Game/Post game 1st place and lighting.png" id="30_k7k5v"]
@@ -216,10 +218,10 @@ anchor_left = 0.5
 anchor_top = 0.556
 anchor_right = 0.5
 anchor_bottom = 0.556
-offset_left = -158.0
-offset_top = 111.712
-offset_right = -82.0
-offset_bottom = 167.712
+offset_left = -136.0
+offset_top = 110.712
+offset_right = -55.0
+offset_bottom = 166.712
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Host"
 
@@ -230,10 +232,10 @@ anchor_left = 0.489
 anchor_top = 0.556
 anchor_right = 0.489
 anchor_bottom = 0.556
-offset_left = -40.328
-offset_top = 111.712
-offset_right = 37.672
-offset_bottom = 167.712
+offset_left = -27.328
+offset_top = 110.712
+offset_right = 52.672
+offset_bottom = 166.712
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Join"
 
@@ -244,10 +246,10 @@ anchor_left = 0.5
 anchor_top = 0.556
 anchor_right = 0.5
 anchor_bottom = 0.556
-offset_left = 52.0
-offset_top = 111.712
-offset_right = 130.0
-offset_bottom = 167.712
+offset_left = 56.0
+offset_top = 110.712
+offset_right = 135.0
+offset_bottom = 166.712
 theme_override_fonts/font = ExtResource("10_dpgvo")
 disabled = true
 text = "Start"
@@ -282,20 +284,41 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Joined: 1/4"
 
-[node name="label" type="Label" parent="StartMenu"]
+[node name="label" type="RichTextLabel" parent="StartMenu"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = -156.0
-offset_top = 88.984
-offset_right = -116.0
-offset_bottom = 111.984
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+offset_left = -168.0
+offset_top = 93.984
+offset_right = -128.0
+offset_bottom = 116.984
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]IP"
+
+[node name="username" type="LineEdit" parent="StartMenu"]
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.524
+anchor_right = 0.5
+anchor_bottom = 0.524
+offset_left = -127.0
+offset_top = 46.448
+offset_right = 128.0
+offset_bottom = 77.448
+focus_next = NodePath("../ip")
+focus_previous = NodePath("../ip")
+theme_override_colors/font_placeholder_color = Color(0.772549, 0.772549, 0.772549, 1)
+theme_override_colors/font_outline_color = Color(0.772549, 0.772549, 0.772549, 1)
+theme_override_colors/font_selected_color = Color(0.772549, 0.772549, 0.772549, 1)
+theme_override_colors/font_uneditable_color = Color(0.772549, 0.772549, 0.772549, 1)
+theme_override_colors/font_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
-text = "IP"
+placeholder_text = "username"
 
 [node name="ip" type="LineEdit" parent="StartMenu"]
 visible = false
@@ -304,10 +327,12 @@ anchor_left = 0.5
 anchor_top = 0.524
 anchor_right = 0.5
 anchor_bottom = 0.524
-offset_left = -120.0
-offset_top = 80.448
-offset_right = 129.0
-offset_bottom = 111.448
+offset_left = -127.0
+offset_top = 85.448
+offset_right = 128.0
+offset_bottom = 116.448
+focus_next = NodePath("../username")
+focus_previous = NodePath("../username")
 theme_override_colors/font_placeholder_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_colors/font_outline_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_colors/font_selected_color = Color(0.772549, 0.772549, 0.772549, 1)
@@ -316,35 +341,35 @@ theme_override_colors/font_color = Color(0.772549, 0.772549, 0.772549, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "localhost"
 
-[node name="error" type="Label" parent="StartMenu"]
+[node name="error" type="RichTextLabel" parent="StartMenu"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = -61.0
-offset_top = 202.984
-offset_right = 40.0
-offset_bottom = 225.984
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_dpgvo")
-text = "error joining"
+offset_left = -64.0
+offset_top = 200.984
+offset_right = 64.0
+offset_bottom = 223.984
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]error joining"
 
-[node name="joined" type="Label" parent="StartMenu"]
+[node name="joined" type="RichTextLabel" parent="StartMenu"]
 visible = false
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
-offset_left = -65.0
+offset_left = -80.0
 offset_top = 205.984
-offset_right = 65.0
+offset_right = 80.0
 offset_bottom = 228.984
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("10_dpgvo")
-text = "waiting for host"
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+bbcode_enabled = true
+text = "[center]waiting for host"
 
 [node name="TimerCanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("10_al2ht")
@@ -533,18 +558,20 @@ theme_override_font_sizes/normal_font_size = 25
 text = "Objective: 
 Escape or kill rat"
 
-[node name="HelpMessage" type="Label" parent="HUD"]
+[node name="HelpMessage" type="Button" parent="HUD"]
+visible = false
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -248.0
+offset_left = -163.0
 offset_top = 8.0
 offset_right = -7.0
-offset_bottom = 33.0
+offset_bottom = 48.0
 grow_horizontal = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
 theme_override_font_sizes/font_size = 20
-text = "Press [tab] for help manual"
+text = "Help Manual"
+icon = ExtResource("22_wycyy")
 
 [node name="PointGoal" type="Label" parent="HUD"]
 visible = false
@@ -565,6 +592,7 @@ vertical_alignment = 1
 
 [node name="ScoreBoard" type="CanvasGroup" parent="HUD"]
 visible = false
+position = Vector2(0, 8)
 
 [node name="GrayRole" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 914.0
@@ -699,6 +727,7 @@ fill_mode = 4
 nine_patch_stretch = true
 texture_over = ExtResource("24_kern2")
 texture_progress = ExtResource("25_geud4")
+script = ExtResource("27_66ydx")
 
 [node name="CheeseCooldown" type="RichTextLabel" parent="HUD"]
 visible = false
@@ -1985,6 +2014,7 @@ autoplay = true
 [connection signal="button_up" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_button_up"]
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="HUD/HelpMessage" to="." method="_on_help_message_pressed"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Controller" to="HelpControl" method="_on_controller_button_down"]

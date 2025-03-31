@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://cip1oahpmpagq"]
+[gd_scene load_steps=54 format=3 uid="uid://cip1oahpmpagq"]
 
 [ext_resource type="Script" path="res://brown_mouse.gd" id="1_2yxuw"]
 [ext_resource type="Texture2D" uid="uid://dwcrogdce4xok" path="res://assets/Flashlight.png" id="2_45tb2"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://bhpjmtb4h532v" path="res://assets/Generic Mouse/Attachments/Knife 2 knife.png" id="30_upl3j"]
 [ext_resource type="Texture2D" uid="uid://cs3v3qs2rw1fr" path="res://assets/Generic Mouse/Attachments/Sheriff gun lr no flash.png" id="31_w127b"]
 [ext_resource type="Texture2D" uid="uid://bfjda0hn8531v" path="res://assets/Generic Mouse/Attachments/Crosshair.png" id="33_v0jsh"]
+[ext_resource type="FontFile" uid="uid://c6qvx3a04wb6o" path="res://assets/PixelifySans-VariableFont_wght.ttf" id="34_aysqt"]
 
 [sub_resource type="Gradient" id="Gradient_s0nxo"]
 offsets = PackedFloat32Array(0.211538, 0.557692, 1)
@@ -674,6 +675,16 @@ shape = SubResource("CapsuleShape2D_asjwq")
 libraries = {
 "": SubResource("AnimationLibrary_fhu0p")
 }
+
+[node name="Username" type="RichTextLabel" parent="."]
+offset_left = -128.0
+offset_top = -167.0
+offset_right = 128.0
+offset_bottom = -127.0
+theme_override_fonts/normal_font = ExtResource("34_aysqt")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+scroll_active = false
 
 [node name="SoundEffects" type="AudioStreamPlayer" parent="."]
 

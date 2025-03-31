@@ -16,6 +16,8 @@ static var roles = ["mouse", "mouse", "rat", "sheriff"]
 static var roles_copy = ["mouse", "mouse", "rat", "sheriff"]
 static var rng = RandomNumberGenerator.new()
 
+var username
+
 var SPEED = 600.0
 var stamina = MAX_STAMINA
 var can_sprint = true
@@ -25,6 +27,7 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var has_buff = false
 var buffed = false
 var buff_end = 0
 var next_rat_kill = 0
@@ -40,19 +43,13 @@ var playback: AudioStreamGeneratorPlayback
 var input
 var output
 
-var death_sound
-var knife_sound
-var shot_sound
-var walk_sound
-var sprint_sound
+var death_sound; var angel_sound
+var knife_sound; var shot_sound; var walk_sound; var sprint_sound
 
 func _init() -> void:
 	var idx = rng.randi_range(0, len(roles) - 1)
 	role = roles[idx]
 	roles.pop_at(idx)
-	alive = true
-	buffed = false
-	started = false
 	ghost_scene = preload("res://ghost_mouse.tscn")
 	
 	death_sound = preload("res://assets/Music/death_sound.mp3")
@@ -60,6 +57,7 @@ func _init() -> void:
 	shot_sound = preload("res://assets/Music/gunshot.mp3")
 	walk_sound = preload("res://assets/Music/walking.mp3")
 	sprint_sound = preload("res://assets/Music/sprinting.mp3")
+	angel_sound = preload("res://assets/Music/angelic.mp3")
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
@@ -68,8 +66,13 @@ func _pseudo_ready():
 	add_to_group("player")
 	if role == "":
 		print("role not set")
+		
+func _attach_usernames(id_to_username, id_to_color):
+	for id in id_to_color:
+		if id_to_color[id] == self.color:
+			$Username.text = "[center]" + id_to_username[id]
 
-func starter(color_to_roles):
+func starter(color_to_roles, id_to_username, id_to_color):
 	if ghost_instance and is_instance_valid(ghost_instance):
 		ghost_instance.queue_free()
 		ghost_instance = null
@@ -78,16 +81,19 @@ func starter(color_to_roles):
 	next_rat_kill = now + RAT_COOLDOWN / 2
 	next_cheese_drop = now
 	buff_end = now - 1
+	buffed = false
+	has_buff = false
 	
+	username = id_to_username[multiplayer.get_unique_id()]
 	role = color_to_roles[color]
 	alive = true
-	buffed = false
 	sheriff_shot = false
 	started = true
 	$ViewSphere.enabled = true
 	$ViewSphere.texture_scale = 1
 	$ViewSphere.energy = 1
 	$Vision.enabled = true
+	_attach_usernames(id_to_username, id_to_color)
 	enable_movement()
 	if is_multiplayer_authority():
 		$Camera2D.enabled = true
@@ -362,11 +368,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.stream.loop = false
 				$SoundEffects.play()
 			if role == "mouse":
-				if Time.get_unix_time_from_system() < next_cheese_drop:
-					print(color + " on cheese drop cooldown")
-					return
-				
-				cheese_create_call.rpc(color)
+				if has_buff:
+					self.buff()
+				else:
+					if Time.get_unix_time_from_system() < next_cheese_drop:
+						print(color + " on cheese drop cooldown")
+						return
+					
+					cheese_create_call.rpc(color)
 
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
@@ -404,6 +413,9 @@ func die():
 		ghost_instance = spawn_ghost(self.get_node("AnimatedSprite2D").modulate)
 		await get_tree().create_timer(0.2).timeout
 		fade_out_vision(0.1)
+		$SoundEffects.stream = angel_sound
+		$SoundEffects.stream.loop = false
+		$SoundEffects.play()
 		await get_tree().create_timer(0.2).timeout
 		activate_ghost(0.1)
 	else:
@@ -421,6 +433,7 @@ func spawn_ghost(color: Color) -> CharacterBody2D:
 	ghost.global_position = global_position
 	color.a = 0.5
 	ghost.get_node("AnimatedSprite2D").modulate = color
+	ghost.get_node("Username").text = "[center](RIP) " + self.username
 	get_parent().add_child(ghost)
 	if multiplayer.has_multiplayer_peer():
 		ghost.set_multiplayer_authority(multiplayer.get_unique_id())
@@ -471,6 +484,7 @@ func cheese_create_call(owner_color: String):
 	
 func buff():
 	self.buffed = true
+	self.has_buff = false
 	self.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
 	self.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
 	var tween := get_tree().create_tween()

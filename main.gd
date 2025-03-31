@@ -16,6 +16,7 @@ var scrn_timeout; var scrn_timeout_addon
 var gray_head; var sb_head; var tan_head; var brown_head
 var knife; var bloody_knife
 
+var id_to_username = {}
 var mice = []
 var color_to_role = {}
 var color_to_pts = {}
@@ -136,6 +137,16 @@ func _quick_start():
 	await get_tree().create_timer(0.5).timeout
 	if is_host:
 		_on_start_pressed()
+		
+func _register_username_wrapper():
+	_register_username.rpc(peer.get_unique_id(), $StartMenu/username.text)
+	$StartMenu/username.editable = false
+	
+@rpc("call_local", "reliable", "any_peer")
+func _register_username(id: int, text: String):
+	# probably add some error checking later
+	id_to_username[id] = text
+	print("Mapped " + str(id) + " to " + text)
 
 func _on_host_pressed():
 	$SoundEffects.play()
@@ -148,6 +159,8 @@ func _on_host_pressed():
 	$StartMenu/num_players.visible = true
 	$StartMenu/host.disabled = true
 	$StartMenu/join.disabled = true
+	$StartMenu/ip.editable = false
+	_register_username_wrapper()
 	is_host = true
 
 func _add_player(id = 1):
@@ -216,9 +229,11 @@ func _on_server_disconnect():
 
 func _on_join_pressed():
 	$SoundEffects.play()
+	$StartMenu/ip.editable = false
 	var error = peer.create_client($StartMenu/ip.text, 135)
 	if error == OK:
 		multiplayer.multiplayer_peer = peer
+		multiplayer.connected_to_server.connect(_register_username_wrapper)
 		$StartMenu/host.disabled = true
 		$StartMenu/join.disabled = true
 		$StartMenu/error.visible = false
@@ -226,6 +241,7 @@ func _on_join_pressed():
 		$StartMenu/disconnect.visible = true
 	else:
 		$StartMenu/error.visible = true
+		$StartMenu/ip.editable = true
 
 func _on_disconnect_pressed():
 	$SoundEffects.play()
@@ -237,6 +253,8 @@ func _on_disconnect_pressed():
 	$StartMenu/error.visible = false
 	$StartMenu/host.disabled = false
 	$StartMenu/joined.visible = false
+	$StartMenu/username.editable = true
+	$StartMenu/ip.editable = true
 	
 func _hide_roles():
 	$HUD/ScoreBoard/GrayRole.visible = false
@@ -271,14 +289,16 @@ func _on_start_pressed():
 	$SoundEffects.play()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
-	start_helper.rpc(maze, offset, color_to_role, color_to_pts)
+	start_helper.rpc(maze, offset, [id_to_color, color_to_role, id_to_username, color_to_pts])
 
 @rpc("call_local", "reliable")
-func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Dictionary):
+func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	first_started = true
 	player_disconnected = false
-	color_to_role = true_roles
-	color_to_pts = pts
+	id_to_color = true_vals[0]
+	color_to_role = true_vals[1]
+	id_to_username = true_vals[2]
+	color_to_pts = true_vals[3]
 	
 	rat_killed = 0
 	sheriff_killed = 0
@@ -295,19 +315,18 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("starter"):
 			var spawn_pos: Vector2i = $Map.get_spawn_area(maze, 4, 4).pick_random()
-			child.starter(true_roles)
+			var out = child.starter(color_to_role, id_to_username, id_to_color)
 			child.visible = true
 			child.position = $Map/Floor.map_to_local(Vector2i(spawn_pos.y, spawn_pos.x) + offset)
 			child.reset_sprite_to_defaults()
 			
 			# Extract necessary statuses
-			var temp = child.starter(true_roles)
-			if temp[0] != "":
-				role = temp[0]
-			if temp[1] != Color(1, 1, 1):
-				color_player = temp[1]
-			if temp[2] != "":
-				my_color = temp[2]
+			if out[0] != "":
+				role = out[0]
+			if out[1] != Color(1, 1, 1):
+				color_player = out[1]
+			if out[2] != "":
+				my_color = out[2]
 	
 	_disable_role_screens()
 	$RoleScreen.visible = true
@@ -336,7 +355,7 @@ func start_helper(maze: Array, offset: Vector2i, true_roles: Dictionary, pts: Di
 	role_screen_color.a = 0
 	tween.tween_property($RoleScreen/Background, "modulate", role_screen_color, 1)
 	
-	if pts.values() == [0,0,0,0]:
+	if color_to_pts.values() == [0,0,0,0]:
 		$HUD/PointGoal.visible = true
 		$HUD/PointGoal.modulate = Color("#ffffffff")
 		fade_out_point_goal()
@@ -430,6 +449,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 	print("game ended!!!")
 	$TimerCanvasLayer.end_timer.rpc()
 	game_ended = true
+	await get_tree().create_timer(1).timeout
 	for player in get_tree().get_nodes_in_group("player"):
 		if player.has_method("die") and player.get_node("AnimationPlayer") != null:
 			player.get_node("AnimationPlayer").stop()
@@ -541,7 +561,22 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if player_disconnected and not game_ended:
+	if Input.is_action_just_pressed("LEFT") and $HelpControl.visible:
+		$HelpControl/Left.emit_signal("button_down")
+	
+	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
+		$HelpControl/Right.emit_signal("button_down")
+		
+	if Input.is_action_just_pressed("TOGGLE LIGHT"):
+		$Darkness.visible = !$Darkness.visible
+	
+	if is_host and game_ended:
+		refresh_play_again_button()
+	
+	if game_ended:
+		return
+		
+	if player_disconnected:
 		_end_game.rpc(false, false, false, true, "")
 	
 	for player in get_tree().get_nodes_in_group("player"):
@@ -550,9 +585,9 @@ func _process(delta: float) -> void:
 			
 		# Check end game
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
-		if $Map/Exit.get_cell_source_id(player_tile) != -1 and not game_ended and player.get_role() != "rat":
+		if $Map/Exit.get_cell_source_id(player_tile) != -1 and player.get_role() != "rat":
 			_end_game.rpc(true, false, false, false, player.get_color())
-		if player.get_role() == "rat" and not game_ended and not player.is_alive():
+		if player.get_role() == "rat" and not player.is_alive():
 			_end_game.rpc(true, true, false, false, "")
 			
 		# Check sheriff shot
@@ -582,42 +617,29 @@ func _process(delta: float) -> void:
 				$HUD/Stamina.tint_progress = Color("#f71f00")
 		
 		# Check cheese status
-		if player.get_color() == my_color and player.get_role() != "rat" and not game_ended:
+		if player.get_color() == my_color and player.get_role() == "mouse":
 			var buff_progress_value = player.get_buff_progress()
 			$HUD/Cheese.value = buff_progress_value
 			if buff_progress_value > 0:
 				$HUD/Cheese.modulate = Color(1, 1, 1, 1)
 				$HUD/Cheese.visible = true
+				$HUD/Cheese.flashing = false
 				$HUD/CheeseCooldown.clear()
 			else:
-				if player.get_role() == "mouse":
-					var cooldown = player.get_cheese_drop_cooldown()
-					if cooldown > 0:
-						$HUD/Cheese.modulate=Color(60/255.0,60/255.0,60/255.0)
-						$HUD/CheeseCooldown.text = "[center]" + str(cooldown)
-					else:
-						$HUD/Cheese.modulate=Color(1, 1, 1)
-						$HUD/CheeseCooldown.clear()
+				var cooldown = player.get_cheese_drop_cooldown()
+				if player.has_buff:
+					$HUD/Cheese.flashing = true
+					$HUD/CheeseCooldown.clear()
+				elif cooldown > 0:
+					$HUD/Cheese.modulate.a = 0.5
+					$HUD/CheeseCooldown.text = "[center]" + str(cooldown)
 				else:
-					$HUD/Cheese.visible = false
+					$HUD/Cheese.flashing = false
+					$HUD/Cheese.modulate = Color(1, 1, 1)
+					$HUD/CheeseCooldown.clear()
 	
-	if rat_killed + sheriff_killed == 3 and not game_ended:
+	if rat_killed + sheriff_killed == 3:
 		_end_game.rpc(false, false, false, false, "")
-		
-	if Input.is_action_just_pressed("HELP"):
-		$HelpControl.visible = !$HelpControl.visible
-	
-	if Input.is_action_just_pressed("LEFT") and $HelpControl.visible:
-		$HelpControl/Left.emit_signal("button_down")
-	
-	if Input.is_action_just_pressed("RIGHT") and $HelpControl.visible:
-		$HelpControl/Right.emit_signal("button_down")
-		
-	if Input.is_action_just_pressed("TOGGLE LIGHT"):
-		$Darkness.visible = !$Darkness.visible
-	
-	if is_host and game_ended:
-		refresh_play_again_button()
 
 func _on_again_button_pressed() -> void:
 	$WinScreen/Again.disabled = true
@@ -630,7 +652,7 @@ func _on_again_button_pressed() -> void:
 	random_role_assignment()
 	if is_host:
 		random_role_assignment()
-	start_helper.rpc(maze, offset, color_to_role, color_to_pts)
+	start_helper.rpc(maze, offset, [id_to_color, color_to_role, id_to_username, color_to_pts])
 
 # assign random roles to colors based on existing roles and colors
 func random_role_assignment():
@@ -645,8 +667,7 @@ func random_role_assignment():
 func _on_skip_pressed() -> void:
 	$SoundEffects.play()
 	$StartMenu/VideoContainer/TitleSequence.stop()
-	show_title_menu()
-	$HelpControl.visible = true
+	_on_title_sequence_finished()
 
 func _on_title_sequence_finished() -> void:
 	show_title_menu()
@@ -658,8 +679,11 @@ func show_title_menu() -> void:
 	$StartMenu/Skip.visible = false
 	$StartMenu/host.visible = true
 	$StartMenu/join.visible = true
+	$StartMenu/username.visible = true
 	$StartMenu/label.visible = true
 	$StartMenu/ip.visible = true
+	
+	$HUD/HelpMessage.visible = true
 	
 	$AudioStreamPlayer.stream = title_sound
 	$AudioStreamPlayer.stream.loop = true
@@ -691,3 +715,6 @@ func _on_lb_close_button_click() -> void:
 # TODO: connect more signals to this function
 func _on_any_button_click() -> void:
 	$SoundEffects.play()
+
+func _on_help_message_pressed() -> void:
+	$HelpControl.visible = !$HelpControl.visible
