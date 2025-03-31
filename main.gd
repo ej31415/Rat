@@ -2,7 +2,10 @@ extends Node2D
 
 class_name Main
 
+enum modes {NORMAL, BOUNTY}
+
 var peer = ENetMultiplayerPeer.new()
+var mode = modes.NORMAL
 @export var gray_mouse: PackedScene
 @export var brown_mouse: PackedScene
 @export var sb_mouse: PackedScene
@@ -24,6 +27,7 @@ var color_to_pts_label = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var color_to_code = {}
+var color_to_kills = {}
 var lb_sprites = []
 var id_to_color = {}
 var role_to_desc = {}
@@ -32,11 +36,12 @@ var is_host = false
 var first_started = false
 var player_disconnected = false
 var my_color = ""
+var bounty_colors = []
 
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 11
+var POINT_THRESHOLD := 4
 
 var quickstart_called = false
 
@@ -299,6 +304,8 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	color_to_role = true_vals[1]
 	id_to_username = true_vals[2]
 	color_to_pts = true_vals[3]
+	for color in color_to_pts:
+		color_to_kills[color] = 0
 	
 	rat_killed = 0
 	sheriff_killed = 0
@@ -405,7 +412,7 @@ func fade_out_point_goal():
 	
 func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
-	_end_game.rpc(false, false, true, false, "")
+	_end_game.rpc(false, false, true, false, "", [])
 
 func ascending_compare(a, b):
 	if a[1] < b[1]:
@@ -442,8 +449,16 @@ func reset_scores() -> void:
 	for color in color_to_pts:
 		color_to_pts[color] = 0
 		
+func _count_kills():
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_color"):
+			var killer = player.killer_color
+			if killer != "":
+				color_to_kills[killer] += 1
+	print(color_to_kills)
+		
 @rpc("call_local", "reliable", "any_peer")
-func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String) -> void:
+func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array) -> void:
 	if game_ended:
 		return
 	print("game ended!!!")
@@ -455,6 +470,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			player.get_node("AnimationPlayer").stop()
 			player.get_node("AnimationPlayer").clear_queue()
 			player.get_node("SoundEffects").stop()
+	_count_kills()
 	$AudioStreamPlayer.stop()
 	$HUD/Gun.visible = false
 	$HUD/Knife.visible = false
@@ -518,6 +534,8 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			player.disable_movement()
 			player.reset_sprite_to_defaults()
 		player.global_position = Vector2i(0, 0)
+	
+	bounty_colors.clear()
 		
 	if !player_discon:
 		if mice_win:
@@ -535,17 +553,23 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			for color in color_to_role:
 				if color_to_role[color] == "rat" and time_out:
 						color_to_pts[color] += 1
+				if len(bounty_pack) != 0:
+					if color == bounty_pack[0]:
+						color_to_pts[color] += 2
+					elif color == bounty_pack[1]:
+						color_to_pts[color] -= 2
 		
 		# rat gets points for each kill, sheriff deducted for each kill
 		for color in color_to_role:
 			if color_to_role[color] == "rat":
 				color_to_pts[color] += rat_killed
-			if color_to_role[color] == "sheriff":
-				color_to_pts[color] -= sheriff_killed
+			elif (color_to_role[color] == "sheriff" and len(bounty_pack) == 0) or (len(bounty_pack) != 0 and color != bounty_pack[0]):
+				color_to_pts[color] -= color_to_kills[color]
 	
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 	
+	var bounty_found = false
 	for color in color_to_pts:
 		if color_to_pts[color] >= POINT_THRESHOLD:
 			$WinScreen/CheckBoxButton.uncheck()
@@ -553,6 +577,12 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			await get_tree().create_timer(2).timeout
 			show_leaderboard()
 			break
+		if color_to_pts[color] >= POINT_THRESHOLD - 3:
+			mode = modes.BOUNTY
+			bounty_found = true
+			bounty_colors.append(color)
+	if not bounty_found:
+		mode = modes.NORMAL
 	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
@@ -577,18 +607,23 @@ func _process(delta: float) -> void:
 		return
 		
 	if player_disconnected:
-		_end_game.rpc(false, false, false, true, "")
+		_end_game.rpc(false, false, false, true, "", [])
 	
 	for player in get_tree().get_nodes_in_group("player"):
 		if not player.has_method("get_role"):
 			continue
 			
 		# Check end game
+		if not player.is_alive() and bounty_colors.has(player.get_color()):
+			var bounty_claimer = player.killer_color
+			var bounty_claimed = player.color
+			_end_game.rpc(false, false, false, false, "", [bounty_claimer, bounty_claimed])
+		
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and player.get_role() != "rat":
-			_end_game.rpc(true, false, false, false, player.get_color())
+			_end_game.rpc(true, false, false, false, player.get_color(), [])
 		if player.get_role() == "rat" and not player.is_alive():
-			_end_game.rpc(true, true, false, false, "")
+			_end_game.rpc(true, true, false, false, "", [])
 			
 		# Check sheriff shot
 		if player.get_shot() == true:
@@ -639,7 +674,7 @@ func _process(delta: float) -> void:
 					$HUD/CheeseCooldown.clear()
 	
 	if rat_killed + sheriff_killed == 3:
-		_end_game.rpc(false, false, false, false, "")
+		_end_game.rpc(false, false, false, false, "", [])
 
 func _on_again_button_pressed() -> void:
 	$WinScreen/Again.disabled = true
@@ -657,12 +692,15 @@ func _on_again_button_pressed() -> void:
 # assign random roles to colors based on existing roles and colors
 func random_role_assignment():
 	var colors = color_to_role.keys()
-	colors.shuffle()
 	var roles = color_to_role.values()
 	roles.shuffle()
 	color_to_role.clear()
 	for i in range(colors.size()):
-		color_to_role[colors[i]] = roles[i]
+		var role = roles[i]
+		if mode == modes.BOUNTY and role != "rat":
+			color_to_role[colors[i]] = "sheriff"
+		else:
+			color_to_role[colors[i]] = role			
 
 func _on_skip_pressed() -> void:
 	$SoundEffects.play()

@@ -27,6 +27,7 @@ var role = ""
 var started = false
 var color = ""
 var alive = true
+var killer_color = ""
 var has_buff = false
 var buffed = false
 var buff_end = 0
@@ -86,6 +87,7 @@ func starter(color_to_roles, id_to_username, id_to_color):
 	
 	username = id_to_username[multiplayer.get_unique_id()]
 	role = color_to_roles[color]
+	killer_color = ""
 	alive = true
 	sheriff_shot = false
 	started = true
@@ -335,7 +337,7 @@ func _unhandled_input(event: InputEvent) -> void:
 						if child.get_role() == "rat" or !child.is_alive():
 							continue
 						if child.position.distance_to(self.position) < 190:
-							die_call.rpc(child.get_color())
+							die_call.rpc(child.get_color(), self.color)
 							next_rat_kill = Time.get_unix_time_from_system() + RAT_COOLDOWN
 							set_cooldown = true
 							add_kill.rpc("rat")
@@ -353,12 +355,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				if sheriff_shot:
 					return
 				if target != null and target.has_method("die"):
-					if target.get_role() == "sheriff":
+					if target.get_color() == self.color:
 						return
 					if !target.is_alive():
 						return
 					target.set_aim_view_visible(false)
-					die_call.rpc(target.get_color())
+					die_call.rpc(target.get_color(), self.color)
 					add_kill.rpc("sheriff")
 				sheriff_shot = true
 				print(color + " shoot!!!")
@@ -390,15 +392,16 @@ func animate_shoot():
 	$AnimationPlayer.play(new_anim)
 
 @rpc("call_local", "reliable")
-func die_call(color):
+func die_call(color, killer_color):
 	for child in get_tree().get_nodes_in_group("player"):
 		if child.has_method("die") and child.get_color() == color:
-			child.die()
+			child.die(killer_color)
 
-func die():
+func die(killer_color):
 	if !alive:
 		return
 	print(color + " killed!!!")
+	self.killer_color = killer_color
 	alive = false
 	$Vision.enabled = false
 	set_physics_process(false)
@@ -504,8 +507,6 @@ func _process(delta: float) -> void:
 		if effect.can_get_buffer(1024) and playback.can_push_buffer(1024):
 			send_data.rpc(effect.get_buffer(1024))
 		effect.clear_buffer()
-	else:
-		print("no effect")
 
 @rpc("call_remote", "unreliable")
 func send_data(data : PackedVector2Array):
