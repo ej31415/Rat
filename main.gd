@@ -445,9 +445,13 @@ func show_leaderboard():
 		$HUD/Leaderboard/TextureRect/Button.text = "Waiting for host to start another game..."
 	$HUD/Leaderboard.visible = true
 
+@rpc("call_local", "reliable")
 func reset_scores() -> void:
+	mode = modes.NORMAL
 	for color in color_to_pts:
 		color_to_pts[color] = 0
+		color_to_pts_label[color].flashing = false
+		color_to_pts_label[color].modulate.a = 1
 		
 func _count_kills():
 	for player in get_tree().get_nodes_in_group("player"):
@@ -456,7 +460,7 @@ func _count_kills():
 			if killer != "":
 				color_to_kills[killer] += 1
 	print(color_to_kills)
-		
+
 @rpc("call_local", "reliable", "any_peer")
 func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array) -> void:
 	if game_ended:
@@ -576,11 +580,14 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			$WinScreen/Again.disabled = true
 			await get_tree().create_timer(2).timeout
 			show_leaderboard()
-			break
 		if color_to_pts[color] >= POINT_THRESHOLD - 3:
 			mode = modes.BOUNTY
 			bounty_found = true
 			bounty_colors.append(color)
+			color_to_pts_label[color].flashing = true
+		else:
+			color_to_pts_label[color].flashing = false
+			color_to_pts_label[color].modulate.a = 1
 	if not bounty_found:
 		mode = modes.NORMAL
 	
@@ -626,7 +633,7 @@ func _process(delta: float) -> void:
 			_end_game.rpc(true, true, false, false, "", [])
 			
 		# Check sheriff shot
-		if player.get_shot() == true:
+		if player.get_color() == my_color and (not player.is_alive() or player.get_shot() == true):
 			$HUD/Gun.modulate = Color(60/255.0,60/255.0,60/255.0)
 			
 		# Check rat kill time
@@ -655,7 +662,10 @@ func _process(delta: float) -> void:
 		if player.get_color() == my_color and player.get_role() == "mouse":
 			var buff_progress_value = player.get_buff_progress()
 			$HUD/Cheese.value = buff_progress_value
-			if buff_progress_value > 0:
+			if not player.is_alive():
+				$HUD/Cheese.visible = false
+				$HUD/CheeseCooldown.clear()
+			elif buff_progress_value > 0:
 				$HUD/Cheese.modulate = Color(1, 1, 1, 1)
 				$HUD/Cheese.visible = true
 				$HUD/Cheese.flashing = false
@@ -744,7 +754,7 @@ func _on_restart_timer_timeout() -> void:
 		
 
 func _on_lb_close_button_click() -> void:
-	reset_scores()
+	reset_scores.rpc()
 	$WinScreen/CheckBoxButton.check()
 	$WinScreen/Again.disabled = false
 	$HUD/Leaderboard.visible = false

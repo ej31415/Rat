@@ -661,6 +661,7 @@ offset_right = 1152.0
 offset_bottom = 83.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 23
+script = ExtResource("27_66ydx")
 
 [node name="SBPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1055.0
@@ -669,6 +670,7 @@ offset_right = 1152.0
 offset_bottom = 122.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 23
+script = ExtResource("27_66ydx")
 
 [node name="TanPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1055.0
@@ -677,6 +679,7 @@ offset_right = 1152.0
 offset_bottom = 162.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 23
+script = ExtResource("27_66ydx")
 
 [node name="BrownPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1055.0
@@ -685,6 +688,7 @@ offset_right = 1152.0
 offset_bottom = 202.0
 theme_override_fonts/font = ExtResource("12_63mnq")
 theme_override_font_sizes/font_size = 23
+script = ExtResource("27_66ydx")
 
 [node name="Gun" type="Sprite2D" parent="HUD"]
 visible = false
@@ -2015,8 +2019,8 @@ autoplay = true
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="HUD/HelpMessage" to="." method="_on_help_message_pressed"]
-[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
+[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Controller" to="HelpControl" method="_on_controller_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Scoring" to="HelpControl" method="_on_scoring_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Cheese" to="HelpControl" method="_on_cheese_button_down"]
