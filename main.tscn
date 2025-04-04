@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://d055hmy0w3mmb"]
+[gd_scene load_steps=73 format=3 uid="uid://d055hmy0w3mmb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_s4k2t"]
 [ext_resource type="Script" path="res://map.gd" id="2_4s054"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cxnr8m51dh3tb" path="res://assets/UI Sprites/check_box_checked.png" id="18_uuutx"]
 [ext_resource type="Script" path="res://check_box_button.gd" id="19_7k81b"]
 [ext_resource type="Texture2D" uid="uid://d1835lx73yhn6" path="res://assets/Help Menu/Question Mark.png" id="22_wycyy"]
+[ext_resource type="Texture2D" uid="uid://cxtdrlovn3puo" path="res://assets/UI Sprites/Xhair.png" id="23_d00mo"]
 [ext_resource type="Texture2D" uid="uid://tovj32houy4h" path="res://assets/UI Sprites/close.png" id="23_omg22"]
 [ext_resource type="Texture2D" uid="uid://d00jq3qprr4ob" path="res://assets/Cheese.PNG" id="24_kern2"]
 [ext_resource type="Script" path="res://minimap.gd" id="25_320b3"]
@@ -653,6 +654,38 @@ modulate = Color(1, 0.368627, 0.376471, 1)
 position = Vector2(1032.5, 182.5)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("26_csx1t")
+
+[node name="GrayHeadX" type="Sprite2D" parent="HUD/ScoreBoard"]
+visible = false
+position = Vector2(1032.5, 69.5)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("23_d00mo")
+script = ExtResource("27_66ydx")
+flashing = true
+
+[node name="SBHeadX" type="Sprite2D" parent="HUD/ScoreBoard"]
+visible = false
+position = Vector2(1032.5, 108.5)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("23_d00mo")
+script = ExtResource("27_66ydx")
+flashing = true
+
+[node name="TanHeadX" type="Sprite2D" parent="HUD/ScoreBoard"]
+visible = false
+position = Vector2(1032.5, 149.5)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("23_d00mo")
+script = ExtResource("27_66ydx")
+flashing = true
+
+[node name="BrownHeadX" type="Sprite2D" parent="HUD/ScoreBoard"]
+visible = false
+position = Vector2(1032.5, 187.5)
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("23_d00mo")
+script = ExtResource("27_66ydx")
+flashing = true
 
 [node name="GrayPts" type="Label" parent="HUD/ScoreBoard"]
 offset_left = 1055.0
@@ -2019,8 +2052,8 @@ autoplay = true
 [connection signal="mouse_entered" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="WinScreen/CheckBoxButton" to="WinScreen/CheckBoxButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="HUD/HelpMessage" to="." method="_on_help_message_pressed"]
-[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
 [connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_lb_close_button_click"]
+[connection signal="button_up" from="HUD/Leaderboard/TextureRect/Button" to="." method="_on_any_button_click"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Controller" to="HelpControl" method="_on_controller_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Scoring" to="HelpControl" method="_on_scoring_button_down"]
 [connection signal="button_down" from="HelpControl/TableOfContents/Cheese" to="HelpControl" method="_on_cheese_button_down"]

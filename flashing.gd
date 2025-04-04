@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 @export var speed = 5
 @export var flashing = false
@@ -11,7 +11,7 @@ func _ready() -> void:
 	default_modulate = self.modulate
 
 func _process_flash():
-	var flash_val = sin(time * speed)
+	var flash_val = sin(time * speed) * 0.4 + 0.6
 	if flashing:
 		self.modulate.a = flash_val
 	#else:

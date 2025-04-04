@@ -24,6 +24,7 @@ var mice = []
 var color_to_role = {}
 var color_to_pts = {}
 var color_to_pts_label = {}
+var color_to_xhair = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var color_to_code = {}
@@ -82,6 +83,12 @@ func _ready():
 		"sb": 0,
 		"tan": 0,
 		"brown": 0
+	}
+	color_to_xhair = {
+		"gray": $HUD/ScoreBoard/GrayHeadX,
+		"sb": $HUD/ScoreBoard/SBHeadX,
+		"tan": $HUD/ScoreBoard/TanHeadX,
+		"brown": $HUD/ScoreBoard/BrownHeadX
 	}
 	color_to_pts_label = {
 		"gray": $HUD/ScoreBoard/GrayPts,
@@ -448,6 +455,10 @@ func show_leaderboard():
 @rpc("call_local", "reliable")
 func reset_scores() -> void:
 	mode = modes.NORMAL
+	$HUD/ScoreBoard/GrayHeadX.visible = false
+	$HUD/ScoreBoard/SBHeadX.visible = false
+	$HUD/ScoreBoard/TanHeadX.visible = false
+	$HUD/ScoreBoard/BrownHeadX.visible = false
 	for color in color_to_pts:
 		color_to_pts[color] = 0
 		color_to_pts_label[color].flashing = false
@@ -585,9 +596,12 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			bounty_found = true
 			bounty_colors.append(color)
 			color_to_pts_label[color].flashing = true
+			color_to_xhair[color].visible = true
 		else:
 			color_to_pts_label[color].flashing = false
 			color_to_pts_label[color].modulate.a = 1
+			color_to_xhair[color].visible = false
+			
 	if not bounty_found:
 		mode = modes.NORMAL
 	
