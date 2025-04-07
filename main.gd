@@ -566,11 +566,11 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 				if color_to_role[color] != "rat":
 					color_to_pts[color] += 1
 				if sheriff_win:
-					if color_to_role[color] == "sheriff":
+					if color_to_role[color] == "sheriff" and color == escaped_color:
 						color_to_pts[color] += 3
 					if color_to_role[color] == "rat":
 						color_to_pts[color] -= 1
-				if color == escaped_color:
+				elif color == escaped_color:
 					color_to_pts[color] += 2
 		else:
 			for color in color_to_role:
@@ -652,7 +652,7 @@ func _process(delta: float) -> void:
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and player.get_role() != "rat":
 			_end_game.rpc(true, false, false, false, player.get_color(), [])
 		if player.get_role() == "rat" and not player.is_alive():
-			_end_game.rpc(true, true, false, false, "", [])
+			_end_game.rpc(true, true, false, false, player.killer_color, [])
 			
 		# Check sheriff shot
 		if player.get_color() == my_color and (not player.is_alive() or player.get_shot() == true):
