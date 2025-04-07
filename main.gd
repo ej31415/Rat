@@ -42,7 +42,7 @@ var bounty_colors = []
 static var rat_killed = 0
 static var sheriff_killed = 0
 
-var POINT_THRESHOLD := 4
+var POINT_THRESHOLD := 11
 
 var quickstart_called = false
 
