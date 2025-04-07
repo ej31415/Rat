@@ -464,6 +464,7 @@ func show_leaderboard():
 @rpc("call_local", "reliable")
 func reset_scores() -> void:
 	mode = modes.NORMAL
+	bounty_colors.clear()
 	$HUD/ScoreBoard/GrayHeadX.visible = false
 	$HUD/ScoreBoard/SBHeadX.visible = false
 	$HUD/ScoreBoard/TanHeadX.visible = false
@@ -642,7 +643,7 @@ func _process(delta: float) -> void:
 			continue
 			
 		# Check end game
-		if not player.is_alive() and bounty_colors.has(player.get_color()):
+		if not player.is_alive() and mode == modes.BOUNTY and bounty_colors.has(player.get_color()):
 			var bounty_claimer = player.killer_color
 			var bounty_claimed = player.color
 			_end_game.rpc(false, false, false, false, "", [bounty_claimer, bounty_claimed])
