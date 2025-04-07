@@ -126,8 +126,6 @@ func _ready():
 		"rat": "Kill or delay the mice!"
 	}
 	
-	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
-	
 	$output.add_to_group("output")
 
 	# instant-start for debugging
@@ -310,6 +308,7 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	id_to_color = true_vals[0]
 	color_to_role = true_vals[1]
 	id_to_username = true_vals[2]
+	print(true_vals[3])
 	color_to_pts = true_vals[3]
 	for color in color_to_pts:
 		color_to_kills[color] = 0
@@ -370,12 +369,22 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	tween.tween_property($RoleScreen/Background, "modulate", role_screen_color, 1)
 	
 	if color_to_pts.values() == [0,0,0,0]:
+		$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
+		$HUD/PointGoal.visible = true
+		$HUD/PointGoal.modulate = Color("#ffffffff")
+		fade_out_point_goal()
+	elif my_color in bounty_colors:
+		$HUD/PointGoal.text = "YOU ARE THE BOUNTY!"
 		$HUD/PointGoal.visible = true
 		$HUD/PointGoal.modulate = Color("#ffffffff")
 		fade_out_point_goal()
 		
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
+		if color_to_pts[color] < POINT_THRESHOLD - 3:
+			color_to_pts_label[color].flashing = false
+			color_to_pts_label[color].modulate.a = 1
+			color_to_xhair[color].visible = false
 	
 	$HUD/PlayerAvatar.modulate = color_player
 	$HUD/PlayerAvatar.visible = true
@@ -452,7 +461,6 @@ func show_leaderboard():
 		$HUD/Leaderboard/TextureRect/Button.text = "Waiting for host to start another game..."
 	$HUD/Leaderboard.visible = true
 
-@rpc("call_local", "reliable")
 func reset_scores() -> void:
 	mode = modes.NORMAL
 	$HUD/ScoreBoard/GrayHeadX.visible = false
@@ -461,8 +469,6 @@ func reset_scores() -> void:
 	$HUD/ScoreBoard/BrownHeadX.visible = false
 	for color in color_to_pts:
 		color_to_pts[color] = 0
-		color_to_pts_label[color].flashing = false
-		color_to_pts_label[color].modulate.a = 1
 		
 func _count_kills():
 	for player in get_tree().get_nodes_in_group("player"):
@@ -708,15 +714,16 @@ func _on_again_button_pressed() -> void:
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
-	random_role_assignment()
+	#random_role_assignment()
 	if is_host:
+		print(color_to_pts)
 		random_role_assignment()
 	start_helper.rpc(maze, offset, [id_to_color, color_to_role, id_to_username, color_to_pts])
 
 # assign random roles to colors based on existing roles and colors
 func random_role_assignment():
 	var colors = color_to_role.keys()
-	var roles = color_to_role.values()
+	var roles = ["mouse", "mouse", "sheriff", "rat"]
 	roles.shuffle()
 	color_to_role.clear()
 	for i in range(colors.size()):
@@ -724,7 +731,7 @@ func random_role_assignment():
 		if mode == modes.BOUNTY and role != "rat":
 			color_to_role[colors[i]] = "sheriff"
 		else:
-			color_to_role[colors[i]] = role			
+			color_to_role[colors[i]] = role
 
 func _on_skip_pressed() -> void:
 	$SoundEffects.play()
@@ -768,10 +775,10 @@ func _on_restart_timer_timeout() -> void:
 		
 
 func _on_lb_close_button_click() -> void:
-	reset_scores.rpc()
 	$WinScreen/CheckBoxButton.check()
 	$WinScreen/Again.disabled = false
 	$HUD/Leaderboard.visible = false
+	reset_scores()
 	_on_again_button_pressed()
 
 # TODO: connect more signals to this function

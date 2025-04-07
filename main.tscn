@@ -755,9 +755,9 @@ bbcode_enabled = true
 [node name="Cheese" type="TextureProgressBar" parent="HUD"]
 visible = false
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
-offset_left = 33.0
+offset_left = 991.0
 offset_top = 488.0
-offset_right = 160.0
+offset_right = 1118.0
 offset_bottom = 616.0
 rounded = true
 fill_mode = 4
@@ -768,9 +768,9 @@ script = ExtResource("27_66ydx")
 
 [node name="CheeseCooldown" type="RichTextLabel" parent="HUD"]
 visible = false
-offset_left = 57.0
+offset_left = 1015.0
 offset_top = 513.0
-offset_right = 137.0
+offset_right = 1095.0
 offset_bottom = 593.0
 theme_override_fonts/normal_font = ExtResource("12_63mnq")
 theme_override_font_sizes/normal_font_size = 50
