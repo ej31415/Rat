@@ -2,7 +2,10 @@ extends Node2D
 
 class_name Main
 
+enum modes {NORMAL, BOUNTY}
+
 var peer = ENetMultiplayerPeer.new()
+var mode = modes.NORMAL
 @export var gray_mouse: PackedScene
 @export var brown_mouse: PackedScene
 @export var sb_mouse: PackedScene
@@ -21,9 +24,11 @@ var mice = []
 var color_to_role = {}
 var color_to_pts = {}
 var color_to_pts_label = {}
+var color_to_xhair = {}
 var color_to_baseinst = {}
 var color_to_color = {}
 var color_to_code = {}
+var color_to_kills = {}
 var lb_sprites = []
 var id_to_color = {}
 var role_to_desc = {}
@@ -32,6 +37,7 @@ var is_host = false
 var first_started = false
 var player_disconnected = false
 var my_color = ""
+var bounty_colors = []
 
 static var rat_killed = 0
 static var sheriff_killed = 0
@@ -78,6 +84,12 @@ func _ready():
 		"tan": 0,
 		"brown": 0
 	}
+	color_to_xhair = {
+		"gray": $HUD/ScoreBoard/GrayHeadX,
+		"sb": $HUD/ScoreBoard/SBHeadX,
+		"tan": $HUD/ScoreBoard/TanHeadX,
+		"brown": $HUD/ScoreBoard/BrownHeadX
+	}
 	color_to_pts_label = {
 		"gray": $HUD/ScoreBoard/GrayPts,
 		"sb": $HUD/ScoreBoard/SBPts,
@@ -113,8 +125,6 @@ func _ready():
 		"sheriff": "Kill the rat or escape!",
 		"rat": "Kill or delay the mice!"
 	}
-	
-	$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
 	
 	$output.add_to_group("output")
 
@@ -298,7 +308,10 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	id_to_color = true_vals[0]
 	color_to_role = true_vals[1]
 	id_to_username = true_vals[2]
+	print(true_vals[3])
 	color_to_pts = true_vals[3]
+	for color in color_to_pts:
+		color_to_kills[color] = 0
 	
 	rat_killed = 0
 	sheriff_killed = 0
@@ -356,12 +369,22 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	tween.tween_property($RoleScreen/Background, "modulate", role_screen_color, 1)
 	
 	if color_to_pts.values() == [0,0,0,0]:
+		$HUD/PointGoal.text = "First to " + str(POINT_THRESHOLD) + " points wins!"
+		$HUD/PointGoal.visible = true
+		$HUD/PointGoal.modulate = Color("#ffffffff")
+		fade_out_point_goal()
+	elif my_color in bounty_colors:
+		$HUD/PointGoal.text = "YOU ARE THE BOUNTY!"
 		$HUD/PointGoal.visible = true
 		$HUD/PointGoal.modulate = Color("#ffffffff")
 		fade_out_point_goal()
 		
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
+		if color_to_pts[color] < POINT_THRESHOLD - 3:
+			color_to_pts_label[color].flashing = false
+			color_to_pts_label[color].modulate.a = 1
+			color_to_xhair[color].visible = false
 	
 	$HUD/PlayerAvatar.modulate = color_player
 	$HUD/PlayerAvatar.visible = true
@@ -405,7 +428,7 @@ func fade_out_point_goal():
 	
 func _on_timer_timeout() -> void:
 	$TimerCanvasLayer.end_timer.rpc()
-	_end_game.rpc(false, false, true, false, "")
+	_end_game.rpc(false, false, true, false, "", [])
 
 func ascending_compare(a, b):
 	if a[1] < b[1]:
@@ -438,14 +461,35 @@ func show_leaderboard():
 		$HUD/Leaderboard/TextureRect/Button.text = "Waiting for host to start another game..."
 	$HUD/Leaderboard.visible = true
 
+@rpc("call_local", "reliable")
 func reset_scores() -> void:
+	mode = modes.NORMAL
+	bounty_colors.clear()
+	$HUD/ScoreBoard/GrayHeadX.visible = false
+	$HUD/ScoreBoard/SBHeadX.visible = false
+	$HUD/ScoreBoard/TanHeadX.visible = false
+	$HUD/ScoreBoard/BrownHeadX.visible = false
 	for color in color_to_pts:
 		color_to_pts[color] = 0
 		
-@rpc("call_local", "reliable", "any_peer")
-func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String) -> void:
+func _count_kills():
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_color"):
+			var killer = player.killer_color
+			if killer != "":
+				color_to_kills[killer] += 1
+	print(color_to_kills)
+
+@rpc("call_local", "reliable")
+func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array):
 	if game_ended:
 		return
+	game_ended = true
+	if is_host:
+		_end_game_helper.rpc(mice_win, sheriff_win, time_out, player_discon, escaped_color, bounty_pack)
+
+@rpc("call_local", "reliable")
+func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array) -> void:
 	print("game ended!!!")
 	$TimerCanvasLayer.end_timer.rpc()
 	game_ended = true
@@ -455,6 +499,7 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			player.get_node("AnimationPlayer").stop()
 			player.get_node("AnimationPlayer").clear_queue()
 			player.get_node("SoundEffects").stop()
+	_count_kills()
 	$AudioStreamPlayer.stop()
 	$HUD/Gun.visible = false
 	$HUD/Knife.visible = false
@@ -518,6 +563,8 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 			player.disable_movement()
 			player.reset_sprite_to_defaults()
 		player.global_position = Vector2i(0, 0)
+	
+	bounty_colors.clear()
 		
 	if !player_discon:
 		if mice_win:
@@ -525,34 +572,52 @@ func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon:
 				if color_to_role[color] != "rat":
 					color_to_pts[color] += 1
 				if sheriff_win:
-					if color_to_role[color] == "sheriff":
+					if color_to_role[color] == "sheriff" and color == escaped_color:
 						color_to_pts[color] += 3
 					if color_to_role[color] == "rat":
 						color_to_pts[color] -= 1
-				if color == escaped_color:
+				elif color == escaped_color:
 					color_to_pts[color] += 2
 		else:
 			for color in color_to_role:
 				if color_to_role[color] == "rat" and time_out:
 						color_to_pts[color] += 1
+				if len(bounty_pack) != 0:
+					if color == bounty_pack[0]:
+						color_to_pts[color] += 2
+					elif color == bounty_pack[1]:
+						color_to_pts[color] -= 2
 		
 		# rat gets points for each kill, sheriff deducted for each kill
 		for color in color_to_role:
 			if color_to_role[color] == "rat":
 				color_to_pts[color] += rat_killed
-			if color_to_role[color] == "sheriff":
-				color_to_pts[color] -= sheriff_killed
+			elif (color_to_role[color] == "sheriff" and len(bounty_pack) == 0) or (len(bounty_pack) != 0 and color != bounty_pack[0]):
+				color_to_pts[color] -= color_to_kills[color]
 	
 	for color in color_to_pts_label:
 		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
 	
+	var bounty_found = false
 	for color in color_to_pts:
 		if color_to_pts[color] >= POINT_THRESHOLD:
 			$WinScreen/CheckBoxButton.uncheck()
 			$WinScreen/Again.disabled = true
 			await get_tree().create_timer(2).timeout
 			show_leaderboard()
-			break
+		if color_to_pts[color] >= POINT_THRESHOLD - 3:
+			mode = modes.BOUNTY
+			bounty_found = true
+			bounty_colors.append(color)
+			color_to_pts_label[color].flashing = true
+			color_to_xhair[color].visible = true
+		else:
+			color_to_pts_label[color].flashing = false
+			color_to_pts_label[color].modulate.a = 1
+			color_to_xhair[color].visible = false
+			
+	if not bounty_found:
+		mode = modes.NORMAL
 	
 	if is_host: # allow only host to start new game
 		$WinScreen/Again.visible = true
@@ -577,21 +642,26 @@ func _process(delta: float) -> void:
 		return
 		
 	if player_disconnected:
-		_end_game.rpc(false, false, false, true, "")
+		_end_game.rpc(false, false, false, true, "", [])
 	
 	for player in get_tree().get_nodes_in_group("player"):
 		if not player.has_method("get_role"):
 			continue
 			
 		# Check end game
+		if not player.is_alive() and mode == modes.BOUNTY and bounty_colors.has(player.get_color()):
+			var bounty_claimer = player.killer_color
+			var bounty_claimed = player.color
+			_end_game.rpc(false, false, false, false, "", [bounty_claimer, bounty_claimed])
+		
 		var player_tile = $Map/Exit.local_to_map(player.global_position)
 		if $Map/Exit.get_cell_source_id(player_tile) != -1 and player.get_role() != "rat":
-			_end_game.rpc(true, false, false, false, player.get_color())
+			_end_game.rpc(true, false, false, false, player.get_color(), [])
 		if player.get_role() == "rat" and not player.is_alive():
-			_end_game.rpc(true, true, false, false, "")
+			_end_game.rpc(true, true, false, false, player.killer_color, [])
 			
 		# Check sheriff shot
-		if player.get_shot() == true:
+		if player.get_color() == my_color and (not player.is_alive() or player.get_shot() == true):
 			$HUD/Gun.modulate = Color(60/255.0,60/255.0,60/255.0)
 			
 		# Check rat kill time
@@ -620,7 +690,10 @@ func _process(delta: float) -> void:
 		if player.get_color() == my_color and player.get_role() == "mouse":
 			var buff_progress_value = player.get_buff_progress()
 			$HUD/Cheese.value = buff_progress_value
-			if buff_progress_value > 0:
+			if not player.is_alive():
+				$HUD/Cheese.visible = false
+				$HUD/CheeseCooldown.clear()
+			elif buff_progress_value > 0:
 				$HUD/Cheese.modulate = Color(1, 1, 1, 1)
 				$HUD/Cheese.visible = true
 				$HUD/Cheese.flashing = false
@@ -639,7 +712,7 @@ func _process(delta: float) -> void:
 					$HUD/CheeseCooldown.clear()
 	
 	if rat_killed + sheriff_killed == 3:
-		_end_game.rpc(false, false, false, false, "")
+		_end_game.rpc(false, false, false, false, "", [])
 
 func _on_again_button_pressed() -> void:
 	$WinScreen/Again.disabled = true
@@ -649,20 +722,24 @@ func _on_again_button_pressed() -> void:
 	$Map._ready()
 	var maze = $Map.get_maze()
 	var offset = $Map.get_offset()
-	random_role_assignment()
+	#random_role_assignment()
 	if is_host:
+		print(color_to_pts)
 		random_role_assignment()
 	start_helper.rpc(maze, offset, [id_to_color, color_to_role, id_to_username, color_to_pts])
 
 # assign random roles to colors based on existing roles and colors
 func random_role_assignment():
 	var colors = color_to_role.keys()
-	colors.shuffle()
-	var roles = color_to_role.values()
+	var roles = ["mouse", "mouse", "sheriff", "rat"]
 	roles.shuffle()
 	color_to_role.clear()
 	for i in range(colors.size()):
-		color_to_role[colors[i]] = roles[i]
+		var role = roles[i]
+		if mode == modes.BOUNTY and role != "rat":
+			color_to_role[colors[i]] = "sheriff"
+		else:
+			color_to_role[colors[i]] = role
 
 func _on_skip_pressed() -> void:
 	$SoundEffects.play()
@@ -706,10 +783,10 @@ func _on_restart_timer_timeout() -> void:
 		
 
 func _on_lb_close_button_click() -> void:
-	reset_scores()
 	$WinScreen/CheckBoxButton.check()
 	$WinScreen/Again.disabled = false
 	$HUD/Leaderboard.visible = false
+	reset_scores.rpc()
 	_on_again_button_pressed()
 
 # TODO: connect more signals to this function

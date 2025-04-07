@@ -660,7 +660,7 @@ visible = false
 material = SubResource("CanvasItemMaterial_bweei")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_frxt3")
-animation = &"front"
+animation = &"back"
 
 [node name="AimView" type="Sprite2D" parent="."]
 visible = false

@@ -638,7 +638,7 @@ light_mask = 2
 material = SubResource("CanvasItemMaterial_cm2ee")
 position = Vector2(0, -50)
 sprite_frames = SubResource("SpriteFrames_p1mwd")
-animation = &"gyatt"
+animation = &"diagonal down"
 frame = 1
 
 [node name="Gun" type="AnimatedSprite2D" parent="."]
