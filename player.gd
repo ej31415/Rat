@@ -382,7 +382,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func animate_shoot():
 	var current_anim = $AnimatedSprite2D.animation
 	var new_anim = ""
-	if current_anim == "left" or current_anim == "static left":
+	if current_anim == "left" or current_anim == "static left" or current_anim == "diagonal down" or current_anim == "diagonal up":
 		new_anim = "shoot left"
 	elif current_anim == "front" or current_anim == "static front":
 		new_anim = "shoot down"

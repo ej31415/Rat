@@ -461,6 +461,7 @@ func show_leaderboard():
 		$HUD/Leaderboard/TextureRect/Button.text = "Waiting for host to start another game..."
 	$HUD/Leaderboard.visible = true
 
+@rpc("call_local", "reliable")
 func reset_scores() -> void:
 	mode = modes.NORMAL
 	$HUD/ScoreBoard/GrayHeadX.visible = false
@@ -778,7 +779,7 @@ func _on_lb_close_button_click() -> void:
 	$WinScreen/CheckBoxButton.check()
 	$WinScreen/Again.disabled = false
 	$HUD/Leaderboard.visible = false
-	reset_scores()
+	reset_scores.rpc()
 	_on_again_button_pressed()
 
 # TODO: connect more signals to this function
