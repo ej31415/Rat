@@ -480,10 +480,16 @@ func _count_kills():
 				color_to_kills[killer] += 1
 	print(color_to_kills)
 
-@rpc("call_local", "reliable", "any_peer")
-func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array) -> void:
+@rpc("call_local", "reliable")
+func _end_game(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array):
 	if game_ended:
 		return
+	game_ended = true
+	if is_host:
+		_end_game_helper.rpc(mice_win, sheriff_win, time_out, player_discon, escaped_color, bounty_pack)
+
+@rpc("call_local", "reliable")
+func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_discon: bool, escaped_color: String, bounty_pack: Array) -> void:
 	print("game ended!!!")
 	$TimerCanvasLayer.end_timer.rpc()
 	game_ended = true
