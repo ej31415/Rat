@@ -93,10 +93,10 @@ func _ready():
 		"brown": $HUD/ScoreBoard/BrownHeadX
 	}
 	color_to_pts_label = {
-		"gray": $HUD/ScoreBoard/GrayPts,
-		"sb": $HUD/ScoreBoard/SBPts,
-		"tan": $HUD/ScoreBoard/TanPts,
-		"brown": $HUD/ScoreBoard/BrownPts
+		"gray": [$HUD/ScoreBoard/GrayPts, $WinScreen/ScoreDetails/GrayOld, $WinScreen/ScoreDetails/GrayDiff],
+		"sb": [$HUD/ScoreBoard/SBPts, $WinScreen/ScoreDetails/SBOld, $WinScreen/ScoreDetails/SBDiff],
+		"tan": [$HUD/ScoreBoard/TanPts, $WinScreen/ScoreDetails/TanOld, $WinScreen/ScoreDetails/TanDiff],
+		"brown": [$HUD/ScoreBoard/BrownPts, $WinScreen/ScoreDetails/BrownOld, $WinScreen/ScoreDetails/BrownDiff]
 	}
 	color_to_baseinst = {
 		"gray": gray_mouse,
@@ -268,26 +268,16 @@ func _on_disconnect_pressed():
 	$StartMenu/joined.visible = false
 	$StartMenu/username.editable = true
 	$StartMenu/ip.editable = true
-	
-func _hide_roles():
-	$HUD/ScoreBoard/GrayRole.visible = false
-	$HUD/ScoreBoard/SBRole.visible = false
-	$HUD/ScoreBoard/TanRole.visible = false
-	$HUD/ScoreBoard/BrownRole.visible = false
 
-func _show_roles():
+func _change_roles():
 	if "gray" in color_to_role:
-		$HUD/ScoreBoard/GrayRole.text = color_to_role["gray"].capitalize()
+		$WinScreen/ScoreDetails/GrayRole.text = "[center]" + color_to_role["gray"].capitalize()
 	if "sb" in color_to_role:
-		$HUD/ScoreBoard/SBRole.text = color_to_role["sb"].capitalize()
+		$WinScreen/ScoreDetails/SBRole.text = "[center]" + color_to_role["sb"].capitalize()
 	if "tan" in color_to_role:
-		$HUD/ScoreBoard/TanRole.text = color_to_role["tan"].capitalize()
+		$WinScreen/ScoreDetails/TanRole.text = "[center]" + color_to_role["tan"].capitalize()
 	if "brown" in color_to_role:
-		$HUD/ScoreBoard/BrownRole.text = color_to_role["brown"].capitalize()
-	$HUD/ScoreBoard/GrayRole.visible = true
-	$HUD/ScoreBoard/SBRole.visible = true
-	$HUD/ScoreBoard/TanRole.visible = true
-	$HUD/ScoreBoard/BrownRole.visible = true
+		$WinScreen/ScoreDetails/BrownRole.text = "[center]" + color_to_role["brown"].capitalize()
 
 func _disable_role_screens() -> void:
 	$RoleScreen/Background/Mouse.visible = false
@@ -322,7 +312,8 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	$StartMenu.visible = false
 	$HUD/ScoreBoard.visible = true
 	$HUD/Leaderboard.visible = false
-	_hide_roles()
+	$WinScreen/ScoreDetails.visible = false
+	$HUD/ScoreBoard.visible = true
 	$Map.erase_maze(maze, offset)
 	$Map.build_maze(maze, offset)
 	
@@ -386,10 +377,10 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 		fade_out_point_goal()
 		
 	for color in color_to_pts_label:
-		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
+		color_to_pts_label[color][0].text = " " + str(color_to_pts[color]) + " pts"
 		if color_to_pts[color] < POINT_THRESHOLD - 3:
-			color_to_pts_label[color].flashing = false
-			color_to_pts_label[color].modulate.a = 1
+			color_to_pts_label[color][0].flashing = false
+			color_to_pts_label[color][0].modulate.a = 1
 			color_to_xhair[color].visible = false
 	
 	$HUD/PlayerAvatar.modulate = color_player
@@ -517,7 +508,7 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 	$HUD/CheeseCooldown.visible = false
 	$WinScreen/Again.disabled = false
 	$WinScreen/CheckBoxButton.check()
-	_show_roles()
+	_change_roles()
 
 	if player_discon:
 		$WinScreen/PlayerDisconnected.visible = true
@@ -580,6 +571,8 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 		player.global_position = Vector2i(0, 0)
 	
 	bounty_colors.clear()
+	
+	var old_scores = self.color_to_pts.duplicate()
 		
 	if !player_discon:
 		if mice_win:
@@ -611,7 +604,23 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 				color_to_pts[color] -= color_to_kills[color]
 	
 	for color in color_to_pts_label:
-		color_to_pts_label[color].text = " " + str(color_to_pts[color]) + " pts"
+		color_to_pts_label[color][0].text = " " + str(color_to_pts[color]) + " pts"
+		color_to_pts_label[color][1].text = " " + str(color_to_pts[color]) + " pts"
+		var diff = color_to_pts[color] - old_scores[color]
+		if diff > 0:
+			color_to_pts_label[color][2].modulate = Color(0, 1, 0)
+			color_to_pts_label[color][2].text = "(+" + str(diff) + ")"
+		elif diff < 0:
+			color_to_pts_label[color][2].modulate = Color(1, 0, 0)
+			color_to_pts_label[color][2].text = "(" + str(diff) + ")"
+		else:
+			color_to_pts_label[color][2].modulate = Color(1, 1, 1)
+			color_to_pts_label[color][2].text = "(" + str(diff) + ")"
+	$WinScreen/ScoreDetails.visible = true
+	$HUD/PlayerAvatar.visible = false
+	$HUD/Role.visible = false
+	$HUD/Objective.visible = false
+	$HUD/ScoreBoard.visible = false
 	
 	var bounty_found = false
 	for color in color_to_pts:
@@ -624,11 +633,11 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 			mode = modes.BOUNTY
 			bounty_found = true
 			bounty_colors.append(color)
-			color_to_pts_label[color].flashing = true
+			color_to_pts_label[color][0].flashing = true
 			color_to_xhair[color].visible = true
 		else:
-			color_to_pts_label[color].flashing = false
-			color_to_pts_label[color].modulate.a = 1
+			color_to_pts_label[color][0].flashing = false
+			color_to_pts_label[color][0].modulate.a = 1
 			color_to_xhair[color].visible = false
 			
 	if not bounty_found:

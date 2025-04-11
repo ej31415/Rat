@@ -411,17 +411,16 @@ color = Color(0, 0, 0, 1)
 [node name="WinArt" type="TextureRect" parent="WinScreen"]
 visible = false
 offset_left = -8.0
-offset_top = 64.0
+offset_top = 0.999997
 offset_right = 4088.0
-offset_bottom = 2112.0
+offset_bottom = 2049.0
 scale = Vector2(0.285, 0.285)
 
 [node name="BountyWin" type="HBoxContainer" parent="WinScreen"]
 visible = false
 offset_left = -8.0
-offset_top = 64.0
 offset_right = 1163.0
-offset_bottom = 648.0
+offset_bottom = 584.0
 
 [node name="Loser" type="TextureRect" parent="WinScreen/BountyWin"]
 layout_mode = 2
@@ -436,9 +435,8 @@ expand_mode = 3
 [node name="WinAddon" type="TextureRect" parent="WinScreen"]
 visible = false
 offset_left = -8.0
-offset_top = 64.0
 offset_right = 4088.0
-offset_bottom = 2112.0
+offset_bottom = 2048.0
 scale = Vector2(0.285, 0.285)
 
 [node name="WinDetails" type="RichTextLabel" parent="WinScreen"]
@@ -449,9 +447,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -520.0
-offset_top = 116.0
+offset_top = 36.0
 offset_right = 520.0
-offset_bottom = 156.0
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/normal_font = ExtResource("10_dpgvo")
@@ -478,9 +476,9 @@ anchor_top = 0.517
 anchor_right = 0.5
 anchor_bottom = 0.517
 offset_left = -247.0
-offset_top = 195.984
+offset_top = -254.016
 offset_right = -159.0
-offset_bottom = 218.984
+offset_bottom = -231.016
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_dpgvo")
 text = "Joined: 1/4"
@@ -510,9 +508,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -128.0
-offset_top = -136.0
+offset_top = -586.0
 offset_right = 128.0
-offset_bottom = -72.0
+offset_bottom = -522.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_fonts/font = ExtResource("10_dpgvo")
@@ -523,9 +521,9 @@ text = "Play Again"
 [node name="CheckBoxButton" type="TextureButton" parent="WinScreen"]
 visible = false
 offset_left = 725.0
-offset_top = 520.0
+offset_top = 70.0
 offset_right = 773.0
-offset_bottom = 568.0
+offset_bottom = 118.0
 texture_normal = ExtResource("18_uuutx")
 ignore_texture_size = true
 stretch_mode = 0
@@ -540,6 +538,141 @@ offset_right = 91.0
 offset_bottom = -15.0
 text = "Toggle auto-play"
 label_settings = SubResource("LabelSettings_q2m06")
+
+[node name="ScoreDetails" type="CanvasGroup" parent="WinScreen"]
+visible = false
+
+[node name="GrayRole" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_top = 469.0
+offset_right = 128.0
+offset_bottom = 499.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="SBRole" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 287.0
+offset_top = 469.0
+offset_right = 415.0
+offset_bottom = 499.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="TanRole" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 576.0
+offset_top = 469.0
+offset_right = 704.0
+offset_bottom = 499.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="BrownRole" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 864.0
+offset_top = 469.0
+offset_right = 992.0
+offset_bottom = 499.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="GrayHead" type="Sprite2D" parent="WinScreen/ScoreDetails"]
+modulate = Color(0.713726, 0.584314, 0, 1)
+position = Vector2(64, 542.5)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("26_csx1t")
+
+[node name="SBHead" type="Sprite2D" parent="WinScreen/ScoreDetails"]
+modulate = Color(0, 0.411765, 0.929412, 1)
+position = Vector2(351, 542)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("26_csx1t")
+
+[node name="TanHead" type="Sprite2D" parent="WinScreen/ScoreDetails"]
+modulate = Color(0.282353, 0.67451, 0.309804, 1)
+position = Vector2(640, 541)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("26_csx1t")
+
+[node name="BrownHead" type="Sprite2D" parent="WinScreen/ScoreDetails"]
+modulate = Color(1, 0.368627, 0.376471, 1)
+position = Vector2(928, 541)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("26_csx1t")
+
+[node name="GrayOld" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 120.0
+offset_top = 526.0
+offset_right = 216.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="SBOld" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 407.0
+offset_top = 526.0
+offset_right = 504.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="TanOld" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 696.0
+offset_top = 526.0
+offset_right = 793.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="BrownOld" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 984.0
+offset_top = 526.0
+offset_right = 1080.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="GrayDiff" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 223.0
+offset_top = 526.0
+offset_right = 280.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "+2"
+
+[node name="SBDiff" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 510.0
+offset_top = 526.0
+offset_right = 568.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="TanDiff" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 799.0
+offset_top = 526.0
+offset_right = 856.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+
+[node name="BrownDiff" type="RichTextLabel" parent="WinScreen/ScoreDetails"]
+offset_left = 1087.0
+offset_top = 526.0
+offset_right = 1144.0
+offset_bottom = 556.0
+theme_override_fonts/normal_font = ExtResource("10_dpgvo")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
@@ -613,42 +746,6 @@ vertical_alignment = 1
 [node name="ScoreBoard" type="CanvasGroup" parent="HUD"]
 visible = false
 position = Vector2(0, 8)
-
-[node name="GrayRole" type="Label" parent="HUD/ScoreBoard"]
-offset_left = 914.0
-offset_top = 50.0
-offset_right = 1001.0
-offset_bottom = 80.0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 25
-horizontal_alignment = 2
-
-[node name="SBRole" type="Label" parent="HUD/ScoreBoard"]
-offset_left = 914.0
-offset_top = 89.0
-offset_right = 1001.0
-offset_bottom = 119.0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 25
-horizontal_alignment = 2
-
-[node name="TanRole" type="Label" parent="HUD/ScoreBoard"]
-offset_left = 914.0
-offset_top = 129.0
-offset_right = 1001.0
-offset_bottom = 159.0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 25
-horizontal_alignment = 2
-
-[node name="BrownRole" type="Label" parent="HUD/ScoreBoard"]
-offset_left = 914.0
-offset_top = 169.0
-offset_right = 1001.0
-offset_bottom = 199.0
-theme_override_fonts/font = ExtResource("10_dpgvo")
-theme_override_font_sizes/font_size = 25
-horizontal_alignment = 2
 
 [node name="GrayHead" type="Sprite2D" parent="HUD/ScoreBoard"]
 modulate = Color(0.713726, 0.584314, 0, 1)
