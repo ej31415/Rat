@@ -16,6 +16,7 @@ var scrn_maze_exit; var scrn_maze_exit_addon
 var scrn_sheriff; var scrn_sheriff_addon
 var scrn_rat_kills; var scrn_rat_kills_addon
 var scrn_timeout; var scrn_timeout_addon
+var scrn_bounty_addon
 var gray_head; var sb_head; var tan_head; var brown_head
 var knife; var bloody_knife
 
@@ -76,6 +77,7 @@ func _load_win_screens():
 	scrn_rat_kills_addon = preload("res://assets/Win Screens/Rat win kill everybody text and knife.png")
 	scrn_timeout = preload("res://assets/Win Screens/Rat win timeout .png")
 	scrn_timeout_addon = preload("res://assets/Win Screens/Rat win timeout text and clock.png")
+	scrn_bounty_addon = preload("res://assets/Win Screens/Bounty claimed gun and blood.png")
 
 func _ready():
 	color_to_pts = {
@@ -226,6 +228,7 @@ func _on_server_disconnect():
 		$WinScreen/Background.visible = false
 		$WinScreen/Again.visible = false
 		$WinScreen/WinArt.visible = false
+		$WinScreen/BountyWin.visible = false
 		$WinScreen/WinAddon.visible = false
 		$WinScreen/PlayerDisconnected.visible = false
 		$WinScreen/num_players.visible = false
@@ -373,8 +376,11 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 		$HUD/PointGoal.visible = true
 		$HUD/PointGoal.modulate = Color("#ffffffff")
 		fade_out_point_goal()
-	elif my_color in bounty_colors:
-		$HUD/PointGoal.text = "YOU ARE THE BOUNTY!"
+	elif mode == modes.BOUNTY:
+		if my_color in bounty_colors:
+			$HUD/PointGoal.text = "YOU ARE THE BOUNTY!"
+		else:
+			$HUD/PointGoal.text = "KILL THE BOUNTY!"
 		$HUD/PointGoal.visible = true
 		$HUD/PointGoal.modulate = Color("#ffffffff")
 		fade_out_point_goal()
@@ -409,6 +415,7 @@ func start_helper(maze: Array, offset: Vector2i, true_vals: Array):
 	$TimerCanvasLayer.start(1000*60)
 	$WinScreen/Background.visible = false
 	$WinScreen/WinArt.visible = false
+	$WinScreen/BountyWin.visible = false
 	$WinScreen/WinAddon.visible = false
 	$WinScreen/WinDetails.visible = false
 	$WinScreen/Again.visible = false
@@ -516,7 +523,12 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 		$WinScreen/PlayerDisconnected.visible = true
 	else:
 		$WinScreen/WinAddon.modulate = Color(1, 1, 1, 1)
-		if mice_win:
+		if mode == modes.BOUNTY and len(bounty_pack) == 2:
+			$WinScreen/WinAddon.texture = scrn_bounty_addon
+			$WinScreen/BountyWin/Winner.modulate = color_to_code[color_to_color[bounty_pack[0]]]
+			$WinScreen/BountyWin/Loser.modulate = color_to_code[color_to_color[bounty_pack[1]]]
+			$WinScreen/WinDetails.text = ""
+		elif mice_win:
 			if sheriff_win:
 				$WinScreen/WinArt.texture = scrn_sheriff
 				$WinScreen/WinAddon.texture = scrn_sheriff_addon
@@ -553,7 +565,10 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 			$AudioStreamPlayer.stream = rat_victory_sound
 			$AudioStreamPlayer.play()
 		$WinScreen/Background.visible = true
-		$WinScreen/WinArt.visible = true
+		if mode == modes.NORMAL:
+			$WinScreen/WinArt.visible = true
+		elif mode == modes.BOUNTY:
+			$WinScreen/BountyWin.visible = true
 		$WinScreen/WinAddon.visible = true
 		$WinScreen/WinDetails.visible = true
 	
