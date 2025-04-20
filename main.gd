@@ -558,7 +558,7 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 		$WinScreen/Background.visible = true
 		if mode == modes.NORMAL:
 			$WinScreen/WinArt.visible = true
-		elif mode == modes.BOUNTY:
+		elif mode == modes.BOUNTY and len(bounty_pack) != 0:
 			$WinScreen/BountyWin.visible = true
 		$WinScreen/WinAddon.visible = true
 		$WinScreen/WinDetails.visible = true
