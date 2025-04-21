@@ -556,10 +556,10 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 			$AudioStreamPlayer.stream = rat_victory_sound
 			$AudioStreamPlayer.play()
 		$WinScreen/Background.visible = true
-		if mode == modes.NORMAL:
-			$WinScreen/WinArt.visible = true
-		elif mode == modes.BOUNTY and len(bounty_pack) != 0:
+		if mode == modes.BOUNTY and len(bounty_pack) != 0:
 			$WinScreen/BountyWin.visible = true
+		else:
+			$WinScreen/WinArt.visible = true
 		$WinScreen/WinAddon.visible = true
 		$WinScreen/WinDetails.visible = true
 	
