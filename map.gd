@@ -239,8 +239,12 @@ func erase_maze(mat: Array, offset: Vector2i):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var size := 8
+	var args = Array(OS.get_cmdline_args())
+	if args.has("--demo"):
+		size = 5
 	var padding := 4
-	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(10, 10), 2), 2)
+	var maze := _horizontal_stretch(_vertical_stretch(generate_maze(size, size), 2), 2)
 	maze = _cap_exit(_add_end_tiles(_adjust_wall_types(_extend_outer_walls(maze, padding))))
 	_pretty_print_mat(maze)
 	var offset := Vector2i(-len(maze[0])/2, -len(maze)-1)
