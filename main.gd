@@ -525,8 +525,11 @@ func _end_game_helper(mice_win: bool, sheriff_win: bool, time_out: bool, player_
 				$WinScreen/WinAddon.texture = scrn_sheriff_addon
 				var sheriff_color
 				for color in color_to_role:
-					if color_to_role[color] == "sheriff":
-						sheriff_color = color_to_color[color]
+					if color_to_role[color] == "rat":
+						for player in get_tree().get_nodes_in_group("player"):
+							if player.has_method("get_color") and player.color == color:
+								sheriff_color = color_to_color[player.killer_color]
+								break
 				$WinScreen/WinArt.modulate = color_to_code[sheriff_color]
 				$WinScreen/WinDetails.text = "[center]The sheriff has killed the rat!"
 			else:

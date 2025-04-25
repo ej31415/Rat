@@ -320,7 +320,7 @@ func _physics_process(delta: float) -> void:
 				$SoundEffects.stream.loop = false
 	
 	if Time.get_unix_time_from_system() > buff_end:
-		self.unbuff()
+		self.unbuff.rpc(self.color)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
@@ -371,7 +371,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				$SoundEffects.play()
 			if role == "mouse":
 				if has_buff:
-					self.buff()
+					self.buff.rpc(self.color)
 				else:
 					if Time.get_unix_time_from_system() < next_cheese_drop:
 						print(color + " on cheese drop cooldown")
@@ -484,21 +484,27 @@ func cheese_create_call(owner_color: String):
 	
 	owner.cheese = Cheese.constructor(owner)
 	owner.next_cheese_drop = Time.get_unix_time_from_system() + CHEESE_DROP_COOLDOWN
-	
-func buff():
-	self.buffed = true
-	self.has_buff = false
-	self.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
-	self.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
-	var tween := get_tree().create_tween()
-	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property($ViewSphere, "scale", Vector2(30, 30), 0.5)
-	
-func unbuff():
-	self.buffed = false
-	var tween := get_tree().create_tween()
-	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)
+
+@rpc("call_local", "reliable")
+func buff(color):
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_color") and player.get_color() == color:
+			player.buffed = true
+			player.has_buff = false
+			player.buff_end = Time.get_unix_time_from_system() + BUFF_TIME
+			player.next_cheese_drop = Time.get_unix_time_from_system() + BUFF_COOLDOWN
+			var tween := get_tree().create_tween()
+			tween.set_ease(Tween.EASE_IN)
+			tween.tween_property($ViewSphere, "scale", Vector2(30, 30), 0.5)
+
+@rpc("call_local", "reliable")
+func unbuff(color):
+	for player in get_tree().get_nodes_in_group("player"):
+		if player.has_method("get_color") and player.get_color() == color:
+			player.buffed = false
+			var tween := get_tree().create_tween()
+			tween.set_ease(Tween.EASE_IN)
+			tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)
 
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
