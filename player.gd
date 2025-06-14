@@ -319,8 +319,8 @@ func _physics_process(delta: float) -> void:
 			if $SoundEffects.playing:
 				$SoundEffects.stream.loop = false
 	
-	if Time.get_unix_time_from_system() > buff_end:
-		self.unbuff.rpc(self.color)
+	if buffed and Time.get_unix_time_from_system() > buff_end:
+		self.unbuff()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if !alive:
@@ -497,14 +497,11 @@ func buff(color):
 			tween.set_ease(Tween.EASE_IN)
 			tween.tween_property($ViewSphere, "scale", Vector2(30, 30), 0.5)
 
-@rpc("call_local", "reliable")
-func unbuff(color):
-	for player in get_tree().get_nodes_in_group("player"):
-		if player.has_method("get_color") and player.get_color() == color:
-			player.buffed = false
-			var tween := get_tree().create_tween()
-			tween.set_ease(Tween.EASE_IN)
-			tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)
+func unbuff():
+	self.buffed = false
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN)
+	tween.tween_property($ViewSphere, "scale", Vector2(10, 10), 0.5)
 
 func _process(delta: float) -> void:
 	if not is_multiplayer_authority():
